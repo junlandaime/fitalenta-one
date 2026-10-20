@@ -16,9 +16,22 @@ if (process.env.TRUST_PROXY) {
   app.set("trust proxy", /^\d+$/.test(v) ? Number(v) : v === "true" ? true : v);
 }
 
+const corsOriginEnv = process.env.CORS_ORIGIN || "http://localhost:3000";
+const allowedOrigins = corsOriginEnv.split(",").map((o) => o.trim());
+allowedOrigins.forEach((origin) => {
+  if (origin.startsWith("https://") && !origin.includes("www.")) {
+    allowedOrigins.push(origin.replace("https://", "https://www."));
+  }
+});
+
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN || "http://localhost:3000",
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+      return callback(null, true);
+    },
     credentials: true,
   })
 );
@@ -49,7 +62,5 @@ app.use(errorHandler);
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
-
-
 
 export default app;
