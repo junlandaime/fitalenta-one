@@ -3,7 +3,8 @@ import { PrismaMariaDb } from "@prisma/adapter-mariadb";
 import { PrismaClient } from "../generated/prisma/client";
 
 const adapter = new PrismaMariaDb({
-  host: process.env.DATABASE_HOST,
+  host: process.env.DATABASE_HOST || "127.0.0.1",
+  port: process.env.DATABASE_PORT ? Number(process.env.DATABASE_PORT) : 3306,
   user: process.env.DATABASE_USER,
   password: process.env.DATABASE_PASSWORD,
   database: process.env.DATABASE_NAME,
@@ -376,28 +377,49 @@ const programs = [
 ];
 
 async function main() {
+  console.log("Menghubungkan ke database dan menyiapkan program...");
   const categoryMap = new Map<string, number>();
 
   for (const name of categoryNames) {
-    const category = await prisma.programCategory.create({ data: { name } });
+    let category = await prisma.programCategory.findFirst({ where: { name } });
+    if (!category) {
+      category = await prisma.programCategory.create({ data: { name } });
+    }
     categoryMap.set(name, category.id);
   }
-  console.log(`${categoryNames.length} kategori program dibuat`);
+  console.log(`✔ ${categoryNames.length} kategori program siap`);
 
+  let count = 0;
   for (const { categoryName, ...programData } of programs) {
-    await prisma.program.create({
-      data: {
-        ...programData,
-        categoryId: categoryMap.get(categoryName),
-      },
+    const data = {
+      ...programData,
+      categoryId: categoryMap.get(categoryName),
+    };
+
+    const existing = await prisma.program.findFirst({
+      where: { name: programData.name },
     });
+
+    if (existing) {
+      await prisma.program.update({
+        where: { id: existing.id },
+        data,
+      });
+    } else {
+      await prisma.program.create({ data });
+    }
+    count++;
+    console.log(`  [${count}/${programs.length}] Program: ${programData.name}`);
   }
-  console.log(`${programs.length} program dibuat`);
+  console.log(`✔ Selesai: ${count} program berhasil disinkronkan ke database.`);
 }
 
 main()
   .catch((e) => {
-    console.error(e);
+    console.error("❌ Error saat seeding programs:", e);
     process.exit(1);
   })
-  .finally(() => prisma.$disconnect());
+  .finally(async () => {
+    await prisma.$disconnect();
+    process.exit(0);
+  });
