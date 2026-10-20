@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { getHomeByRole, normalizeRole, type AuthRole } from "@/lib/auth-role";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const API_URL = process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5001/api";
 
 async function getSessionRole(request: NextRequest): Promise<AuthRole | null> {
     try {
