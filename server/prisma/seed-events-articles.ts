@@ -7,7 +7,8 @@ import { PrismaMariaDb } from "@prisma/adapter-mariadb";
 import { PrismaClient } from "../generated/prisma/client";
 
 const adapter = new PrismaMariaDb({
-  host: process.env.DATABASE_HOST,
+  host: process.env.DATABASE_HOST || "127.0.0.1",
+  port: process.env.DATABASE_PORT ? Number(process.env.DATABASE_PORT) : 3306,
   user: process.env.DATABASE_USER,
   password: process.env.DATABASE_PASSWORD,
   database: process.env.DATABASE_NAME,
@@ -112,18 +113,20 @@ async function main() {
   let eventCount = 0;
   for (const e of scrapedEvents) {
     const imagePath = e.image_url ? e.image_url.replace(/^https?:\/\/[^\/]+\/storage\/events\//, "/uploads/events/") : null;
-    await prisma.event.create({
-      data: {
-        title: e.title,
-        slug: e.slug,
-        description: buildEventDescription(e),
-        eventDate: new Date(e.start_at),
-        location: e.location,
-        maxParticipants: e.max_participants ?? undefined,
-        image: imagePath,
-        categoryId: category.id,
-        isFeatured: false,
-      },
+    const eventData = {
+      title: e.title,
+      description: buildEventDescription(e),
+      eventDate: new Date(e.start_at),
+      location: e.location,
+      maxParticipants: e.max_participants ?? undefined,
+      image: imagePath,
+      categoryId: category.id,
+      isFeatured: false,
+    };
+    await prisma.event.upsert({
+      where: { slug: e.slug },
+      update: eventData,
+      create: { slug: e.slug, ...eventData },
     });
     eventCount++;
   }
@@ -132,18 +135,20 @@ async function main() {
   let articleCount = 0;
   for (const a of scrapedArticles) {
     const imagePath = a.image_url ? a.image_url.replace(/^https?:\/\/[^\/]+\/storage\/articles\//, "/uploads/articles/") : null;
-    await prisma.article.create({
-      data: {
-        title: a.title,
-        slug: a.slug,
-        content: a.content_html,
-        excerpt: a.excerpt,
-        eventDate: new Date(a.published_at),
-        image: imagePath,
-        categoryId: category.id,
-        authorId: author.id,
-        isFeatured: false,
-      },
+    const articleData = {
+      title: a.title,
+      content: a.content_html,
+      excerpt: a.excerpt,
+      eventDate: new Date(a.published_at),
+      image: imagePath,
+      categoryId: category.id,
+      authorId: author.id,
+      isFeatured: false,
+    };
+    await prisma.article.upsert({
+      where: { slug: a.slug },
+      update: articleData,
+      create: { slug: a.slug, ...articleData },
     });
     articleCount++;
   }
