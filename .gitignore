@@ -8,3 +8,4 @@ build/
 server/uploads/
 server/generated/
 server/prisma/data/legacy-participants.json
+legacy-participants.json
