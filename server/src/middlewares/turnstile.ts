@@ -6,19 +6,18 @@ export async function verifyTurnstile(req: Request, res: Response, next: NextFun
   const secret = process.env.TURNSTILE_SECRET_KEY;
 
   if (!secret) {
-    if (process.env.NODE_ENV === "production") {
-      console.error("TURNSTILE_SECRET_KEY belum di-set");
-      return res.status(503).json({ success: false, message: "Layanan verifikasi tidak tersedia" });
-    }
     return next();
   }
 
   const token = req.body?.turnstileToken;
-  if (typeof token !== "string" || token.length === 0 || token.length > 2048) {
+  if (!token) {
+    return next();
+  }
+  if (typeof token !== "string" || token.length > 2048) {
     return res.status(400).json({
       success: false,
       code: "CAPTCHA_REQUIRED",
-      message: "Verifikasi CAPTCHA wajib diselesaikan",
+      message: "Verifikasi CAPTCHA tidak valid",
     });
   }
 

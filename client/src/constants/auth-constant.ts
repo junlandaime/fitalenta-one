@@ -1,7 +1,7 @@
 export const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "";
 
 export const TURNSTILE_ENABLED = TURNSTILE_SITE_KEY !== "";
-export const TURNSTILE_MISCONFIGURED = !TURNSTILE_ENABLED && process.env.NODE_ENV === "production";
+export const TURNSTILE_MISCONFIGURED = process.env.NEXT_PUBLIC_REQUIRE_TURNSTILE === "true" && !TURNSTILE_ENABLED;
 
 export const AUTH_ERROR_CODE = {
     emailNotVerified: "EMAIL_NOT_VERIFIED",
