@@ -117,7 +117,15 @@ function generateRegCode() {
 }
 async function migrateParticipants(filePath) {
   const defaultPassword = process.env.DEFAULT_PARTICIPANT_PASSWORD || "Fitalenta2026!";
-  const targetFile = filePath || path2.join(process.cwd(), "prisma", "data", "legacy-participants.json");
+  const candidatePaths = [
+    filePath,
+    path2.join(process.cwd(), "prisma", "data", "legacy-participants.json"),
+    path2.join(process.cwd(), "legacy-participants.json"),
+    path2.join(process.cwd(), "..", "legacy-participants.json"),
+    path2.join(process.cwd(), "..", "..", "legacy-participants.json"),
+    path2.join(process.cwd(), "data", "legacy-participants.json")
+  ].filter(Boolean);
+  const targetFile = candidatePaths.find((p) => fs.existsSync(p)) || candidatePaths[0];
   console.log("=================================================");
   console.log("       MIGRASI DATA PESERTA OJETU / FITALENTA    ");
   console.log("=================================================");
@@ -291,13 +299,14 @@ async function migrateParticipants(filePath) {
   console.log(`\u2714 Semua peserta diseragamkan password-nya ke: ${defaultPassword}`);
   console.log("=================================================");
 }
-if (process.argv[1] && process.argv[1].endsWith("migrate-participants.ts")) {
+if (process.argv[1] && process.argv[1].includes("migrate-participants")) {
   const filePathArg = process.argv[2];
   migrateParticipants(filePathArg).catch((e) => {
     console.error(e);
     process.exit(1);
   }).finally(async () => {
     await prisma_default.$disconnect();
+    process.exit(0);
   });
 }
 export {
