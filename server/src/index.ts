@@ -23,6 +23,17 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(morgan("dev"));
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
+app.use("/team-members", express.static(path.join(process.cwd(), "uploads", "team-members")));
+
+// Development fallback for missing assets (e.g. seeded data): redirect to live storage
+app.get("/team-members/{*file}", (req: Request, res: Response) => {
+  const filePath = Array.isArray(req.params.file) ? req.params.file.join("/") : req.params.file;
+  res.redirect(`https://www.fitalenta.co.id/storage/team-members/${encodeURI(filePath)}`);
+});
+app.get("/uploads/{*file}", (req: Request, res: Response) => {
+  const filePath = Array.isArray(req.params.file) ? req.params.file.join("/") : req.params.file;
+  res.redirect(`https://www.fitalenta.co.id/storage/${encodeURI(filePath)}`);
+});
 
 app.get("/api/health", (req: Request, res: Response) => {
   res.json({ status: "ok", message: "Fitalenta backend is running" });

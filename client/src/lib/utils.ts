@@ -66,8 +66,15 @@ const ASSET_URL =
 
 export function imageUrl(image?: string | null): string | undefined {
     if (!image) return undefined;
-    if (/^https?:\/\//.test(image)) return image;
-    return `${ASSET_URL}${image.startsWith("/") ? "" : "/"}${image}`;
+    const fullUrl = /^https?:\/\//.test(image)
+        ? image
+        : `${ASSET_URL}${image.startsWith("/") ? "" : "/"}${image}`;
+
+    try {
+        return encodeURI(decodeURI(fullUrl));
+    } catch {
+        return encodeURI(fullUrl);
+    }
 }
 
 export async function safely<T>(fn: () => Promise<T>, fallback: T, label: string): Promise<T> {

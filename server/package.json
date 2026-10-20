@@ -9,7 +9,13 @@
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio",
-    "seed:admin": "tsx prisma/seed-admin.ts"
+    "seed:admin": "tsx prisma/seed-admin.ts",
+    "seed:programs": "tsx prisma/seed-programs.ts",
+    "seed:events-articles": "tsx prisma/seed-events-articles.ts",
+    "seed:testimonials": "tsx prisma/seed-testimonials-clients-services.ts",
+    "seed:team": "tsx prisma/seed-team-members.ts",
+    "seed:featured": "tsx prisma/seed-featured.ts",
+    "seed:all": "tsx prisma/seed-admin.ts && tsx prisma/seed-programs.ts && tsx prisma/seed-events-articles.ts && tsx prisma/seed-testimonials-clients-services.ts && tsx prisma/seed-team-members.ts && tsx prisma/seed-featured.ts"
   },
   "author": "fitalenta-dev",
   "license": "ISC",
