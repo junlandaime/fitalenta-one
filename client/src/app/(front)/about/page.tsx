@@ -1,8 +1,10 @@
 import PageHero from "@/components/common/page-hero";
 import { getAbout } from "@/constants/about-constant";
+import { getPublicTeamMembers } from "@/services/team-service";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { TeamMembersGrid } from "./feature/team-members-grid";
 
 export const metadata: Metadata = {
     title: "About Us - FITALENTA",
@@ -23,7 +25,7 @@ function Heading({ eyebrow, title, sub }: { eyebrow?: string; title: string; sub
 }
 
 export default async function AboutPage() {
-    const data = await getAbout();
+    const [data, members] = await Promise.all([getAbout(), getPublicTeamMembers()]);
 
     return (
         <main className="text-slate-800">
@@ -120,15 +122,7 @@ export default async function AboutPage() {
                             className="object-contain"
                         />
                     </div>
-                    <div className="relative aspect-video overflow-hidden rounded-2xl border border-slate-200 bg-white">
-                        <Image
-                            src={data.team}
-                            alt="Tim dan expertise FITALENTA"
-                            fill
-                            sizes="(min-width: 1152px) 1152px, 100vw"
-                            className="object-contain"
-                        />
-                    </div>
+                    <TeamMembersGrid members={members} />
                 </div>
             </section>
 

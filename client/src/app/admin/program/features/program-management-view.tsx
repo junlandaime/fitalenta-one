@@ -16,9 +16,9 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import { useAdminProgramOptions, useAdminPrograms, useAdminProgramSummary } from "@/hooks/use-admin-programs";
+import { useAdminProgramOptions, useAdminPrograms, useAdminProgramSummary } from "@/hooks/admin/use-admin-programs";
 import { useDebounced } from "@/hooks/use-debounced";
-import type { AdminProgram, AdminProgramParams } from "@/types/admin-program";
+import type { AdminProgram, AdminProgramParams } from "@/types/admin/admin-program";
 import { DeleteProgramDialog } from "./delete-program-dialog";
 import { ProgramStatCards } from "./program-stat-cards";
 import { ProgramTable } from "./program-table";

@@ -1,18 +1,21 @@
 import { Request, Response } from "express";
 import * as articleService from "../services/article.service";
 import { getStringParam, getStringQuery } from '../utils/request';
+import { INVALID_PAGE_RESPONSE, parsePageQuery } from "../utils/pagination";
 
 
 export async function index(req: Request, res: Response) {
   try {
     const search = getStringQuery(req, "search");
     const categoryId = getStringQuery(req, "categoryId");
-    const pageParam = getStringQuery(req, "page");
+
+    const page =  parsePageQuery(getStringQuery(req, "page"));
+    if (page === null) return res.status(400).json(INVALID_PAGE_RESPONSE);
 
     const result = await articleService.getPublicArticles({
       search,
       categoryId: categoryId ? parseInt(categoryId) : undefined,
-      page: pageParam ? parseInt(pageParam) : 1,
+      page: page ? parseInt(page.toString()) : 1,
     });
 
     return res.json({ success: true, data: result });

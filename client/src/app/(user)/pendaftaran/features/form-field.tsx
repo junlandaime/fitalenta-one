@@ -12,9 +12,8 @@ import {
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import { useRegistrationStore } from "@/store/registration-store";
-import type { StringFieldName } from "@/types/registration";
+import type { StringFieldName } from "@/types/user/registration";
 
-/** Tinggi kontrol form; sedikit lebih besar dari default shadcn agar nyaman di layar sentuh. */
 export const CONTROL_CLASS = "h-10";
 
 type FieldShellProps = {
@@ -27,7 +26,6 @@ type FieldShellProps = {
     children: ReactNode;
 };
 
-/** Label + pesan bantuan/error yang konsisten untuk semua jenis kontrol. */
 export function FieldShell({ id, label, required, hint, error, className, children }: FieldShellProps) {
     return (
         <div className={cn("space-y-2", className)}>
@@ -53,7 +51,6 @@ export function FieldShell({ id, label, required, hint, error, className, childr
     );
 }
 
-/** Atribut aksesibilitas yang menghubungkan kontrol dengan pesan error/hint-nya. */
 export function fieldA11y(id: string, error?: string, hint?: string) {
     return {
         "aria-invalid": Boolean(error),
@@ -66,7 +63,6 @@ type TextFieldProps = Omit<ComponentProps<typeof Input>, "id" | "name" | "value"
     label: string;
     hint?: string;
     required?: boolean;
-    /** Normalisasi nilai sebelum disimpan, mis. hanya angka untuk NIK. */
     format?: (value: string) => string;
 };
 

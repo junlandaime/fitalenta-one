@@ -1,8 +1,6 @@
 import { Router } from "express";
 import * as selectionPlacementController from "../../controllers/admin/selectionPlacement.controller";
-import { ADMIN_PANEL_ROLES } from "../../config/admin.config";
-import { authenticate } from "../../middlewares/authenticate";
-import { authorize } from "../../middlewares/authorize";
+import { superAdminAccess } from "../../middlewares/access";
 import { validate } from "../../middlewares/validate";
 import {
   listParticipantsRules,
@@ -12,7 +10,7 @@ import {
 
 const router = Router();
 
-router.use(authenticate, authorize(...ADMIN_PANEL_ROLES));
+router.use(...superAdminAccess);
 router.get("/summary", selectionPlacementController.summary);
 router.get("/options", selectionPlacementController.options);
 router.get("/", validate(listParticipantsRules), selectionPlacementController.index);

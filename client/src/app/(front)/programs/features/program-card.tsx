@@ -110,7 +110,7 @@ export function ProgramCard({ program }: { program: Program }) {
                         </span>
                     ) : (
                         <Link
-                            href={"/register"}
+                            href={"/user/pendaftaran"}
                             className="flex flex-1 items-center justify-center rounded-lg bg-secondary px-3 py-2.5 text-sm font-semibold text-white transition hover:opacity-90"
                         >
                             Daftar Sekarang

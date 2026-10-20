@@ -3,7 +3,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
 import { RadioGroupItem } from "@/components/ui/radio-group";
-import { getProgramFacts } from "@/helpers/registration-helper";
+import { getProgramFacts } from "@/helpers/user/registration-helper";
 import { isFull, quotaLabel } from "@/helpers/program-helper";
 import { cn } from "@/lib/utils";
 import type { Program } from "@/types/program";

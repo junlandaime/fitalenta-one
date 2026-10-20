@@ -1,13 +1,33 @@
 import prisma from "../../config/prisma";
 import { Prisma } from "../../../generated/prisma/client";
-import { MAX_CODE_COLLISION_RETRIES } from "../../config/registration.config";
+import { MAX_CODE_COLLISION_RETRIES, REGISTRATION_FEE } from "../../config/registration.config";
 import { RegistrationErrors } from "../../errors/registration.errors";
-import { CreateRegistrationInput, RegistrationResult } from "../../types/registration.types";
-import { nextInvoiceNumber, nextRegistrationCode } from "../../utils/code-generator";
+import {
+  CreateRegistrationInput,
+  RegistrationResult,
+} from "../../types/registration.types";
+import {
+  nextInvoiceNumber,
+  nextRegistrationCode,
+} from "../../utils/code-generator";
 import { isUniqueViolation } from "../../utils/prisma-error";
 import { assertProgramAcceptsRegistration } from "./registration-policy";
-import { RegistrationFilePaths, assertRequiredFiles } from "./registration-files";
-import { registrationResultInclude, toRegistrationResult } from "./registration.mapper";
+import {
+  RegistrationFilePaths,
+  assertRequiredFiles,
+} from "./registration-files";
+import {
+  registrationResultInclude,
+  toRegistrationResult,
+} from "./registration.mapper";
+import {
+  buildInvoiceIssuedNotification,
+  createPaymentNotification,
+} from "../admin/payment.notifications";
+
+const ISSUED_ONLY = {
+  issuedAt: { not: null },
+} satisfies Prisma.PaymentWhereInput;
 
 export async function getMyRegistrations(userId: number) {
   return prisma.registration.findMany({
@@ -16,7 +36,7 @@ export async function getMyRegistrations(userId: number) {
       program: true,
       selectionStatuses: { orderBy: { createdAt: "desc" }, take: 1 },
       placementStatuses: { orderBy: { createdAt: "desc" }, take: 1 },
-      payments: true,
+      payments: { where: ISSUED_ONLY },
     },
     orderBy: { registrationDate: "desc" },
   });
@@ -30,22 +50,26 @@ export async function getMyRegistrationById(userId: number, id: number) {
       statusHistory: { orderBy: { changedAt: "desc" } },
       selectionStatuses: { orderBy: { createdAt: "desc" } },
       placementStatuses: { orderBy: { createdAt: "desc" } },
-      payments: { include: { paymentHistory: { orderBy: { changedAt: "desc" } } } },
+      payments: {
+        where: ISSUED_ONLY,
+        include: { paymentHistory: { orderBy: { changedAt: "desc" } } },
+      },
     },
   });
   if (!registration) throw new Error("REGISTRATION_NOT_FOUND");
   return registration;
 }
 
-
 async function reserveSlot(
   tx: Prisma.TransactionClient,
-  program: { id: number; capacity: number | null }
+  program: { id: number; capacity: number | null },
 ): Promise<void> {
   const result = await tx.program.updateMany({
     where: {
       id: program.id,
-      ...(program.capacity !== null ? { currentParticipants: { lt: program.capacity } } : {}),
+      ...(program.capacity !== null
+        ? { currentParticipants: { lt: program.capacity } }
+        : {}),
     },
     data: { currentParticipants: { increment: 1 } },
   });
@@ -56,11 +80,14 @@ async function registerInTransaction(
   tx: Prisma.TransactionClient,
   userId: number,
   input: CreateRegistrationInput,
-  filePaths: RegistrationFilePaths
+  filePaths: RegistrationFilePaths,
 ): Promise<RegistrationResult> {
   const { programId, birthDate, fullName, phone, ...profile } = input;
 
-  const user = await tx.user.findUnique({ where: { id: userId }, select: { id: true } });
+  const user = await tx.user.findUnique({
+    where: { id: userId },
+    select: { id: true },
+  });
   if (!user) throw RegistrationErrors.userNotFound();
 
   const program = await tx.program.findUnique({ where: { id: programId } });
@@ -81,9 +108,16 @@ async function registerInTransaction(
   if (fullName || phone) {
     await tx.user.update({
       where: { id: userId },
-      data: { ...(fullName ? { name: fullName } : {}), ...(phone ? { phone } : {}) },
+      data: {
+        ...(fullName ? { name: fullName } : {}),
+        ...(phone ? { phone } : {}),
+      },
     });
   }
+
+  const dueDate = program.registrationDeadline ?? null;
+  const registrationFeeNotes = REGISTRATION_FEE.defaultNotes(program.name);
+  const now = new Date();
 
   const registration = await tx.registration.create({
     data: {
@@ -96,9 +130,13 @@ async function registerInTransaction(
       payments: {
         create: {
           invoiceNumber,
-          amount: program.trainingCost,
+          amount: REGISTRATION_FEE.amount,
           status: "pending",
           currentInstallmentNumber: 0,
+          issuedAt: now,
+          dueDate,
+          nextDueDate: dueDate,
+          notes: registrationFeeNotes,
         },
       },
       selectionStatuses: { create: {} },
@@ -107,19 +145,35 @@ async function registerInTransaction(
     include: registrationResultInclude,
   });
 
+  const createdPayment = registration.payments[0];
+  if (createdPayment) {
+    await createPaymentNotification(
+      tx,
+      userId,
+      createdPayment.id,
+      buildInvoiceIssuedNotification({
+        invoiceNumber,
+        amount: new Prisma.Decimal(REGISTRATION_FEE.amount),
+        dueDate,
+      })
+    );
+  }
+
   return toRegistrationResult(registration);
 }
 
 export async function createRegistration(
   userId: number,
   input: CreateRegistrationInput,
-  filePaths: RegistrationFilePaths
+  filePaths: RegistrationFilePaths,
 ): Promise<RegistrationResult> {
   assertRequiredFiles(filePaths);
 
   for (let attempt = 1; ; attempt++) {
     try {
-      return await prisma.$transaction((tx) => registerInTransaction(tx, userId, input, filePaths));
+      return await prisma.$transaction((tx) =>
+        registerInTransaction(tx, userId, input, filePaths),
+      );
     } catch (error) {
       if (!isUniqueViolation(error)) throw error;
 
@@ -128,7 +182,8 @@ export async function createRegistration(
         select: { id: true },
       });
       if (duplicate) throw RegistrationErrors.alreadyRegistered();
-      if (attempt >= MAX_CODE_COLLISION_RETRIES) throw RegistrationErrors.codeGenerationFailed();
+      if (attempt >= MAX_CODE_COLLISION_RETRIES)
+        throw RegistrationErrors.codeGenerationFailed();
     }
   }
 }

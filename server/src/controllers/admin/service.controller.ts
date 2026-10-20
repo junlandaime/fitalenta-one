@@ -13,6 +13,24 @@ export async function index(req: Request, res: Response) {
   }
 }
 
+export async function show(req: Request, res: Response) {
+  try {
+    const id = parseInt(req.params.id as string);
+    if (!Number.isInteger(id) || id < 1) {
+      return res.status(404).json({ success: false, message: "Layanan tidak ditemukan" });
+    }
+
+    const service = await serviceService.getAdminServiceById(id);
+    return res.json({ success: true, data: service });
+  } catch (error: any) {
+    if (error.message === "SERVICE_NOT_FOUND") {
+      return res.status(404).json({ success: false, message: "Layanan tidak ditemukan" });
+    }
+    console.error("Get admin service detail error:", error);
+    return res.status(500).json({ success: false, message: "Terjadi kesalahan pada server" });
+  }
+}
+
 export async function store(req: Request, res: Response) {
   try {
     const { slug, title, icon, summary, content, isFeatured } = req.body || {};

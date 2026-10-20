@@ -1,6 +1,6 @@
 import { CircleCheck, LayoutGrid, UserPlus, Users } from "lucide-react";
 import { AdminStatCard } from "@/components/admin/admin-stat-card";
-import type { AdminProgramSummary } from "@/types/admin-program";
+import type { AdminProgramSummary } from "@/types/admin/admin-program";
 
 export function ProgramStatCards({ summary }: { summary?: AdminProgramSummary }) {
     return (

@@ -20,11 +20,6 @@ interface ScrapedTestimonial {
   rating: number;
 }
 
-interface ScrapedClient {
-  name: string;
-  logo_url: string;
-}
-
 interface ServiceSeed {
   slug: string;
   title: string;
@@ -72,26 +67,6 @@ async function seedTestimonials() {
   console.log(`${created} testimoni baru di-seed (${testimonials.length - created} sudah ada)`);
 }
 
-async function seedClients() {
-  const clients = readJson<ScrapedClient[]>("clients.json");
-
-  let created = 0;
-  for (const c of clients) {
-    const exists = await prisma.client.findFirst({ where: { name: c.name } });
-    if (exists) continue;
-
-    await prisma.client.create({
-      data: {
-        name: c.name,
-        logo: c.logo_url,
-        isFeatured: false,
-      },
-    });
-    created++;
-  }
-  console.log(`${created} klien/mitra baru di-seed (${clients.length - created} sudah ada)`);
-}
-
 async function seedServices() {
   const services = readJson<ServiceSeed[]>("services.json");
 
@@ -118,7 +93,6 @@ async function seedServices() {
 
 async function main() {
   await seedTestimonials();
-  await seedClients();
   await seedServices();
 }
 

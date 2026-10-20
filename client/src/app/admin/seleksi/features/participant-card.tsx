@@ -1,15 +1,15 @@
 import { CalendarDays, Clock, GraduationCap, Mail, Phone } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
-import { getInitials } from "@/helpers/admin-selection-placement-helper";
+import { getInitials } from "@/helpers/admin/admin-selection-placement-helper";
 import { formatDate, imageUrl } from "@/lib/utils";
-import type { Participant } from "@/types/selection-placement";
+import type { Participant } from "@/types/admin/selection-placement";
 
 function InfoRow({ icon: Icon, children }: { icon: typeof Mail; children: React.ReactNode }) {
     return (
         <div className="flex items-start gap-2 text-sm">
             <Icon className="mt-0.5 size-4 shrink-0 text-muted-foreground" aria-hidden />
-            <span className="min-w-0 break-words">{children}</span>
+            <span className="min-w-0 wrap-break-word">{children}</span>
         </div>
     );
 }

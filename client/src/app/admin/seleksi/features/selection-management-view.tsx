@@ -8,9 +8,9 @@ import {
     useAdminParticipants,
     useAdminSelectionOptions,
     useAdminSelectionSummary,
-} from "@/hooks/use-admin-selection-placements";
+} from "@/hooks/admin/use-admin-selection-placements";
 import { useDebounced } from "@/hooks/use-debounced";
-import type { ParticipantParams } from "@/types/selection-placement";
+import type { ParticipantParams } from "@/types/admin/selection-placement";
 import { SelectionFilters } from "./selection-filters";
 import { SelectionStatCards } from "./selection-stat-cards";
 import { SelectionTable } from "./selection-table";

@@ -41,8 +41,6 @@ const about: AboutContent = {
     team: "/images/team.jpg",
 };
 
-// Ganti isi fungsi ini dengan fetch ke CMS/API/database Anda.
-// Contoh: const res = await fetch(`${process.env.CMS_URL}/about`, { next: { revalidate: 60 } });
 export async function getAbout(): Promise<AboutContent> {
     return about;
 }

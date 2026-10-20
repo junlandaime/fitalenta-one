@@ -1,7 +1,6 @@
-import bcrypt from "bcryptjs";
 import prisma from "../../config/prisma";
 import { Prisma, Role } from "../../../generated/prisma/client";
-import { BCRYPT_ROUNDS } from "../../config/admin.config";
+import { hashPassword } from "../../utils/password";
 import { UserErrors } from "../../errors/user.errors";
 import { CreateUserInput, UpdateUserInput, UserItem, UserListFilters, UserSummary } from "../../types/admin.types";
 import { isForeignKeyViolation, isUniqueViolation } from "../../utils/prisma-error";
@@ -51,9 +50,6 @@ function buildUserWhere({ search, role }: UserListFilters): Prisma.UserWhereInpu
   };
 }
 
-function hashPassword(password: string): Promise<string> {
-  return bcrypt.hash(password, BCRYPT_ROUNDS);
-}
 
 async function assertEmailAvailable(email: string, excludeUserId?: number): Promise<void> {
   const taken = await prisma.user.findFirst({
@@ -116,6 +112,7 @@ export async function createUser(input: CreateUserInput, currentUserId: number):
         email: input.email,
         phone: input.phone,
         role: input.role ?? "user",
+        emailVerifiedAt: new Date(),
         password: await hashPassword(input.password),
       },
       select: userSelect,
@@ -139,13 +136,11 @@ export async function updateUser(
     throw UserErrors.cannotChangeOwnRole();
   }
   if (input.email) await assertEmailAvailable(input.email, id);
-
-  const { password, ...profile } = input;
-
-  try {
+  
+    try {
     const user = await prisma.user.update({
       where: { id },
-      data: { ...profile, ...(password ? { password: await hashPassword(password) } : {}) },
+      data: input,
       select: userSelect,
     });
     return toUserItem(user, currentUserId);

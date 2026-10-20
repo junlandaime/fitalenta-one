@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { registerUser, loginUser } from "../services/auth.service";
+import { registerUser, loginUser, verifyEmail, resendVerification } from "../services/auth.service";
 import { setAuthCookie, clearAuthCookie } from "../utils/cookie";
 import prisma from "../config/prisma";
 
@@ -14,29 +14,25 @@ export async function register(req: Request, res: Response) {
       });
     }
 
-    if (password.length < 6) {
-      return res.status(400).json({
-        success: false,
-        message: "Password minimal 6 karakter",
-      });
+    if ([name, email, phone, password, confirmPassword].some((v) => typeof v !== "string")) {
+      return res.status(400).json({ success: false, message: "Format data tidak valid" });
+    }
+
+    if (password.length < 6 || password.length > 128) {
+      return res.status(400).json({ success: false, message: "Password harus 6-128 karakter" });
     }
 
     if (password !== confirmPassword) {
       return res.status(400).json({ success: false, message: "Konfirmasi password tidak cocok" });
     }
 
-    const { user, token } = await registerUser({ email, password, name, phone });
-    setAuthCookie(res, token);
+    await registerUser({ email, password, name, phone });
 
-    return res.status(201).json({
+    return res.status(200).json({
       success: true,
-      message: "Registrasi berhasil",
-      data: { user: { id: user.id, email: user.email, name: user.name, role: user.role } },
+      message: "Jika email tersedia, link verifikasi telah dikirim. Silakan cek inbox Anda.",
     });
   } catch (error: any) {
-    if (error.message === "EMAIL_TAKEN") {
-      return res.status(409).json({ success: false, message: "Email sudah terdaftar" });
-    }
     console.error("Register error:", error);
     return res.status(500).json({ success: false, message: "Terjadi kesalahan pada server" });
   }
@@ -48,6 +44,9 @@ export async function login(req: Request, res: Response) {
 
     if (!email || !password) {
       return res.status(400).json({ success: false, message: "Email dan password wajib diisi" });
+    }
+    if (typeof email !== "string" || typeof password !== "string" || password.length > 128) {
+      return res.status(400).json({ success: false, message: "Format data tidak valid" });
     }
 
     const { user, token } = await loginUser(email, password);
@@ -62,7 +61,45 @@ export async function login(req: Request, res: Response) {
     if (error.message === "INVALID_CREDENTIALS") {
       return res.status(401).json({ success: false, message: "Email atau password salah" });
     }
+    if (error.message === "EMAIL_NOT_VERIFIED") {
+      return res.status(403).json({
+        success: false,
+        code: "EMAIL_NOT_VERIFIED",
+        message: "Email belum diverifikasi. Silakan cek inbox Anda atau kirim ulang link verifikasi.",
+      });
+    }
     console.error("Login error:", error);
+    return res.status(500).json({ success: false, message: "Terjadi kesalahan pada server" });
+  }
+}
+
+export async function verifyEmailToken(req: Request, res: Response) {
+  try {
+    const { token } = req.body || {};
+    if (typeof token !== "string" || !token || token.length > 2048) {
+      return res.status(400).json({ success: false, message: "Token tidak valid" });
+    }
+    await verifyEmail(token);
+    return res.json({ success: true, message: "Email berhasil diverifikasi. Silakan login." });
+  } catch (error: any) {
+    if (error.message === "INVALID_TOKEN") {
+      return res.status(400).json({ success: false, message: "Link verifikasi tidak valid atau sudah kedaluwarsa" });
+    }
+    console.error("Verify email error:", error);
+    return res.status(500).json({ success: false, message: "Terjadi kesalahan pada server" });
+  }
+}
+
+export async function resendVerificationEmail(req: Request, res: Response) {
+  try {
+    const { email } = req.body || {};
+    if (typeof email === "string" && email) await resendVerification(email);
+    return res.json({
+      success: true,
+      message: "Jika email terdaftar dan belum terverifikasi, link verifikasi telah dikirim.",
+    });
+  } catch (error) {
+    console.error("Resend verification error:", error);
     return res.status(500).json({ success: false, message: "Terjadi kesalahan pada server" });
   }
 }

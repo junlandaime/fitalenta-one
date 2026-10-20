@@ -2,12 +2,14 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 import { AppError } from "../utils/app-error";
-import { ABOUT_UPLOAD_FOLDER, TEAM_MEMBER_UPLOAD_FOLDER } from "../config/about.config";
+import { TEAM_MEMBER_UPLOAD_FOLDER } from "../config/team.config";
 import {
   REGISTRATION_ALLOWED_MIME_TYPES,
   REGISTRATION_FILES,
   REGISTRATION_UPLOAD_FOLDER,
 } from "../config/registration.config";
+import { IMPORT_LIMITS, XLSX_MIME } from "../config/financial-report.config";
+import { PAYMENT_PROOF_UPLOAD_FOLDER } from "../config/payment.config";
 
 const IMAGE_MIME_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
 
@@ -52,12 +54,21 @@ export const uploadEventImage = createUploader("events");
 export const uploadArticleImage = createUploader("articles");
 export const uploadGalleryImage = createUploader("gallery");
 export const uploadTestimonialImage = createUploader("testimonials");
-export const uploadPartnerLogo = createUploader("partners");
-export const uploadCompanyLogo = createUploader("company-logos");
 export const uploadTeamMemberImage = createUploader(TEAM_MEMBER_UPLOAD_FOLDER);
-export const uploadAboutImage = createUploader(ABOUT_UPLOAD_FOLDER);
-export const uploadPaymentProof = createUploader("payment-proofs");
+export const uploadPaymentProof = createUploader(PAYMENT_PROOF_UPLOAD_FOLDER);
 export const uploadRegistrationFiles = createUploader(REGISTRATION_UPLOAD_FOLDER, {
   allowedMimeTypes: REGISTRATION_ALLOWED_MIME_TYPES,
   invalidTypeMessage: "Format file tidak didukung (hanya JPG, PNG, WEBP, PDF)",
 }).fields(REGISTRATION_FILES.map(({ field }) => ({ name: field, maxCount: 1 })));
+const SPREADSHEET_MIME_TYPES = [XLSX_MIME, "application/octet-stream"];
+
+export const uploadReportSpreadsheet = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: IMPORT_LIMITS.maxFileSizeMB * 1024 * 1024, files: 1 },
+  fileFilter: (req, file, cb) => {
+    const isXlsx =
+      path.extname(file.originalname).toLowerCase() === ".xlsx" && SPREADSHEET_MIME_TYPES.includes(file.mimetype);
+    if (isXlsx) cb(null, true);
+    else cb(new AppError("INVALID_FILE_TYPE", 400, "Format file harus Excel (.xlsx)"));
+  },
+});

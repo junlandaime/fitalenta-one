@@ -1,33 +1,44 @@
 import { Request, Response } from "express";
+import { matchedData } from "express-validator";
+import { PAYMENT_PROOF_UPLOAD_FOLDER } from "../../config/payment.config";
+import { PaymentErrors } from "../../errors/payment.errors";
+import { sendInvoicePdf } from "../../services/admin/admin.invoicePdf";
 import * as paymentService from "../../services/user/payment.service";
+import { MyPaymentFilters } from "../../types/userPayment.types";
+import { toPublicUploadPath, withUploadCleanup } from "../../utils/file";
+
+const currentUserId = (req: Request) => req.user!.userId;
+
+export async function summary(req: Request, res: Response) {
+  const data = await paymentService.getMySummary(currentUserId(req));
+  return res.json({ success: true, data });
+}
 
 export async function index(req: Request, res: Response) {
-  try {
-    const payments = await paymentService.getMyPayments(req.user!.userId);
-    return res.json({ success: true, data: payments });
-  } catch (error) {
-    console.error("Get my payments error:", error);
-    return res.status(500).json({ success: false, message: "Terjadi kesalahan pada server" });
-  }
+  const { items, meta } = await paymentService.listMyPayments(currentUserId(req), matchedData<MyPaymentFilters>(req));
+  return res.json({ success: true, data: items, meta });
+}
+
+export async function show(req: Request, res: Response) {
+  const { id } = matchedData<{ id: number }>(req);
+  const data = await paymentService.getMyPayment(currentUserId(req), id);
+  return res.json({ success: true, data });
+}
+
+export async function invoicePdf(req: Request, res: Response) {
+  const { id, download } = matchedData<{ id: number; download?: boolean }>(req);
+  const invoice = await paymentService.getMyInvoice(currentUserId(req), id);
+  sendInvoicePdf(res, invoice, download);
 }
 
 export async function uploadProof(req: Request, res: Response) {
-  try {
-    const id = parseInt(req.params.id as string);
+  const { id } = matchedData<{ id: number }>(req);
+  if (!req.file) throw PaymentErrors.proofRequired();
 
-    if (!req.file) {
-      return res.status(400).json({ success: false, message: "Bukti pembayaran wajib diunggah" });
-    }
+  const proofPath = toPublicUploadPath(PAYMENT_PROOF_UPLOAD_FOLDER, req.file.filename);
+  const data = await withUploadCleanup(proofPath, () =>
+    paymentService.submitPaymentProof(currentUserId(req), id, proofPath)
+  );
 
-    const proofImagePath = `/uploads/payment-proofs/${req.file.filename}`;
-    const payment = await paymentService.attachPaymentProof(req.user!.userId, id, proofImagePath);
-
-    return res.json({ success: true, message: "Bukti pembayaran berhasil diunggah", data: payment });
-  } catch (error: any) {
-    if (error.message === "PAYMENT_NOT_FOUND") {
-      return res.status(404).json({ success: false, message: "Tagihan tidak ditemukan" });
-    }
-    console.error("Upload payment proof error:", error);
-    return res.status(500).json({ success: false, message: "Terjadi kesalahan pada server" });
-  }
+  return res.json({ success: true, message: "Bukti pembayaran berhasil diunggah", data });
 }

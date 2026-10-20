@@ -69,6 +69,11 @@ enum RelatedEntity {
   placement
 }
 
+enum TeamMemberType {
+  expert
+  team
+}
+
 model User {
   id              Int       @id @default(autoincrement())
   email           String    @unique
@@ -208,20 +213,6 @@ model ServiceView {
   @@map("service_views")
 }
 
-model HeroSlide {
-  id        Int      @id @default(autoincrement())
-  title     String
-  subtitle  String?
-  image     String
-  ctaText   String?  @map("cta_text")
-  ctaLink   String?  @map("cta_link")
-  order     Int      @default(0)
-  isActive  Boolean  @default(true) @map("is_active")
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  @@map("hero_slides")
-}
 
 model Gallery {
   id          Int       @id @default(autoincrement())
@@ -240,16 +231,18 @@ model Gallery {
 }
 
 model TeamMember {
-  id        Int      @id @default(autoincrement())
+  id        Int            @id @default(autoincrement())
+  type      TeamMemberType @default(expert)
   name      String
   position  String
-  bio       String?  @db.Text
+  bio       String?        @db.Text
   image     String?
-  order     Int      @default(0)
-  isActive  Boolean  @default(true) @map("is_active")
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  order     Int            @default(0)
+  isActive  Boolean        @default(true) @map("is_active")
+  createdAt DateTime       @default(now()) @map("created_at")
+  updatedAt DateTime       @updatedAt @map("updated_at")
 
+  @@index([type, isActive, order])
   @@map("team_members")
 }
 
@@ -267,96 +260,6 @@ model Testimonial {
   @@map("testimonials")
 }
 
-model Client {
-  id         Int      @id @default(autoincrement())
-  name       String
-  logo       String
-  website    String?
-  isFeatured Boolean  @default(false) @map("is_featured")
-  createdAt  DateTime @default(now()) @map("created_at")
-  updatedAt  DateTime @updatedAt @map("updated_at")
-
-  @@map("clients")
-}
-
-model Visitor {
-  id        Int       @id @default(autoincrement())
-  ipAddress String    @map("ip_address")
-  userAgent String    @map("user_agent") @db.Text
-  visits    Int       @default(0)
-  lastVisit DateTime? @map("last_visit")
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @updatedAt @map("updated_at")
-
-  @@map("visitors")
-}
-
-model Setting {
-  id        Int      @id @default(autoincrement())
-  key       String   @unique
-  value     Json?
-  type      String   @default("text")
-  group     String   @default("general")
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  @@map("settings")
-}
-
-model UniversityPartner {
-  id           Int      @id @default(autoincrement())
-  name         String
-  logo         String?
-  location     String
-  studentCount Int      @default(0) @map("student_count")
-  isActive     Boolean  @default(true) @map("is_active")
-  order        Int      @default(0)
-  createdAt    DateTime @default(now()) @map("created_at")
-  updatedAt    DateTime @updatedAt @map("updated_at")
-
-  @@map("university_partners")
-}
-
-model Company {
-  id            Int      @id @default(autoincrement())
-  name          String
-  logo          String?
-  website       String?
-  industry      String
-  employeeCount String?  @map("employee_count")
-  location      String
-  description   String   @db.Text
-  isActive      Boolean  @default(true) @map("is_active")
-  createdAt     DateTime @default(now()) @map("created_at")
-  updatedAt     DateTime @updatedAt @map("updated_at")
-
-  jobs Job[]
-
-  @@map("companies")
-}
-
-model Job {
-  id               Int      @id @default(autoincrement())
-  companyId        Int      @map("company_id")
-  company          Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  title            String
-  type             String
-  location         String
-  salaryMin        Decimal? @map("salary_min") @db.Decimal(12, 2)
-  salaryMax        Decimal? @map("salary_max") @db.Decimal(12, 2)
-  description      String   @db.Text
-  responsibilities Json
-  requirements     Json
-  benefits         Json
-  howToApply       String   @map("how_to_apply") @db.Text
-  isActive         Boolean  @default(true) @map("is_active")
-  order            Int      @default(0)
-  postedAt         DateTime @map("posted_at")
-  createdAt        DateTime @default(now()) @map("created_at")
-  updatedAt        DateTime @updatedAt @map("updated_at")
-
-  @@map("job")
-}
 
 model ProgramCategory {
   id          Int      @id @default(autoincrement())
@@ -520,6 +423,7 @@ model Payment {
   installmentAmounts       Json?         @map("installment_amounts")
   currentInstallmentNumber Int           @default(0) @map("current_installment_number")
   nextDueDate              DateTime?     @map("next_due_date") @db.Date
+  issuedAt                 DateTime?     @map("issued_at")
 
   paymentHistory PaymentHistory[]
 

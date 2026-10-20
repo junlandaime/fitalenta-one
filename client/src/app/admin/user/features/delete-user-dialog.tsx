@@ -12,8 +12,8 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { useDeleteAdminUser } from "@/hooks/use-admin-users";
-import type { AdminUser } from "@/types/admin-user";
+import { useDeleteAdminUser } from "@/hooks/admin/use-admin-users";
+import type { AdminUser } from "@/types/admin/admin-user";
 
 type DeleteUserDialogProps = {
     user: AdminUser;
@@ -48,7 +48,6 @@ export function DeleteUserDialog({ user, onClose, onDeleted }: DeleteUserDialogP
                         variant="destructive"
                         disabled={remove.isPending}
                         onClick={(event) => {
-                            // tetap terbuka sampai request selesai agar error bisa ditampilkan
                             event.preventDefault();
                             remove.mutate(user.id, { onSuccess: () => onDeleted(user) });
                         }}

@@ -4,7 +4,7 @@ import { ArrowLeft, CheckCircle2, ShieldCheck, UserPlus } from "lucide-react";
 import { RegisterForm } from "../features/register-form";
 
 export const metadata: Metadata = {
-    title: "Registrasi | FITALENTA",
+    title: "Registrasi - FITALENTA",
 };
 
 const highlights = [

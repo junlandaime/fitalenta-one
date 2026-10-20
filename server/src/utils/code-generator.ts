@@ -6,6 +6,8 @@ import {
   REGISTRATION_TIMEZONE_OFFSET_HOURS,
 } from "../config/registration.config";
 
+import { RECEIPT_CODE_FORMAT } from "../config/payment.config";
+
 type Db = Prisma.TransactionClient;
 
 function periodKey(format: CodeFormat, date: Date): string {
@@ -46,5 +48,16 @@ export function nextInvoiceNumber(db: Db, date = new Date()): Promise<string> {
       select: { invoiceNumber: true },
     });
     return latest?.invoiceNumber ?? null;
+  });
+}
+
+export function nextReceiptNumber(db: Db, date = new Date()): Promise<string> {
+  return nextSequentialCode(RECEIPT_CODE_FORMAT, date, async (prefix) => {
+    const latest = await db.payment.findFirst({
+      where: { receiptNumber: { startsWith: prefix } },
+      orderBy: { receiptNumber: "desc" },
+      select: { receiptNumber: true },
+    });
+    return latest?.receiptNumber ?? null;
   });
 }

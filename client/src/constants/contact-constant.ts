@@ -26,7 +26,6 @@ const contact: ContactInfo = {
     ],
 };
 
-// Ganti dengan fetch ke CMS/API Anda.
 export async function getContactMock(): Promise<ContactInfo> {
     return contact;
 }

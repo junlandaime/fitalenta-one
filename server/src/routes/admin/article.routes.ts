@@ -1,12 +1,11 @@
 import { Router } from "express";
 import * as adminArticleController from "../../controllers/admin/article.controller";
-import { authenticate } from "../../middlewares/authenticate";
-import { authorize } from "../../middlewares/authorize";
+import { cmsAccess } from "../../middlewares/access";
 import { uploadArticleImage } from "../../middlewares/upload";
 
 const router = Router();
 
-router.use(authenticate, authorize("admin", "editor"));
+router.use(...cmsAccess);
 
 router.get("/", adminArticleController.index);
 router.get("/:id", adminArticleController.show);

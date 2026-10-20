@@ -6,11 +6,11 @@ import { usePathname } from "next/navigation";
 import { ExternalLink, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { getAdminPageTitle } from "@/constants/admin-nav";
+import { ADMIN_AREA, getAdminPageTitle, type AdminAreaConfig } from "@/constants/admin/admin-nav";
 import type { AuthUser } from "@/store/auth-store";
 import { AdminSidebarContent } from "./admin-sidebar";
 
-export function AdminHeader({ user }: { user: AuthUser }) {
+export function AdminHeader({ user, area = ADMIN_AREA }: { user: AuthUser; area?: AdminAreaConfig }) {
     const pathname = usePathname();
     const [menuOpen, setMenuOpen] = useState(false);
 
@@ -24,14 +24,14 @@ export function AdminHeader({ user }: { user: AuthUser }) {
                 </SheetTrigger>
                 <SheetContent side="left" className="gap-0 bg-sidebar p-0 text-sidebar-foreground sm:max-w-72">
                     <SheetHeader className="sr-only">
-                        <SheetTitle>Menu admin</SheetTitle>
+                        <SheetTitle>Menu {area.areaLabel}</SheetTitle>
                         <SheetDescription>Navigasi halaman panel admin</SheetDescription>
                     </SheetHeader>
-                    <AdminSidebarContent user={user} onNavigate={() => setMenuOpen(false)} />
+                    <AdminSidebarContent user={user} area={area} onNavigate={() => setMenuOpen(false)} />
                 </SheetContent>
             </Sheet>
 
-            <h1 className="text-base font-medium">{getAdminPageTitle(pathname)}</h1>
+            <h1 className="text-base font-medium">{getAdminPageTitle(pathname, area.nav)}</h1>
 
             <Button asChild variant="ghost" size="sm" className="ml-auto hidden sm:inline-flex">
                 <Link href="/">

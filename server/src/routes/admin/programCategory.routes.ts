@@ -1,12 +1,21 @@
 import { Router } from "express";
-import * as adminProgramCategoryController from "../../controllers/admin/programCategory.controller";
-import { authenticate } from "../../middlewares/authenticate";
-import { authorize } from "../../middlewares/authorize";
+import * as programCategoryController from "../../controllers/admin/programCategory.controller";
+import { superAdminAccess } from "../../middlewares/access";
+import { validate } from "../../middlewares/validate";
+import {
+  createProgramCategoryRules,
+  listProgramCategoryRules,
+  programCategoryIdRules,
+  updateProgramCategoryRules,
+} from "../../validators/programCategory.validator";
 
 const router = Router();
-router.use(authenticate, authorize("admin", "editor"));
-router.get("/", adminProgramCategoryController.index);
-router.post("/", adminProgramCategoryController.store);
-router.put("/:id", adminProgramCategoryController.update);
-router.delete("/:id", adminProgramCategoryController.destroy);
+
+router.use(...superAdminAccess);
+router.get("/", validate(listProgramCategoryRules), programCategoryController.index);
+router.post("/", validate(createProgramCategoryRules), programCategoryController.store);
+router.get("/:id", validate(programCategoryIdRules), programCategoryController.show);
+router.put("/:id", validate(updateProgramCategoryRules), programCategoryController.update);
+router.delete("/:id", validate(programCategoryIdRules), programCategoryController.destroy);
+
 export default router;

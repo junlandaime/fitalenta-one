@@ -38,3 +38,11 @@ export const REGISTRATION_ALLOWED_MIME_TYPES = [
   "image/webp",
   "application/pdf",
 ];
+
+/** Biaya pendaftaran untuk setiap program (Rp 300.000) */
+export const REGISTRATION_FEE = {
+  amount: 300_000,
+  description: (programName: string) => `Biaya pendaftaran program ${programName}`,
+  defaultNotes: (programName: string) =>
+    `Biaya pendaftaran program ${programName}. Pembayaran ini merupakan biaya pendaftaran awal dan administrasi seleksi peserta.`,
+} as const;

@@ -7,14 +7,14 @@ import { CircleAlert, Loader2, Save } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { INSTALLMENT_PLANS, PROGRAM_STATUS_OPTIONS } from "@/constants/admin-program-constant";
-import { createEmptyProgramForm, toProgramFormValues } from "@/helpers/admin-program-helper";
+import { INSTALLMENT_PLANS, PROGRAM_STATUS_OPTIONS } from "@/constants/admin/admin-program-constant";
+import { createEmptyProgramForm, toProgramFormValues } from "@/helpers/admin/admin-program-helper";
 import { installmentLabel } from "@/helpers/program-helper";
-import { focusFirstInvalidField } from "@/helpers/registration-helper";
-import { useSaveAdminProgram } from "@/hooks/use-admin-programs";
+import { focusFirstInvalidField } from "@/helpers/user/registration-helper";
+import { useSaveAdminProgram } from "@/hooks/admin/use-admin-programs";
 import { useProgramForm, type ProgramFormErrors } from "@/hooks/use-program-form";
-import { buildProgramSchema, type ProgramFormValues } from "@/schemas/admin-program";
-import type { AdminProgramDetail, AdminProgramOptions } from "@/types/admin-program";
+import { buildProgramSchema, type ProgramFormValues } from "@/schemas/admin/admin-program";
+import type { AdminProgramDetail, AdminProgramOptions } from "@/types/admin/admin-program";
 import { CheckboxField, NumberField, SelectField, TextareaField, TextField } from "./program-form-fields";
 
 const PAIR = "grid gap-4 sm:grid-cols-2";
@@ -33,7 +33,6 @@ function FormCard({ title, description, children }: { title: string; description
 }
 
 type ProgramFormProps = {
-    /** Program yang diedit; kosong untuk program baru. */
     program?: AdminProgramDetail;
     options: AdminProgramOptions;
 };
@@ -48,7 +47,6 @@ export function ProgramForm({ program, options }: ProgramFormProps) {
         label: category.name,
     }));
 
-    // skema yang tersimpan di program lama ikut ditampilkan meski tidak ada di daftar umum
     const installmentOptions = [...new Set([...INSTALLMENT_PLANS, form.values.installmentPlan])].map((plan) => ({
         value: plan,
         label: installmentLabel(plan),

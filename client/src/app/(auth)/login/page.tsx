@@ -1,10 +1,11 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { ArrowLeft, CheckCircle2, ShieldCheck, UserRound } from "lucide-react";
+import { resolveLoginNotice } from "@/constants/auth-constant";
 import { LoginForm } from "../features/login-form";
 
 export const metadata: Metadata = {
-    title: "Login | FITALENTA",
+    title: "Login - FITALENTA",
 };
 
 const highlights = [
@@ -22,7 +23,11 @@ const highlights = [
     },
 ];
 
-export default function LoginPage() {
+type Props = { searchParams: Promise<{ registered?: string; verified?: string; reset?: string }> };
+
+export default async function LoginPage({ searchParams }: Props) {
+    const notice = resolveLoginNotice(await searchParams);
+
     return (
         <main className="grid min-h-svh lg:grid-cols-2">
             <section className="relative isolate hidden overflow-hidden bg-primary px-10 py-12 text-primary-foreground lg:flex lg:flex-col lg:justify-between xl:px-16">
@@ -100,7 +105,7 @@ export default function LoginPage() {
                         </p>
 
                         <div className="mt-8">
-                            <LoginForm />
+                            <LoginForm notice={notice} />
                         </div>
                     </div>
 

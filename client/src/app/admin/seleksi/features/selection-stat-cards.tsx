@@ -1,6 +1,6 @@
 import { Building2, CircleCheck, Hourglass, Users } from "lucide-react";
 import { AdminStatCard } from "@/components/admin/admin-stat-card";
-import type { SelectionPlacementSummary } from "@/types/selection-placement";
+import type { SelectionPlacementSummary } from "@/types/admin/selection-placement";
 
 export function SelectionStatCards({ summary }: { summary?: SelectionPlacementSummary }) {
     return (

@@ -1,32 +1,23 @@
 import Image from "next/image";
-import { imageUrl } from "@/lib/utils";
-import { safely } from "@/lib/utils";
-import { getPartners } from "@/services/partner-service";
-import type { Partner } from "@/types/partner";
+import { partners, type Partner } from "@/lib/data/partners";
 
 const MIN_ITEMS_PER_SET = 8;
 const SPLIT_THRESHOLD = 10;
 
 function PartnerCard({ partner }: { partner: Partner }) {
-    const logo = imageUrl(partner.logo);
 
     return (
-        <div className="flex h-24 w-44 items-center justify-center border border-[#10302B]/15 bg-white p-3 sm:h-28 sm:w-56 sm:p-4">
-            {logo ? (
-                <div className="relative h-full w-full">
-                    <Image
-                        src={logo}
-                        alt={partner.name}
-                        fill
-                        sizes="(min-width: 640px) 192px, 152px"
-                        className="object-contain grayscale transition hover:opacity-100 hover:grayscale-0"
-                    />
-                </div>
-            ) : (
-                <span className="text-center text-base font-semibold text-[#10302B]/60 sm:text-lg">
-                    {partner.name}
-                </span>
-            )}
+        <div className="flex h-24 w-44 items-center justify-center border border-[#10302B]/15 rounded-md bg-white p-3 sm:h-28 sm:w-56 sm:p-4">
+            <div className="relative h-full w-full">
+                <Image
+                    src={partner.logo}
+                    alt={partner.name}
+                    fill
+                    unoptimized
+                    sizes="(min-width: 640px) 192px, 152px"
+                    className="object-contain"
+                />
+            </div>
         </div>
     );
 }
@@ -50,7 +41,7 @@ function MarqueeRow({
                 style={{ animationDuration: `${duration}s` }}
             >
                 {set.map((partner, index) => (
-                    <div key={`${partner.id}-${index}`} className="shrink-0 pr-4">
+                    <div key={`${partner.name}-${index}`} className="shrink-0 pr-4">
                         <PartnerCard partner={partner} />
                     </div>
                 ))}
@@ -64,8 +55,7 @@ function MarqueeRow({
     );
 }
 
-export async function PartnersSection() {
-    const partners = await safely(getPartners, [], "partners");
+export function PartnersSection() {
     if (partners.length === 0) return null;
 
     const splitAt = Math.ceil(partners.length / 2);

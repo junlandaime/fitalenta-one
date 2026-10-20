@@ -6,7 +6,7 @@ import { ArrowLeft, CircleAlert } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useAdminParticipant } from "@/hooks/use-admin-selection-placements";
+import { useAdminParticipant } from "@/hooks/admin/use-admin-selection-placements";
 import { ParticipantCard } from "./participant-card";
 import { SelectionForm } from "./selection-form";
 

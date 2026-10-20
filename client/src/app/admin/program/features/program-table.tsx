@@ -4,19 +4,17 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { PROGRAM_STATUS_META } from "@/constants/admin-program-constant";
+import { PROGRAM_STATUS_META } from "@/constants/admin/admin-program-constant";
 import { cn, formatIDR } from "@/lib/utils";
-import type { AdminProgram } from "@/types/admin-program";
+import type { AdminProgram } from "@/types/admin/admin-program";
 import { QuotaBar } from "./quota-bar";
 
 const COLUMNS = ["Program", "Kategori", "Durasi", "Kuota", "Biaya", "Status", "Aksi"];
 
-// Tabel full-width di dalam card, jadi kolom pertama & terakhir diberi jarak tepi.
 const EDGE = "first:pl-(--card-spacing) last:pr-(--card-spacing)";
 
 type ProgramTableProps = {
     programs?: AdminProgram[];
-    /** Data lama masih ditampilkan sementara data baru dimuat. */
     stale?: boolean;
     onDelete: (program: AdminProgram) => void;
 };
@@ -90,10 +88,12 @@ export function ProgramTable({ programs, stale, onDelete }: ProgramTableProps) {
                                 </TableCell>
                                 <TableCell className={EDGE}>
                                     <div className="flex flex-col items-start gap-1">
-                                        <Badge variant={status.variant}>{status.label}</Badge>
+                                        <Badge className={status.className}>
+                                            {status.label}
+                                        </Badge>
                                         {program.isRunning && (
                                             <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                                                <span className="size-1.5 rounded-full bg-primary" aria-hidden />
+                                                <span className="size-1.5 rounded-full bg-green-400" aria-hidden />
                                                 Sedang berjalan
                                             </span>
                                         )}

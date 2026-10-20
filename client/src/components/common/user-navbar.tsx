@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronDown, LogOut, User } from "lucide-react";
+import { useState } from "react";
+import { ChevronDown, KeyRound, LogOut, User, UserRound } from "lucide-react";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
@@ -14,15 +15,18 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+import { ChangePasswordSheet } from "./change-password-sheet";
 import { Logo } from "./logo";
+import { NotificationBell } from "./notification-bell";
 import { cn } from "@/lib/utils";
-import { useCurrentUser } from "@/hooks/use-current-user";
+import { useCurrentUser } from "@/hooks/auth/use-current-user";
+import { useLogout } from "@/hooks/auth/use-logout";
 
 const LINKS = [
-    { href: "/dashboard", label: "Dashboard" },
+    { href: "/user/dashboard", label: "Dashboard" },
     { href: "/programs", label: "Program" },
-    { href: "/pendaftaran", label: "Pendaftaran" },
-    { href: "/pembayaran", label: "Pembayaran" },
+    { href: "/user/pendaftaran", label: "Pendaftaran" },
+    { href: "/user/pembayaran", label: "Pembayaran" },
 ];
 
 function isActive(pathname: string, href: string) {
@@ -32,6 +36,8 @@ function isActive(pathname: string, href: string) {
 export function UserNavbar() {
     const pathname = usePathname();
     const { data } = useCurrentUser();
+    const logout = useLogout();
+    const [passwordOpen, setPasswordOpen] = useState(false);
 
     return (
         <header className="sticky top-0 z-50 border-b border-[#10302B]/10 bg-primary text-white">
@@ -64,6 +70,8 @@ export function UserNavbar() {
                             );
                         })}
                     </nav>
+
+                    <NotificationBell />
 
                     <DropdownMenu>
                         <DropdownMenuTrigger
@@ -115,7 +123,23 @@ export function UserNavbar() {
 
                             <DropdownMenuSeparator className="lg:hidden" />
 
-                            <DropdownMenuItem variant="destructive">
+                            <DropdownMenuItem asChild>
+                                <Link href="/user/profil">
+                                    <UserRound aria-hidden />
+                                    Profil saya
+                                </Link>
+                            </DropdownMenuItem>
+
+                            <DropdownMenuItem onSelect={() => setPasswordOpen(true)}>
+                                <KeyRound aria-hidden />
+                                Ubah password
+                            </DropdownMenuItem>
+
+                            <DropdownMenuItem
+                                variant="destructive"
+                                disabled={logout.isPending}
+                                onSelect={() => logout.mutate()}
+                            >
                                 <LogOut aria-hidden />
                                 Keluar
                             </DropdownMenuItem>
@@ -123,6 +147,8 @@ export function UserNavbar() {
                     </DropdownMenu>
                 </div>
             </div>
+
+            {passwordOpen && <ChangePasswordSheet onClose={() => setPasswordOpen(false)} />}
         </header>
     );
 }

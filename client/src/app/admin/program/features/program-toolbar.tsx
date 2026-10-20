@@ -3,8 +3,8 @@
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { PROGRAM_STATUS_OPTIONS, RUNNING_FILTER_OPTIONS } from "@/constants/admin-program-constant";
-import type { AdminProgramOptions, AdminProgramParams } from "@/types/admin-program";
+import { PROGRAM_STATUS_OPTIONS, RUNNING_FILTER_OPTIONS } from "@/constants/admin/admin-program-constant";
+import type { AdminProgramOptions, AdminProgramParams } from "@/types/admin/admin-program";
 
 type ProgramToolbarProps = {
     search: string;

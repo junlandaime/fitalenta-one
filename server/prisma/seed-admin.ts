@@ -53,6 +53,7 @@ async function seedAdmins() {
       name: admin.name,
       phone: admin.phone ?? null,
       role: admin.role,
+      emailVerifiedAt: new Date(),
     };
 
     if (existing) {

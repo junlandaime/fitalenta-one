@@ -4,7 +4,8 @@
   "main": "dist/index.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "build": "tsc",
+    "build": "npm run typecheck && esbuild src/index.ts --bundle --platform=node --format=esm --packages=external --outfile=dist/index.js",
+    "typecheck": "tsc",
     "start": "node dist/index.js",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
@@ -15,7 +16,10 @@
     "seed:testimonials": "tsx prisma/seed-testimonials-clients-services.ts",
     "seed:team": "tsx prisma/seed-team-members.ts",
     "seed:featured": "tsx prisma/seed-featured.ts",
-    "seed:all": "tsx prisma/seed-admin.ts && tsx prisma/seed-programs.ts && tsx prisma/seed-events-articles.ts && tsx prisma/seed-testimonials-clients-services.ts && tsx prisma/seed-team-members.ts && tsx prisma/seed-featured.ts"
+    "seed:all": "tsx prisma/seed-admin.ts && tsx prisma/seed-programs.ts && tsx prisma/seed-events-articles.ts && tsx prisma/seed-testimonials-clients-services.ts && tsx prisma/seed-team-members.ts && tsx prisma/seed-featured.ts",
+    "migrate:participants": "tsx src/scripts/migrate-participants.ts",
+    "reset:passwords": "tsx src/scripts/reset-participant-passwords.ts",
+    "verify:passwords": "tsx src/scripts/verify-participant-passwords.ts"
   },
   "author": "fitalenta-dev",
   "license": "ISC",
@@ -51,6 +55,7 @@
     "@types/node": "^26.6.2",
     "@types/nodemailer": "^8.0.2",
     "@types/pdfkit": "^0.17.6",
+    "esbuild": "^0.28.2",
     "prisma": "^7.10.0",
     "tsx": "^4.23.15",
     "typescript": "^5.9.3"

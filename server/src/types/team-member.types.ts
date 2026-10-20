@@ -1,31 +1,11 @@
+import type { TeamMemberType } from "../../generated/prisma/client";
 import { PaginationMeta, PaginationQuery } from "../utils/pagination";
 
-export interface AboutDocument {
-  hero: { title: string; subtitle: string };
-  story: { paragraphs: string[]; image: string | null };
-  vision: string;
-  missions: string[];
-  journey: { year: string; text: string }[];
-  values: { icon: string; title: string; desc: string }[];
-  director: string | null;
-  team: string | null;
-}
+export type { TeamMemberType };
 
-export interface AboutContent extends AboutDocument {
-  updatedAt: Date | null;
-}
-
-export interface AboutUpdateInput {
-  hero?: { title?: string; subtitle?: string };
-  story?: { paragraphs?: string[] };
-  vision?: string;
-  missions?: string[];
-  journey?: { year: string; text: string }[];
-  values?: { icon: string; title: string; desc: string }[];
-}
-
-export interface ExpertItem {
+export interface MemberItem {
   id: number;
+  type: TeamMemberType;
   name: string;
   position: string;
   bio: string | null;
@@ -36,24 +16,24 @@ export interface ExpertItem {
   updatedAt: Date;
 }
 
-export interface ExpertListFilters extends PaginationQuery {
+export interface MemberListFilters extends PaginationQuery {
   search?: string;
   isActive?: boolean;
 }
 
-export interface ExpertSummary {
+export interface MemberSummary {
   total: number;
   active: number;
   inactive: number;
 }
 
-export interface ExpertListResult {
-  items: ExpertItem[];
+export interface MemberListResult {
+  items: MemberItem[];
   meta: PaginationMeta;
-  summary: ExpertSummary;
+  summary: MemberSummary;
 }
 
-export interface CreateExpertInput {
+export interface CreateMemberInput {
   name: string;
   position: string;
   bio?: string;
@@ -61,7 +41,7 @@ export interface CreateExpertInput {
   isActive?: boolean;
 }
 
-export interface UpdateExpertInput {
+export interface UpdateMemberInput {
   name?: string;
   position?: string;
   bio?: string;
@@ -70,7 +50,17 @@ export interface UpdateExpertInput {
   removeImage?: boolean;
 }
 
-export interface TeamMemberCms {
-  expert: ExpertListResult;
-  team_member: AboutContent;
+export interface PublicMemberItem {
+  id: number;
+  name: string;
+  position: string;
+  bio: string | null;
+  image: string | null;
 }
+
+export type ExpertItem = MemberItem;
+export type ExpertListFilters = MemberListFilters;
+export type ExpertSummary = MemberSummary;
+export type ExpertListResult = MemberListResult;
+export type CreateExpertInput = CreateMemberInput;
+export type UpdateExpertInput = UpdateMemberInput;

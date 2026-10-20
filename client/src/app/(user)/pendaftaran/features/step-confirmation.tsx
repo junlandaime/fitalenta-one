@@ -8,11 +8,11 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { GENDERS } from "@/constants/registration-constant";
 import { quotaLabel } from "@/helpers/program-helper";
-import { getProgramFacts } from "@/helpers/registration-helper";
+import { getProgramFacts } from "@/helpers/user/registration-helper";
 import { formatDate } from "@/lib/utils";
 import { useRegistrationStore } from "@/store/registration-store";
 import type { Program } from "@/types/program";
-import type { RegistrationAddress } from "@/types/registration";
+import type { RegistrationAddress } from "@/types/user/registration";
 import { ReviewItem, ReviewSection } from "./review-section";
 
 const formatAddress = ({ detail, cityName, provinceName }: RegistrationAddress) =>

@@ -26,7 +26,15 @@ export async function getDashboardSummary(userId: number) {
         payments: {
           orderBy: { createdAt: "desc" },
           take: 1,
-          select: { status: true, amount: true, amountPaid: true, dueDate: true },
+          select: {
+            id: true,
+            invoiceNumber: true,
+            status: true,
+            amount: true,
+            amountPaid: true,
+            dueDate: true,
+            notes: true,
+          },
         },
       },
     }),
@@ -57,10 +65,13 @@ export async function getDashboardSummary(userId: number) {
       : null,
     payment: latestPayment
       ? {
+          id: latestPayment.id,
+          invoiceNumber: latestPayment.invoiceNumber,
           status: latestPayment.status,
           amount: latestPayment.amount,
           amountPaid: latestPayment.amountPaid,
           dueDate: latestPayment.dueDate,
+          notes: latestPayment.notes,
         }
       : null,
     unreadNotifications,

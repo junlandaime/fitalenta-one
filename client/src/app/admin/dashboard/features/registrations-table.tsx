@@ -3,13 +3,13 @@ import { Eye, FileText, Mail, Pencil, Phone, RefreshCw, Users } from "lucide-rea
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { INTERVIEW_STATUS, PAYMENT_STATUS, PLACEMENT_STATUS, SELECTION_STATUS } from "@/constants/admin-status";
+import { INTERVIEW_STATUS, PAYMENT_STATUS, PLACEMENT_STATUS, SELECTION_STATUS } from "@/constants/admin/admin-status";
 import { formatIDR } from "@/lib/utils";
-import type { AdminRegistrationListItem, PaginationMeta } from "@/types/admin-dashboard";
+import type { AdminRegistrationListItem, PaginationMeta } from "@/types/admin/admin-dashboard";
 import { StatusBadge, ToneBadge } from "./status-badge";
 import { EmptyRow } from "./table-card";
+import { ParticipantAvatar } from "../../../../components/admin/participant-avatar";
 
-// ASUMSI rute FE, sesuaikan dengan halaman detail/edit yang ada.
 const detailHref = (id: number) => `/admin/seleksi/${id}`;
 const editHref = (id: number) => `/admin/seleksi/${id}?mode=edit`;
 
@@ -31,22 +31,14 @@ function formatDateTime(value: string) {
     return `${dateFmt.format(date)} pukul ${timeFmt.format(date)}`;
 }
 
-function initials(name: string) {
-    return name
-        .split(/\s+/)
-        .filter(Boolean)
-        .slice(0, 2)
-        .map((w) => w[0]?.toUpperCase())
-        .join("");
-}
-
 function ParticipantCell({ participant }: { participant: AdminRegistrationListItem["participant"] }) {
     return (
         <div className="flex items-center gap-3">
-            {/* photoPath belum dipakai: butuh base URL file dari BE */}
-            <div className="flex size-10 shrink-0 items-center justify-center rounded-lg border bg-indigo-50 text-xs font-bold text-indigo-600 dark:bg-indigo-950">
-                {initials(participant.name) || "?"}
-            </div>
+            <ParticipantAvatar
+                key={`${participant.name}-${participant.photoPath ?? ""}`}
+                name={participant.name}
+                photoPath={participant.photoPath}
+            />
             <div className="min-w-0 space-y-0.5">
                 <div className="truncate text-sm font-semibold">{participant.name}</div>
                 <div className="flex items-center gap-1 text-[11px] text-muted-foreground">

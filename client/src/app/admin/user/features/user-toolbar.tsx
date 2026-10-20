@@ -3,8 +3,8 @@
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ROLE_FILTER_OPTIONS } from "@/constants/admin-user-constant";
-import type { AdminUserParams } from "@/types/admin-user";
+import { ROLE_FILTER_OPTIONS } from "@/constants/admin/admin-user-constant";
+import type { AdminUserParams } from "@/types/admin/admin-user";
 
 type UserToolbarProps = {
     search: string;

@@ -1,5 +1,6 @@
 import prisma from "../config/prisma";
 import resend from "../config/resend";
+import { renderContactEmail } from "../utils/templates/email/contactEmail";
 
 interface ContactInput {
   name: string;
@@ -13,21 +14,15 @@ interface ContactInput {
 export async function submitContactMessage(data: ContactInput) {
   const contactMessage = await prisma.contactMessage.create({ data });
 
+  const { html, text } = renderContactEmail(data);
+
   await resend.emails.send({
     from: process.env.CONTACT_EMAIL_FROM as string,
     to: process.env.CONTACT_EMAIL_TO as string,
     replyTo: data.email,
     subject: `[Contact Form] ${data.subject}`,
-    html: `
-      <h2>Pesan Baru dari Website</h2>
-      <p><strong>Nama:</strong> ${data.name}</p>
-      <p><strong>Email:</strong> ${data.email}</p>
-      ${data.phone ? `<p><strong>Telepon:</strong> ${data.phone}</p>` : ""}
-      ${data.company ? `<p><strong>Perusahaan:</strong> ${data.company}</p>` : ""}
-      <p><strong>Subjek:</strong> ${data.subject}</p>
-      <p><strong>Pesan:</strong></p>
-      <p>${data.message.replace(/\n/g, "<br>")}</p>
-    `,
+    html,
+    text,
   });
 
   return contactMessage;

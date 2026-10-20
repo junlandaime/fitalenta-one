@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
 import { Badge } from "@/components/ui/badge";
-import { getStatus, PAYMENT_METHOD_LABEL, TONE_CLASS, type StatusKind } from "@/constants/dashboard-constant";
+import { getStatus, PAYMENT_METHOD_LABEL, TONE_CLASS, type StatusKind } from "@/constants/user/dashboard-constant";
 import { cn } from "@/lib/utils";
-import type { DashboardData } from "@/types/dashboard";
+import type { DashboardData } from "@/types/user/dashboard";
 
 function StatusBadge({ value, kind }: { value?: string | null; kind: StatusKind }) {
     const status = getStatus(value, kind);
@@ -31,8 +31,8 @@ export function RegistrationDetail({ data }: { data: DashboardData }) {
                 <span className="font-mono">{data.registrationCode ?? "-"}</span>
             </Item>
             <Item label="Status Pendaftaran"><StatusBadge kind="registration" value={data.registrationStatus} /></Item>
-            <Item label="Status Seleksi"><StatusBadge kind="registration" value={data.selectionStatus} /></Item>
-            <Item label="Status Penempatan"><StatusBadge kind="placement" value={data.placementStatus} /></Item>
+            <Item label="Status Seleksi"><StatusBadge kind="registration" value={data.selectionStatus?.status} /></Item>
+            <Item label="Status Penempatan"><StatusBadge kind="placement" value={data.placementStatus?.status} /></Item>
             <Item label="Pembayaran"><StatusBadge kind="payment" value={data.payment?.status} /></Item>
             {data.payment?.method && (
                 <Item label="Metode Pembayaran">

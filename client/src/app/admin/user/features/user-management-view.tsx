@@ -13,10 +13,10 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import { useAdminUsers, useAdminUserSummary } from "@/hooks/use-admin-users";
-import { useCurrentUser } from "@/hooks/use-current-user";
+import { useAdminUsers, useAdminUserSummary } from "@/hooks/admin/use-admin-users";
+import { useCurrentUser } from "@/hooks/auth/use-current-user";
 import { useDebounced } from "@/hooks/use-debounced";
-import type { AdminUser, AdminUserParams } from "@/types/admin-user";
+import type { AdminUser, AdminUserParams } from "@/types/admin/admin-user";
 import { DeleteUserDialog } from "./delete-user-dialog";
 import { TablePagination } from "./table-pagination";
 import { UserFormSheet } from "./user-form-sheet";

@@ -1,6 +1,6 @@
 import { Ban, CircleCheck, CircleDashed, CircleX, Hourglass, Wallet, type LucideIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import type { StatusMap, StatusTone } from "@/constants/admin-status";
+import type { StatusMap, StatusTone } from "@/constants/admin/admin-status";
 import { cn } from "@/lib/utils";
 
 const TONES: Record<StatusTone, { className: string; Icon: LucideIcon }> = {

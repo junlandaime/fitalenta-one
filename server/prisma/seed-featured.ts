@@ -11,7 +11,7 @@ const adapter = new PrismaMariaDb({
 });
 const prisma = new PrismaClient({ adapter });
 
-const FEATURED_ARTICLE_COUNT = 4; // 1 utama + 3 artikel samping di home
+const FEATURED_ARTICLE_COUNT = 4;
 
 async function main() {
     const latest = await prisma.article.findMany({

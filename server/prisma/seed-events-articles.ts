@@ -111,6 +111,7 @@ async function main() {
 
   let eventCount = 0;
   for (const e of scrapedEvents) {
+    const imagePath = e.image_url ? e.image_url.replace(/^https?:\/\/[^\/]+\/storage\/events\//, "/uploads/events/") : null;
     await prisma.event.create({
       data: {
         title: e.title,
@@ -119,7 +120,7 @@ async function main() {
         eventDate: new Date(e.start_at),
         location: e.location,
         maxParticipants: e.max_participants ?? undefined,
-        image: e.image_url,
+        image: imagePath,
         categoryId: category.id,
         isFeatured: false,
       },
@@ -130,6 +131,7 @@ async function main() {
 
   let articleCount = 0;
   for (const a of scrapedArticles) {
+    const imagePath = a.image_url ? a.image_url.replace(/^https?:\/\/[^\/]+\/storage\/articles\//, "/uploads/articles/") : null;
     await prisma.article.create({
       data: {
         title: a.title,
@@ -137,7 +139,7 @@ async function main() {
         content: a.content_html,
         excerpt: a.excerpt,
         eventDate: new Date(a.published_at),
-        image: a.image_url,
+        image: imagePath,
         categoryId: category.id,
         authorId: author.id,
         isFeatured: false,

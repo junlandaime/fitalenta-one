@@ -33,3 +33,6 @@ coverage/
 
 # Uploaded files (kalau multer simpan lokal)
 uploads/
+
+# Sensitive legacy participant migration data
+prisma/data/legacy-participants.json

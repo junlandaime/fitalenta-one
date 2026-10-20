@@ -10,7 +10,6 @@ type Props = {
 export function StatCard({ icon: Icon, title, value }: Props) {
     return (
         <Card className="relative gap-0 overflow-hidden border-0 bg-linear-to-br from-[#4a64a1] to-[#334d82] py-0 text-white shadow-lg shadow-[#334d82]/20">
-            {/* dekorasi */}
             <div aria-hidden className="pointer-events-none absolute -right-10 -top-10 size-40 rounded-full bg-white/10" />
             <div aria-hidden className="pointer-events-none absolute -bottom-16 right-8 h-32 w-48 rounded-t-full bg-white/10" />
 

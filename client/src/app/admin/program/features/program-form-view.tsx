@@ -5,7 +5,7 @@ import { ArrowLeft, CircleAlert } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useAdminProgram, useAdminProgramOptions } from "@/hooks/use-admin-programs";
+import { useAdminProgram, useAdminProgramOptions } from "@/hooks/admin/use-admin-programs";
 import { ProgramForm } from "./program-form";
 
 function FormSkeleton() {
@@ -24,7 +24,6 @@ function FormSkeleton() {
 }
 
 type ProgramFormViewProps = {
-    /** Kosong untuk program baru. */
     programId?: number;
 };
 

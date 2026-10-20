@@ -18,7 +18,7 @@ export type Program = {
     schedule?: string | null;
     duration?: string | null;
     capacity?: number | null;
-    registeredCount?: number | null;
+    currentParticipants?: number | null;
     status: ProgramStatus;
     isRunning: boolean;
     contactInfo?: string | null;
@@ -41,8 +41,3 @@ export type Program = {
 };
 
 export type ProgramsListData = Program[];
-
-export type ProgramDetailData = {
-    program: Program;
-    relatedPrograms: Program[];
-};

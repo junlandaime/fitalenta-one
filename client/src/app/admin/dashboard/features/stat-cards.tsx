@@ -2,7 +2,7 @@ import type { LucideIcon } from "lucide-react";
 import { Hourglass, UserPlus, Users, Wallet } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { cn, formatIDR } from "@/lib/utils";
-import type { AdminDashboardSummary } from "@/types/admin-dashboard";
+import type { AdminDashboardSummary } from "@/types/admin/admin-dashboard";
 
 const numberFormat = new Intl.NumberFormat("id-ID");
 

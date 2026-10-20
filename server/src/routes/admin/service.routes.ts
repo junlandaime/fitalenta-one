@@ -1,11 +1,11 @@
 import { Router } from "express";
 import * as adminServiceController from "../../controllers/admin/service.controller";
-import { authenticate } from "../../middlewares/authenticate";
-import { authorize } from "../../middlewares/authorize";
+import { cmsAccess } from "../../middlewares/access";
 
 const router = Router();
-router.use(authenticate, authorize("admin", "editor"));
+router.use(...cmsAccess);
 router.get("/", adminServiceController.index);
+router.get("/:id", adminServiceController.show);
 router.post("/", adminServiceController.store);
 router.put("/:id", adminServiceController.update);
 router.delete("/:id", adminServiceController.destroy);

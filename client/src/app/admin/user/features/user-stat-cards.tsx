@@ -2,7 +2,7 @@ import type { LucideIcon } from "lucide-react";
 import { Phone, ShieldCheck, User, Users } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import type { AdminUserSummary } from "@/types/admin-user";
+import type { AdminUserSummary } from "@/types/admin/admin-user";
 
 type StatCardProps = {
     title: string;

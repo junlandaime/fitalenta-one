@@ -1,13 +1,13 @@
 import { Filter, Search } from "lucide-react";
 import { Card } from "@/components/ui/card";
-import { PLACEMENT_STATUS, SELECTION_STATUS, statusLabel, type StatusMap } from "@/constants/admin-status";
-import { PLACEMENT_STATUS_VALUES, SELECTION_STATUS_VALUES } from "@/constants/selection-placement-constant";
+import { PLACEMENT_STATUS, SELECTION_STATUS, statusLabel, type StatusMap } from "@/constants/admin/admin-status";
+import { PLACEMENT_STATUS_VALUES, SELECTION_STATUS_VALUES } from "@/constants/admin/selection-placement-constant";
 import type {
     ParticipantParams,
     PlacementStatus,
     SelectionPlacementOptions,
     SelectionStatus,
-} from "@/types/selection-placement";
+} from "@/types/admin/selection-placement";
 
 const controlClass =
     "h-10 w-full rounded-md border bg-background px-3 text-xs outline-none focus-visible:ring-2 focus-visible:ring-ring/50 disabled:opacity-60";

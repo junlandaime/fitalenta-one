@@ -48,7 +48,7 @@ export function HeroSection() {
                             variant="outline"
                             className="h-12 border-white/30 bg-transparent px-7 text-base font-semibold text-white hover:bg-white/85 hover:text-black"
                         >
-                            <Link href="#contact">
+                            <Link href="/contact">
                                 <MessageCircle className="mr-2 h-4 w-4" aria-hidden />
                                 Free Consultation
                             </Link>

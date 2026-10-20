@@ -5,8 +5,8 @@ import { CircleAlert } from "lucide-react";
 import { LayoutDashboard } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useAdminDashboard } from "@/hooks/use-admin-dashboard";
-import type { AdminRegistrationQuery } from "@/types/admin-dashboard";
+import { useAdminDashboard } from "@/hooks/admin/use-admin-dashboard";
+import type { AdminRegistrationQuery } from "@/types/admin/admin-dashboard";
 import { RegistrationFilters } from "./registration-filters";
 import { RegistrationsTable } from "./registrations-table";
 import { StatCards } from "./stat-cards";
@@ -37,7 +37,6 @@ export function DashboardView() {
     const [query, setQuery] = useState(INITIAL_QUERY);
     const [searchInput, setSearchInput] = useState("");
 
-    // Debounce pencarian 400ms, lalu reset ke halaman 1.
     useEffect(() => {
         const timer = setTimeout(() => {
             setQuery((q) => (q.search === searchInput ? q : { ...q, search: searchInput, page: 1 }));

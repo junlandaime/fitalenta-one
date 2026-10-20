@@ -4,7 +4,7 @@ import { RegistrationResult } from "../../types/registration.types";
 export const registrationResultInclude = {
   user: { select: { name: true, email: true, phone: true } },
   program: { select: { id: true, name: true, programFormat: true, installmentPlan: true } },
-  payments: { select: { invoiceNumber: true, amount: true, status: true } },
+  payments: { select: { id: true, invoiceNumber: true, amount: true, status: true, notes: true } },
 } satisfies Prisma.RegistrationInclude;
 
 type RegistrationRecord = Prisma.RegistrationGetPayload<{
@@ -79,9 +79,11 @@ export function toRegistrationResult(registration: RegistrationRecord): Registra
       programFormat: program?.programFormat ?? null,
     },
     payment: {
+      id: payment.id,
       invoiceNumber: payment.invoiceNumber,
       amount: payment.amount.toString(),
       status: payment.status,
+      notes: payment.notes,
       installmentPlan: program?.installmentPlan ?? null,
     },
     applicant: toApplicant(registration),

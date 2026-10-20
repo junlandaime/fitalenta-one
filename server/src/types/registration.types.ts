@@ -50,9 +50,11 @@ export interface RegistrationResult {
     programFormat: string | null;
   };
   payment: {
+    id?: number;
     invoiceNumber: string;
     amount: string;
     status: string;
+    notes?: string | null;
     installmentPlan: string | null;
   };
   applicant: {

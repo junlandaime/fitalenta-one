@@ -1,8 +1,6 @@
 import { Router } from "express";
 import * as programController from "../../controllers/admin/program.controller";
-import { ADMIN_PANEL_ROLES } from "../../config/admin.config";
-import { authenticate } from "../../middlewares/authenticate";
-import { authorize } from "../../middlewares/authorize";
+import { superAdminAccess } from "../../middlewares/access";
 import { validate } from "../../middlewares/validate";
 import {
   createProgramRules,
@@ -13,7 +11,7 @@ import {
 
 const router = Router();
 
-router.use(authenticate, authorize(...ADMIN_PANEL_ROLES));
+router.use(...superAdminAccess);
 router.get("/summary", programController.summary);
 router.get("/options", programController.options);
 router.get("/", validate(listProgramsRules), programController.index);

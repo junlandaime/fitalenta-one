@@ -5,7 +5,7 @@ import { Camera, Upload } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { PHOTO_RULES } from "@/constants/registration-constant";
-import { validatePhotoFile } from "@/helpers/registration-helper";
+import { validatePhotoFile } from "@/helpers/user/registration-helper";
 import { useRegistrationStore } from "@/store/registration-store";
 import { FieldShell, fieldA11y } from "./form-field";
 
@@ -20,7 +20,7 @@ export function PhotoUpload() {
 
     function handleChange(event: ChangeEvent<HTMLInputElement>) {
         const file = event.target.files?.[0];
-        event.target.value = ""; // memungkinkan memilih file yang sama setelah gagal validasi
+        event.target.value = "";
         if (!file) return;
 
         const message = validatePhotoFile(file);

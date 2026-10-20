@@ -27,6 +27,7 @@ export function Logo({ tone = "dark", width, height }: LogoProps) {
                     width: "auto",
                     height: "auto",
                 }}
+                loading="eager"
             />
         </Link>
     );

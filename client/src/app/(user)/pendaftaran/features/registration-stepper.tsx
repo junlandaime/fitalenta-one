@@ -3,7 +3,7 @@
 import { Check } from "lucide-react";
 import { REGISTRATION_STEPS } from "@/constants/registration-constant";
 import { cn } from "@/lib/utils";
-import type { RegistrationStep } from "@/types/registration";
+import type { RegistrationStep } from "@/types/user/registration";
 
 type RegistrationStepperProps = {
     current: RegistrationStep;

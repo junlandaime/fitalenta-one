@@ -9,22 +9,22 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { PLACEMENT_STATUS, SELECTION_STATUS, statusLabel } from "@/constants/admin-status";
+import { PLACEMENT_STATUS, SELECTION_STATUS, statusLabel } from "@/constants/admin/admin-status";
 import {
     COMPANY_REQUIRED_PLACEMENT_STATUSES,
     DATE_REQUIRED_PLACEMENT_STATUSES,
     PASSED_SELECTION_STATUS,
     PLACEMENT_STATUS_VALUES,
     SELECTION_STATUS_VALUES,
-} from "@/constants/selection-placement-constant";
-import { buildUpdatePayload, toFormValues } from "@/helpers/admin-selection-placement-helper";
-import { useUpdateAdminParticipant } from "@/hooks/use-admin-selection-placements";
+} from "@/constants/admin/selection-placement-constant";
+import { buildUpdatePayload, toFormValues } from "@/helpers/admin/admin-selection-placement-helper";
+import { useUpdateAdminParticipant } from "@/hooks/admin/use-admin-selection-placements";
 import {
     validateSelectionPlacementForm,
     type SelectionPlacementFormErrors,
     type SelectionPlacementFormValues,
-} from "@/schemas/admin-selection-placement";
-import type { Participant, PlacementStatus, SelectionStatus } from "@/types/selection-placement";
+} from "@/schemas/admin/admin-selection-placement";
+import type { Participant, PlacementStatus, SelectionStatus } from "@/types/admin/selection-placement";
 
 type FieldName = keyof SelectionPlacementFormValues;
 
@@ -69,7 +69,6 @@ const a11y = (id: FieldName, error?: string, hint?: string) => ({
 
 type SelectionFormProps = {
     participant: Participant;
-    /** Buka langsung dalam mode ubah (mis. dari tombol Kelola). */
     initialEditing: boolean;
 };
 
@@ -81,7 +80,6 @@ export function SelectionForm({ participant, initialEditing }: SelectionFormProp
     const [errors, setErrors] = useState<SelectionPlacementFormErrors>({});
     const [notice, setNotice] = useState<string | null>(null);
 
-    // Saat tidak mengubah, tampilkan data terbaru dari server.
     const values = editing ? draft : toFormValues(participant);
     const passed = values.selectionStatus === PASSED_SELECTION_STATUS;
     const companyRequired = COMPANY_REQUIRED_PLACEMENT_STATUSES.includes(values.placementStatus);

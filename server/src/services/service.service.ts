@@ -57,6 +57,12 @@ export async function getAdminServices({ page = 1 }: { page?: number }) {
   return { services, pagination: { page, perPage, total, totalPages: Math.ceil(total / perPage) } };
 }
 
+export async function getAdminServiceById(id: number) {
+  const service = await prisma.service.findUnique({ where: { id } });
+  if (!service) throw new Error("SERVICE_NOT_FOUND");
+  return service;
+}
+
 export async function createService(data: ServiceInput) {
   return prisma.service.create({ data: { ...data, content: data.content as any } });
 }

@@ -3,11 +3,13 @@
 import Link from "next/link";
 import { useState, type FormEvent } from "react";
 import { ArrowRight, Eye, EyeOff, Loader2, Lock, Mail, Phone, User } from "lucide-react";
+import { TurnstileField } from "@/components/common/turnstile-field";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { registerSchema, type RegisterInput } from "@/schemas/auth";
-import { useRegister } from "@/hooks/use-register";
+import { useRegister } from "@/hooks/auth/use-register";
+import { useTurnstile } from "@/hooks/auth/use-turnstile";
 
 type FieldErrors = Partial<Record<keyof RegisterInput, string>>;
 
@@ -25,7 +27,9 @@ export function RegisterForm() {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-    const { mutate, isPending, error } = useRegister();
+    const { mutate, isPending, isSuccess, error } = useRegister();
+    const turnstile = useTurnstile();
+    const busy = isPending || isSuccess;
 
     function handleChange<K extends keyof RegisterInput>(field: K, value: RegisterInput[K]) {
         setValues((prev) => ({ ...prev, [field]: value }));
@@ -34,6 +38,7 @@ export function RegisterForm() {
 
     function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
+        if (!turnstile.ready) return;
 
         const result = registerSchema.safeParse(values);
         if (!result.success) {
@@ -46,7 +51,7 @@ export function RegisterForm() {
             return;
         }
 
-        mutate(result.data);
+        mutate({ ...result.data, turnstileToken: turnstile.token }, { onSettled: turnstile.reset });
     }
 
     return (
@@ -60,6 +65,7 @@ export function RegisterForm() {
                     />
                     <Input
                         id="name"
+                        disabled={busy}
                         type="text"
                         autoComplete="name"
                         placeholder="Nama sesuai KTP"
@@ -86,6 +92,7 @@ export function RegisterForm() {
                     />
                     <Input
                         id="email"
+                        disabled={busy}
                         type="email"
                         autoComplete="email"
                         placeholder="nama@email.com"
@@ -112,6 +119,7 @@ export function RegisterForm() {
                     />
                     <Input
                         id="phone"
+                        disabled={busy}
                         type="tel"
                         autoComplete="tel"
                         placeholder="08xxxxxxxxxx"
@@ -138,6 +146,7 @@ export function RegisterForm() {
                     />
                     <Input
                         id="password"
+                        disabled={busy}
                         type={showPassword ? "text" : "password"}
                         autoComplete="new-password"
                         placeholder="Minimal 6 karakter"
@@ -176,6 +185,7 @@ export function RegisterForm() {
                     />
                     <Input
                         id="confirmPassword"
+                        disabled={busy}
                         type={showConfirmPassword ? "text" : "password"}
                         autoComplete="new-password"
                         placeholder="Ulangi password"
@@ -214,15 +224,18 @@ export function RegisterForm() {
                 </p>
             )}
 
+            <TurnstileField controller={turnstile} busy={busy} />
+
             <Button
                 type="submit"
-                disabled={isPending}
+                disabled={busy || !turnstile.ready}
+                suppressHydrationWarning
                 className="h-12 w-full bg-secondary text-base font-semibold text-secondary-foreground hover:bg-secondary/90"
             >
-                {isPending ? (
+                {busy ? (
                     <>
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden />
-                        Memproses...
+                        {isSuccess ? "Mengalihkan..." : "Memproses..."}
                     </>
                 ) : (
                     <>

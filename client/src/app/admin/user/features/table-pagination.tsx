@@ -1,6 +1,6 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import type { AdminPageMeta } from "@/types/admin-user";
+import type { AdminPageMeta } from "@/types/admin/admin-user";
 
 type TablePaginationProps = {
     meta: AdminPageMeta;

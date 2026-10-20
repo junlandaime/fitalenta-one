@@ -35,16 +35,20 @@ export async function proxy(request: NextRequest) {
     }
 
     if (pathname.startsWith("/admin") && role !== "admin") {
-        return NextResponse.redirect(new URL("/dashboard", request.url));
+        return NextResponse.redirect(new URL(getHomeByRole(role), request.url));
     }
 
-    if (pathname.startsWith("/dashboard") && role === "admin") {
-        return NextResponse.redirect(new URL("/admin/dashboard", request.url));
+    if (pathname.startsWith("/editor") && role === "user") {
+        return NextResponse.redirect(new URL(getHomeByRole(role), request.url));
+    }
+
+    if (pathname.startsWith("/user") && role !== "user") {
+        return NextResponse.redirect(new URL(getHomeByRole(role), request.url));
     }
 
     return NextResponse.next();
 }
 
 export const config = {
-    matcher: ["/login", "/register", "/admin/:path*", "/dashboard/:path*"],
+    matcher: ["/login", "/register", "/admin/:path*", "/editor/:path*", "/user/:path*"],
 };

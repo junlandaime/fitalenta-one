@@ -11,7 +11,7 @@ import {
     GUARDIAN_RELATIONS,
     MARITAL_STATUSES,
 } from "@/constants/registration-constant";
-import { digitsOnly } from "@/helpers/registration-helper";
+import { digitsOnly } from "@/helpers/user/registration-helper";
 import { cn } from "@/lib/utils";
 import { useRegistrationStore } from "@/store/registration-store";
 import { CONTROL_CLASS, FieldShell, SelectField, TextField, fieldA11y } from "./form-field";

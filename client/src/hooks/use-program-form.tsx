@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import type { ProgramFormValues } from "@/schemas/admin-program";
+import type { ProgramFormValues } from "@/schemas/admin/admin-program";
 
 export type ProgramFormErrors = Partial<Record<keyof ProgramFormValues, string>>;
 

@@ -1,6 +1,4 @@
-import { PaymentStatus, Role } from "../../generated/prisma/client";
-
-export const ADMIN_PANEL_ROLES: Role[] = ["admin"];
+import { PaymentStatus } from "../../generated/prisma/client";
 
 export const NEW_REGISTRANT_WINDOW_DAYS = 7;
 

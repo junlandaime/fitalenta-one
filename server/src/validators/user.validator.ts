@@ -32,15 +32,12 @@ const phoneRule: ValidationChain = body("phone")
   .matches(PHONE_PATTERN)
   .withMessage("Nomor telepon tidak valid (contoh: 081234567890)");
 
-function passwordRule(required: boolean): ValidationChain {
-  const chain = required
-    ? body("password").notEmpty().withMessage("Password wajib diisi").bail()
-    : body("password").optional({ values: "falsy" });
-
-  return chain
-    .isLength({ min: PASSWORD_MIN_LENGTH, max: PASSWORD_MAX_LENGTH })
-    .withMessage(`Password harus ${PASSWORD_MIN_LENGTH} sampai ${PASSWORD_MAX_LENGTH} karakter`);
-}
+const passwordRule: ValidationChain = body("password")
+  .notEmpty()
+  .withMessage("Password wajib diisi")
+  .bail()
+  .isLength({ min: PASSWORD_MIN_LENGTH, max: PASSWORD_MAX_LENGTH })
+  .withMessage(`Password harus ${PASSWORD_MIN_LENGTH} sampai ${PASSWORD_MAX_LENGTH} karakter`);
 
 const roleRule: ValidationChain = body("role")
   .optional({ values: "falsy" })
@@ -59,7 +56,7 @@ export const createUserRules: ValidationChain[] = [
   nameRule(true),
   emailRule(true),
   phoneRule,
-  passwordRule(true),
+  passwordRule,
   roleRule,
 ];
 
@@ -68,6 +65,5 @@ export const updateUserRules: ValidationChain[] = [
   nameRule(false),
   emailRule(false),
   phoneRule,
-  passwordRule(false),
   roleRule,
 ];

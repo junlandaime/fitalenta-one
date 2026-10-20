@@ -8,11 +8,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { ADMIN_USER_ROLES, ROLE_META } from "@/constants/admin-user-constant";
-import { buildUpdatePayload } from "@/helpers/admin-user-helper";
-import { useSaveAdminUser } from "@/hooks/use-admin-users";
-import { createUserSchema, updateUserSchema, type UserFormValues } from "@/schemas/admin-user";
-import type { AdminUser } from "@/types/admin-user";
+import { ADMIN_USER_ROLES, ROLE_META } from "@/constants/admin/admin-user-constant";
+import { buildUpdatePayload } from "@/helpers/admin/admin-user-helper";
+import { useSaveAdminUser } from "@/hooks/admin/use-admin-users";
+import { PASSWORD_MIN, createUserSchema, updateUserSchema, type UserFormValues } from "@/schemas/admin/admin-user";
+import type { AdminUser } from "@/types/admin/admin-user";
+import { z } from "zod";
 
 type FieldName = keyof UserFormValues;
 
@@ -80,24 +81,24 @@ export function UserFormSheet({ target, isSelf, onClose, onSaved }: UserFormShee
         setErrors((current) => ({ ...current, [name]: undefined }));
     }
 
+    function toFieldErrors(error: z.ZodError) {
+        const next: Partial<Record<FieldName, string>> = {};
+        for (const issue of error.issues) {
+            const key = issue.path[0] as FieldName;
+            next[key] ??= issue.message;
+        }
+        return next;
+    }
+
     function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
-        const phoneUnchanged = editing !== null && values.phone.trim() === (editing.phone ?? "");
-        const input = phoneUnchanged ? { ...values, phone: "" } : values;
-
-        const result = (editing ? updateUserSchema : createUserSchema).safeParse(input);
-        if (!result.success) {
-            const next: Partial<Record<FieldName, string>> = {};
-            for (const issue of result.error.issues) {
-                const key = issue.path[0] as FieldName;
-                next[key] ??= issue.message;
-            }
-            setErrors(next);
-            return;
-        }
-
         if (!editing) {
+            const result = createUserSchema.safeParse(values);
+            if (!result.success) {
+                setErrors(toFieldErrors(result.error));
+                return;
+            }
             const { name, email, phone, role, password } = result.data;
             save.mutate(
                 { payload: { name, email, role, password, ...(phone ? { phone } : {}) } },
@@ -106,8 +107,14 @@ export function UserFormSheet({ target, isSelf, onClose, onSaved }: UserFormShee
             return;
         }
 
-        const payload = buildUpdatePayload(editing, result.data);
+        const phoneUnchanged = values.phone.trim() === (editing.phone ?? "");
+        const result = updateUserSchema.safeParse(phoneUnchanged ? { ...values, phone: "" } : values);
+        if (!result.success) {
+            setErrors(toFieldErrors(result.error));
+            return;
+        }
 
+        const payload = buildUpdatePayload(editing, result.data);
         if (Object.keys(payload).length === 0) {
             onClose();
             return;
@@ -188,23 +195,19 @@ export function UserFormSheet({ target, isSelf, onClose, onSaved }: UserFormShee
                             </Select>
                         </Field>
 
-                        <Field
-                            id="password"
-                            label={editing ? "Password baru" : "Password"}
-                            required={!editing}
-                            error={errors.password}
-                            hint={editing ? "Kosongkan jika tidak ingin mengubah password." : "Minimal 6 karakter."}
-                        >
-                            <Input
-                                id="password"
-                                type="password"
-                                value={values.password}
-                                onChange={(event) => setValue("password", event.target.value)}
-                                autoComplete="new-password"
-                                className="h-10"
-                                {...a11y("password", errors.password, "x")}
-                            />
-                        </Field>
+                        {!editing && (
+                            <Field id="password" label="Password" required error={errors.password} hint={`Minimal ${PASSWORD_MIN} karakter.`}>
+                                <Input
+                                    id="password"
+                                    type="password"
+                                    value={values.password}
+                                    onChange={(event) => setValue("password", event.target.value)}
+                                    autoComplete="new-password"
+                                    className="h-10"
+                                    {...a11y("password", errors.password, "hint")}
+                                />
+                            </Field>
+                        )}
 
                         {save.isError && (
                             <Alert variant="destructive">

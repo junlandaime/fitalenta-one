@@ -20,10 +20,9 @@ function parseId(raw: string) {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const id = parseId((await params).id);
-    const detail = id ? await getProgramById(id) : undefined;
-    if (!detail) return { title: "Program tidak ditemukan - FITALENTA" };
+    const program = id ? await getProgramById(id) : undefined;
+    if (!program) return { title: "Program tidak ditemukan - FITALENTA" };
 
-    const { program } = detail;
     return {
         title: `${program.name} - FITALENTA`,
         description: program.description?.slice(0, 160),
@@ -34,10 +33,8 @@ export default async function ProgramDetailPage({ params }: Props) {
     const id = parseId((await params).id);
     if (!id) notFound();
 
-    const detail = await getProgramById(id);
-    if (!detail) notFound();
-
-    const { program } = detail;
+    const program = await getProgramById(id);
+    if (!program) notFound();
 
     const full = isFull(program);
 

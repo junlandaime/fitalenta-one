@@ -1,7 +1,7 @@
 import { Filter, Search } from "lucide-react";
 import { Card } from "@/components/ui/card";
-import { PAYMENT_STATUS, PLACEMENT_STATUS, SELECTION_STATUS, statusLabel, type StatusMap } from "@/constants/admin-status";
-import type { AdminFilterOptions, AdminRegistrationQuery } from "@/types/admin-dashboard";
+import { PAYMENT_STATUS, PLACEMENT_STATUS, SELECTION_STATUS, statusLabel, type StatusMap } from "@/constants/admin/admin-status";
+import type { AdminFilterOptions, AdminRegistrationQuery } from "@/types/admin/admin-dashboard";
 
 const controlClass =
     "h-10 w-full rounded-md border bg-background px-3 text-xs outline-none focus-visible:ring-2 focus-visible:ring-ring/50 disabled:opacity-60";

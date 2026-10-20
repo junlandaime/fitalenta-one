@@ -20,7 +20,7 @@ export function OverviewSection({ program: p }: { program: Program }) {
                 <OverviewCard icon={Calendar} label="Jadwal" value={p.schedule || "-"} />
                 <OverviewCard icon={Clock} label="Durasi" value={p.duration || "-"} />
                 <OverviewCard icon={MapPin} label="Lokasi" value={p.location || "-"} />
-                <OverviewCard icon={Users} label="Kuota" value={p.capacity != null ? `${quotaLabel(p)}${p.registeredCount != null ? " Peserta" : ""}` : "-"} />
+                <OverviewCard icon={Users} label="Kuota" value={p.capacity != null ? `${quotaLabel(p)}${p.currentParticipants != null ? " Peserta" : ""}` : "-"} />
             </div>
         </section>
     );

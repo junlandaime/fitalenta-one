@@ -1,8 +1,8 @@
 "use client";
 
 import { ConfirmDeleteDialog } from "@/components/admin/confirm-delete-dialog";
-import { useDeleteAdminProgram } from "@/hooks/use-admin-programs";
-import type { AdminProgram } from "@/types/admin-program";
+import { useDeleteAdminProgram } from "@/hooks/admin/use-admin-programs";
+import type { AdminProgram } from "@/types/admin/admin-program";
 
 type DeleteProgramDialogProps = {
     program: AdminProgram;
@@ -10,7 +10,6 @@ type DeleteProgramDialogProps = {
     onDeleted: (program: AdminProgram) => void;
 };
 
-/** Mount hanya saat ada program yang akan dihapus. */
 export function DeleteProgramDialog({ program, onClose, onDeleted }: DeleteProgramDialogProps) {
     const remove = useDeleteAdminProgram();
 

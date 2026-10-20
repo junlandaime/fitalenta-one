@@ -8,12 +8,10 @@ import { TableCell, TableRow } from "@/components/ui/table";
 type TableCardProps = {
     title: string;
     description: string;
-    /** Tautan "Lihat semua" ke halaman manajemen terkait. */
     href?: string;
     children: ReactNode;
 };
 
-/** Pembungkus Card untuk tabel ringkasan di dashboard. */
 export function TableCard({ title, description, href, children }: TableCardProps) {
     return (
         <Card>

@@ -5,13 +5,13 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { PLACEMENT_STATUS, SELECTION_STATUS } from "@/constants/admin-status";
-import { getInitials } from "@/helpers/admin-selection-placement-helper";
+import { PLACEMENT_STATUS, SELECTION_STATUS } from "@/constants/admin/admin-status";
 import { cn } from "@/lib/utils";
 import type { AdminPageMeta } from "@/types/pagination";
-import type { Participant } from "@/types/selection-placement";
+import type { Participant } from "@/types/admin/selection-placement";
 import { StatusBadge, ToneBadge } from "@/app/admin/dashboard/features/status-badge";
 import { EmptyRow } from "@/app/admin/dashboard/features/table-card";
+import { ParticipantAvatar } from "@/components/admin/participant-avatar";
 
 const COLUMNS = ["Peserta", "Program", "Seleksi Diklat", "Penyaluran Kerja", "Perusahaan", "Penempatan", "Aksi"];
 
@@ -44,9 +44,11 @@ function ParticipantCell({ row }: { row: Participant }) {
 
     return (
         <div className="flex items-center gap-3">
-            <div className="flex size-10 shrink-0 items-center justify-center rounded-lg border bg-indigo-50 text-xs font-bold text-indigo-600 dark:bg-indigo-950">
-                {getInitials(participant.name)}
-            </div>
+            <ParticipantAvatar
+                key={`${participant.name}-${participant.photoPath ?? ""}`}
+                name={participant.name}
+                photoPath={participant.photoPath}
+            />
             <div className="min-w-0 space-y-0.5">
                 <div className="truncate text-sm font-semibold">{participant.name}</div>
                 <div className="flex items-center gap-1 text-[11px] text-muted-foreground">
@@ -110,7 +112,6 @@ function LoadingRows() {
 type Props = {
     rows?: Participant[];
     meta?: AdminPageMeta;
-    /** Data lama masih ditampilkan sementara data baru dimuat. */
     stale?: boolean;
     refreshing: boolean;
     onRefresh: () => void;

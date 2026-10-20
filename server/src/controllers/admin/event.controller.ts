@@ -1,9 +1,11 @@
 import { Request, Response } from "express";
 import * as eventService from "../../services/event.service";
+import { INVALID_PAGE_RESPONSE, parsePageQuery } from "../../utils/pagination";
 
 export async function index(req: Request, res: Response) {
   try {
-    const page = req.query.page ? parseInt(req.query.page as string) : 1;
+    const page = parsePageQuery(typeof req.query.page === "string" ? req.query.page : undefined);
+    if (page === null) return res.status(400).json(INVALID_PAGE_RESPONSE);
     const result = await eventService.getAdminEvents({ page });
     return res.json({ success: true, data: result });
   } catch (error) {

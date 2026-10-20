@@ -33,3 +33,51 @@ export const registerSchema = z
     });
 
 export type RegisterInput = z.infer<typeof registerSchema>;
+
+export const resendVerificationSchema = z.object({
+    email: z
+        .string()
+        .min(1, "Email wajib diisi")
+        .email("Masukkan email yang valid"),
+});
+
+export type ResendVerificationInput = z.infer<typeof resendVerificationSchema>;
+export type CaptchaPayload = { turnstileToken?: string };
+export const PASSWORD_MIN_LENGTH = 6;
+
+const newPasswordField = z
+    .string()
+    .min(1, "Password baru wajib diisi")
+    .min(PASSWORD_MIN_LENGTH, `Password minimal ${PASSWORD_MIN_LENGTH} karakter`);
+
+export const forgotPasswordSchema = resendVerificationSchema;
+export type ForgotPasswordInput = z.infer<typeof forgotPasswordSchema>;
+
+export const resetPasswordSchema = z
+    .object({
+        newPassword: newPasswordField,
+        confirmPassword: z.string().min(1, "Konfirmasi password wajib diisi"),
+    })
+    .refine((data) => data.newPassword === data.confirmPassword, {
+        message: "Konfirmasi password tidak cocok",
+        path: ["confirmPassword"],
+    });
+
+export type ResetPasswordInput = z.infer<typeof resetPasswordSchema>;
+
+export const changePasswordSchema = z
+    .object({
+        currentPassword: z.string().min(1, "Password saat ini wajib diisi"),
+        newPassword: newPasswordField,
+        confirmPassword: z.string().min(1, "Konfirmasi password wajib diisi"),
+    })
+    .refine((data) => data.newPassword === data.confirmPassword, {
+        message: "Konfirmasi password tidak cocok",
+        path: ["confirmPassword"],
+    })
+    .refine((data) => data.currentPassword !== data.newPassword, {
+        message: "Password baru harus berbeda dari password saat ini",
+        path: ["newPassword"],
+    });
+
+export type ChangePasswordInput = z.infer<typeof changePasswordSchema>;

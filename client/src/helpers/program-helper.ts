@@ -2,17 +2,17 @@ import type { Program } from "@/types/program";
 
 export function isFull(p: Program) {
     if (p.status === "full") return true;
-    return p.capacity != null && p.registeredCount != null && p.registeredCount >= p.capacity;
+    return p.capacity != null && p.currentParticipants != null && p.currentParticipants >= p.capacity;
 }
 
 export function quotaLabel(p: Program) {
     if (p.capacity == null) return "-";
-    return p.registeredCount != null ? `${p.registeredCount} / ${p.capacity}` : `${p.capacity} peserta`;
+    return p.currentParticipants != null ? `${p.currentParticipants} / ${p.capacity}` : `${p.capacity} peserta`;
 }
 
 export function quotaPercent(p: Program) {
-    if (!p.capacity || p.registeredCount == null) return undefined;
-    return Math.min(100, Math.round((p.registeredCount / p.capacity) * 100));
+    if (!p.capacity || p.currentParticipants == null) return undefined;
+    return Math.min(100, Math.round((p.currentParticipants / p.capacity) * 100));
 }
 
 export function totalEstimate(p: Program) {
