@@ -7,8 +7,12 @@ import type {
 import type { ApiResponse } from "@/types/api";
 
 export async function getServices(): Promise<ServicesListData> {
-    const { data } = await api.get<ApiResponse<ServicesListData>>("/services");
-    return data.data;
+    try {
+        const { data } = await api.get<ApiResponse<ServicesListData>>("/services");
+        return data.data ?? [];
+    } catch {
+        return [];
+    }
 }
 
 export const getServiceBySlug = cache(

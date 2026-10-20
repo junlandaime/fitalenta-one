@@ -7,8 +7,12 @@ import type {
 import type { ApiResponse } from "@/types/api";
 
 export async function getGallery(): Promise<GalleryListData> {
-    const { data } = await api.get<ApiResponse<GalleryListData>>("/gallery");
-    return data.data;
+    try {
+        const { data } = await api.get<ApiResponse<GalleryListData>>("/gallery");
+        return data.data ?? [];
+    } catch {
+        return [];
+    }
 }
 
 export const getGalleryById = cache(

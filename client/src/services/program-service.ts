@@ -4,8 +4,12 @@ import type { Program, ProgramsListData } from "@/types/program";
 import type { ApiResponse } from "@/types/api";
 
 export async function getPrograms(): Promise<ProgramsListData> {
-    const { data } = await api.get<ApiResponse<ProgramsListData>>("/programs");
-    return data.data;
+    try {
+        const { data } = await api.get<ApiResponse<ProgramsListData>>("/programs");
+        return data.data ?? [];
+    } catch {
+        return [];
+    }
 }
 
 export const getProgramById = cache(
