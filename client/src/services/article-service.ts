@@ -10,15 +10,23 @@ import type { ApiResponse } from "@/types/api";
 export async function getArticles(
     params: { page?: number } = {},
 ): Promise<ArticlesListData> {
-    const { data } = await api.get<ApiResponse<ArticlesListData>>("/articles", {
-        params: { page: params.page && params.page > 1 ? params.page : undefined },
-    });
-    return data.data;
+    try {
+        const { data } = await api.get<ApiResponse<ArticlesListData>>("/articles", {
+            params: { page: params.page && params.page > 1 ? params.page : undefined },
+        });
+        return data.data ?? { articles: [], pagination: { page: 1, perPage: 7, total: 0, totalPages: 0 } };
+    } catch {
+        return { articles: [], pagination: { page: 1, perPage: 7, total: 0, totalPages: 0 } };
+    }
 }
 
 export async function getFeaturedArticles(): Promise<ArticleItem[]> {
-    const { data } = await api.get<ApiResponse<ArticleItem[]>>("/articles/featured");
-    return data.data;
+    try {
+        const { data } = await api.get<ApiResponse<ArticleItem[]>>("/articles/featured");
+        return data.data ?? [];
+    } catch {
+        return [];
+    }
 }
 
 export const getArticleBySlug = cache(

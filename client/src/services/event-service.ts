@@ -10,18 +10,26 @@ import type { ApiResponse } from "@/types/api";
 export async function getEvents(
     params: { search?: string; page?: number } = {},
 ): Promise<EventsListData> {
-    const { data } = await api.get<ApiResponse<EventsListData>>("/events", {
-        params: {
-            search: params.search || undefined,
-            page: params.page && params.page > 1 ? params.page : undefined,
-        },
-    });
-    return data.data;
+    try {
+        const { data } = await api.get<ApiResponse<EventsListData>>("/events", {
+            params: {
+                search: params.search || undefined,
+                page: params.page && params.page > 1 ? params.page : undefined,
+            },
+        });
+        return data.data ?? { events: [], pagination: { page: 1, perPage: 6, total: 0, totalPages: 0 } };
+    } catch {
+        return { events: [], pagination: { page: 1, perPage: 6, total: 0, totalPages: 0 } };
+    }
 }
 
 export async function getFeaturedEvents(): Promise<EventItem[]> {
-    const { data } = await api.get<ApiResponse<EventItem[]>>("/events/featured");
-    return data.data;
+    try {
+        const { data } = await api.get<ApiResponse<EventItem[]>>("/events/featured");
+        return data.data ?? [];
+    } catch {
+        return [];
+    }
 }
 
 export const getEventBySlug = cache(
