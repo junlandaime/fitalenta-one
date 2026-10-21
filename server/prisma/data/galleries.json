@@ -100,16 +100,6 @@
     "order": 11
   },
   {
-    "id": 11,
-    "title": "Launch Phylanthropy Business Affiliate Program",
-    "description": "Launch Phylanthropy Business Affiliate Program by FITALENTA",
-    "image": "/uploads/gallery/launch affiliate program.jpg",
-    "categorySlug": "event",
-    "isFeatured": false,
-    "eventDate": "2024-02-10T00:00:00.000Z",
-    "order": 12
-  },
-  {
     "id": 12,
     "title": "Spiritual Education Camp",
     "description": "Spiritual Education Camp khusus Remaja di Masjid Raya Al Jabbar 29 - 31 Maret 2024",
@@ -173,7 +163,7 @@
     "id": 18,
     "title": "Partisipasi FITALENTA pada Job Fair",
     "description": "Partisipasi FITALENTA pada Job Fair Milangkala Paguyuban Pasundan dan Apindo",
-    "image": "/uploads/gallery/3 Agustus 2024_Job Fair Pasundan.jpg",
+    "image": "/uploads/gallery/9i3qqf1MKHujeieELwDVcpuCzvd7ck73d0nn7gGV.jpg",
     "categorySlug": "event",
     "isFeatured": false,
     "eventDate": "2024-08-03T00:00:00.000Z",
@@ -188,5 +178,95 @@
     "isFeatured": false,
     "eventDate": "2024-08-14T00:00:00.000Z",
     "order": 20
+  },
+  {
+    "id": 20,
+    "title": "Dokumentasi Diklat Persiapan — Hasbi Azni Insani",
+    "description": "Suasana diklat persiapan keberangkatan Hasbi Azni Insani di Bekasi, sebagai bagian dari tahapan sebelum berangkat bekerja ke Jepang melalui Program Kerja ke Jepang FITALENTA x YDSF.",
+    "image": "/uploads/gallery/jxifnOHze1QYlMfMXDKpTspiinzH6xL139ZmHXgf.jpg",
+    "categorySlug": "event",
+    "isFeatured": false,
+    "eventDate": "2026-08-14T00:00:00.000Z",
+    "order": 0
+  },
+  {
+    "id": 21,
+    "title": "Dokumentasi Aktivitas Kerja — Muhammad Revaldi Meylapasha Eldaz di Jepang",
+    "description": "Momen kebersamaan Revaldi bersama rekan kerja di Prefektur Okinawa, Jepang, dalam menjalani aktivitas kerja pada sektor Building Cleaning melalui skema Visa Tokutei Ginou.",
+    "image": "/uploads/gallery/rvDh7om8qlad10EDCBSgCPirQPHE7IvYNNH6mKg3.jpg",
+    "categorySlug": "event",
+    "isFeatured": false,
+    "eventDate": "2026-08-14T00:00:00.000Z",
+    "order": 0
+  },
+  {
+    "id": 22,
+    "title": "Dokumentasi Penandatanganan MoU FITALENTA & YDSF",
+    "description": "Dokumentasi kegiatan penandatanganan Memorandum of Understanding (MoU) antara PT FAST Indo Talenta (FITALENTA) dan Yayasan Dana Sosial Al-Falah (YDSF) di Bandung, sebagai wujud kerja sama resmi dalam pembiayaan dan pendampingan peserta Program Kerja ke Jepang.",
+    "image": "/uploads/gallery/IA6lesIYDYaLH0BLd6uvafO76uHh7F3w9FkwKRg6.jpg",
+    "categorySlug": "event",
+    "isFeatured": false,
+    "eventDate": "2026-07-07T00:00:00.000Z",
+    "order": 0
+  },
+  {
+    "id": 23,
+    "title": "Kegiatan Pelatihan Program Reguler",
+    "description": "Dokumentasi kegiatan pelatihan bahasa Jepang dan persiapan SSW pada Program Reguler FITALENTA, dilaksanakan di Bandung dengan metode pelatihan intensif pagi hingga sore.",
+    "image": "/uploads/gallery/BXuweqiWxdLlDzsrRsaDTSIBY6v2YWYWGDEOXwGD.jpg",
+    "categorySlug": "event",
+    "isFeatured": false,
+    "eventDate": "2026-08-20T00:00:00.000Z",
+    "order": 0
+  },
+  {
+    "id": 24,
+    "title": "Kegiatan Pelatihan Program Asrama",
+    "description": "Dokumentasi kegiatan peserta Program Asrama FITALENTA, mencakup pelatihan bahasa Jepang, budaya kerja, serta kegiatan karantina di asrama Bandung/Cikarang.",
+    "image": "/uploads/gallery/FN30Ou8mLcfAVzP0LlHuJ2RtOI2Zuq7M7MyoB69I.jpg",
+    "categorySlug": "event",
+    "isFeatured": false,
+    "eventDate": "2026-08-20T00:00:00.000Z",
+    "order": 0
+  },
+  {
+    "id": 25,
+    "title": "Kegiatan Pelatihan Program Hybrid",
+    "description": "Dokumentasi kegiatan pelatihan Program Hybrid FITALENTA, kombinasi kelas online dan offline untuk persiapan bahasa Jepang dan sertifikasi SSW.",
+    "image": "/uploads/gallery/bYjs29vlRxWtJ8454h1LdcYYPp5G8cBogTh2l8O8.png",
+    "categorySlug": "event",
+    "isFeatured": false,
+    "eventDate": "2026-08-20T00:00:00.000Z",
+    "order": 0
+  },
+  {
+    "id": 26,
+    "title": "Kegiatan Kelas Intensif Program Fast Track",
+    "description": "Dokumentasi kelas intensif Program Fast Track FITALENTA, jalur ekspres bagi kandidat yang telah memiliki sertifikat JLPT N4/JFT-A2 dan SSW.",
+    "image": "/uploads/gallery/tvXCB3LrOhs8f74yUJjDkqdkyQ7GyaDavVZ6Lqp1.jpg",
+    "categorySlug": "event",
+    "isFeatured": false,
+    "eventDate": "2026-08-20T00:00:00.000Z",
+    "order": 0
+  },
+  {
+    "id": 27,
+    "title": "Sosialisasi AMTO Tel-U ATC pada Prodi Teknologi Komputer",
+    "description": "Sosialisasi Program Basic Certificate dari Tel-U ATC kepada mahasiswa Teknologi Komputer, memperkenalkan peluang karir di industri aircraft maintenance.",
+    "image": "/uploads/gallery/v7FsaSlPOIjfyCmQoHunSNZIrchiLzVG8VnfFt7K.jpg",
+    "categorySlug": "event",
+    "isFeatured": false,
+    "eventDate": "2026-06-08T00:00:00.000Z",
+    "order": 0
+  },
+  {
+    "id": 28,
+    "title": "Koordinasi FITALENTA dengan Tel-U ATC",
+    "description": "Pertemuan koordinasi FITALENTA dan Tel-U ATC membahas kerja sama Program Basic Certificate Category C (Avionics).",
+    "image": "/uploads/gallery/HwsBX4EdIgXKSWzRJyfTCawdWiOGBBPpuqQiMRux.jpg",
+    "categorySlug": "event",
+    "isFeatured": false,
+    "eventDate": "2026-06-08T00:00:00.000Z",
+    "order": 0
   }
 ]
