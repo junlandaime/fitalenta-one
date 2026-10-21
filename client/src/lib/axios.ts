@@ -18,6 +18,23 @@ export const api = axios.create({
     },
 });
 
+api.interceptors.request.use((config) => {
+    // When executing on the Node.js server (SSR), bypass external domain / reverse proxy
+    // and connect directly to the Express backend on localhost for maximum speed and reliability
+    if (typeof window === "undefined") {
+        const internalApi = process.env.INTERNAL_API_URL || "http://127.0.0.1:5000/api";
+        if (
+            !config.baseURL ||
+            config.baseURL.includes("api.fitalenta.co.id") ||
+            config.baseURL.includes("fitalenta.co.id") ||
+            config.baseURL.includes("5001")
+        ) {
+            config.baseURL = internalApi;
+        }
+    }
+    return config;
+});
+
 api.interceptors.response.use(
     (response) => response,
     (error: unknown) => {
@@ -26,11 +43,13 @@ api.interceptors.response.use(
                 | { message?: string; code?: string; details?: unknown; errors?: unknown }
                 | undefined;
             const message = data?.message ?? "Something went wrong. Please try again.";
-            return Promise.reject(new ApiError(message, {
-                status: error.response?.status,
-                code: data?.code,
-                details: toFieldErrors(data?.details ?? data?.errors),
-            }),);
+            return Promise.reject(
+                new ApiError(message, {
+                    status: error.response?.status,
+                    code: data?.code,
+                    details: toFieldErrors(data?.details ?? data?.errors),
+                }),
+            );
         }
         return Promise.reject(error);
     },
