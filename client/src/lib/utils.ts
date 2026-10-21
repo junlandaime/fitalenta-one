@@ -1,57 +1,62 @@
-import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
+export { cn } from "cn";
 
-export function cn(...inputs: ClassValue[]) {
-    return twMerge(clsx(inputs));
+const TZ = "Asia/Jakarta";
+const hasTime = (iso: string) => iso.length > 10;
+
+function toValidDate(iso?: string | null): Date | null {
+    if (!iso) return null;
+    const date = new Date(iso);
+    return Number.isNaN(date.getTime()) ? null : date;
 }
 
-export function formatRupiah(value: number): string {
-    return new Intl.NumberFormat("id-ID", {
-        style: "currency",
-        currency: "IDR",
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0,
-    }).format(value);
-}
-
-export function formatDate(date: string | Date): string {
-    return new Intl.DateTimeFormat("id-ID", {
-        day: "numeric",
-        month: "long",
+export function formatDate(iso?: string | null, locale = "en-US") {
+    const date = toValidDate(iso);
+    if (!date) return "-";
+    return new Intl.DateTimeFormat(locale, {
         year: "numeric",
-    }).format(new Date(date));
+        month: "long",
+        day: "numeric",
+        timeZone: TZ,
+    }).format(date);
 }
 
-export function formatDateTime(date: string | Date): string {
-    return new Intl.DateTimeFormat("id-ID", {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
+export function formatTime(iso: string) {
+    if (!hasTime(iso)) return undefined;
+    const time = new Intl.DateTimeFormat("id-ID", {
         hour: "2-digit",
         minute: "2-digit",
-        timeZoneName: "short",
-    }).format(new Date(date));
+        hourCycle: "h23",
+        timeZone: TZ,
+    })
+        .format(new Date(iso))
+        .replace(".", ":");
+    return `${time} WIB`;
 }
 
-export function timeAgo(date: string | Date): string {
-    const now = new Date();
-    const past = new Date(date);
-    const diffInSeconds = Math.floor((now.getTime() - past.getTime()) / 1000);
+const UNITS: [Intl.RelativeTimeFormatUnit, number][] = [
+    ["year", 60 * 60 * 24 * 365],
+    ["month", 60 * 60 * 24 * 30],
+    ["day", 60 * 60 * 24],
+    ["hour", 60 * 60],
+    ["minute", 60],
+];
 
-    if (diffInSeconds < 60) return "baru saja";
-    const diffInMinutes = Math.floor(diffInSeconds / 60);
-    if (diffInMinutes < 60) return `${diffInMinutes} menit yang lalu`;
-    const diffInHours = Math.floor(diffInMinutes / 60);
-    if (diffInHours < 24) return `${diffInHours} jam yang lalu`;
-    const diffInDays = Math.floor(diffInHours / 24);
-    if (diffInDays < 30) return `${diffInDays} hari yang lalu`;
-    const diffInMonths = Math.floor(diffInDays / 30);
-    if (diffInMonths < 12) return `${diffInMonths} bulan yang lalu`;
-    const diffInYears = Math.floor(diffInDays / 365);
-    return `${diffInYears} tahun yang lalu`;
+export function timeAgo(iso: string, locale = "en") {
+    const diff = (new Date(iso).getTime() - Date.now()) / 1000;
+    const rtf = new Intl.RelativeTimeFormat(locale, { numeric: "always" });
+    for (const [unit, secs] of UNITS) {
+        if (Math.abs(diff) >= secs) return rtf.format(Math.trunc(diff / secs), unit);
+    }
+    return rtf.format(0, "minute");
 }
 
-export function stripHtml(html: string): string {
+export function isPastEvent(iso: string) {
+    const date = new Date(iso);
+    if (!hasTime(iso)) date.setHours(23, 59, 59, 999);
+    return date.getTime() < Date.now();
+}
+
+export function stripHtml(html: string) {
     return html.replace(/<[^>]*>/g, " ").replace(/[ \t]+/g, " ").trim();
 }
 
@@ -77,10 +82,31 @@ export function imageUrl(image?: string | null): string | undefined {
     }
 }
 
-export async function safely<T>(fn: () => Promise<T>, fallback: T): Promise<T> {
+export async function safely<T>(fn: () => Promise<T>, fallback: T, label: string): Promise<T> {
     try {
         return await fn();
-    } catch {
+    } catch (err) {
+        console.error(`[${label}] gagal dimuat:`, err);
         return fallback;
     }
+}
+
+export function formatIDR(value?: number | string | null) {
+    if (value === null || value === undefined || value === "") return "-";
+    const number = Number(value);
+    if (Number.isNaN(number)) return "-";
+    return new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR",
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2,
+    }).format(number);
+}
+
+export function toLines(text?: string | null): string[] {
+    if (!text) return [];
+    return text
+        .split(/\r?\n/)
+        .map((l) => l.replace(/^\s*(?:[-•*]|\d+[.)])\s+/, "").trim())
+        .filter(Boolean);
 }
