@@ -31,8 +31,15 @@ Thumbs.db
 # Test coverage
 coverage/
 
-# Uploaded files (kalau multer simpan lokal)
-uploads/
+# Uploaded files
+uploads/*
+!uploads/articles/
+!uploads/events/
+!uploads/gallery/
+!uploads/team-members/
+!uploads/clients/
+!uploads/partners/
+!uploads/hero-slides/
 
 # Sensitive legacy participant migration data
 prisma/data/legacy-participants.json

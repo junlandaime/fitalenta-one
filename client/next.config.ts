@@ -16,6 +16,10 @@ const nextConfig: NextConfig = {
         hostname: "fitalenta.co.id",
       },
       {
+        protocol: "https",
+        hostname: "api.fitalenta.co.id",
+      },
+      {
         protocol: "http",
         hostname: "localhost",
       },

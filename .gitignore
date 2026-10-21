@@ -5,7 +5,16 @@ node_modules/
 dist/
 build/
 .next/
-server/uploads/
+server/uploads/*
+!server/uploads/articles/
+!server/uploads/events/
+!server/uploads/gallery/
+!server/uploads/team-members/
+!server/uploads/clients/
+!server/uploads/partners/
+!server/uploads/hero-slides/
 server/generated/
 server/prisma/data/legacy-participants.json
 legacy-participants.json
+
+public.zip
