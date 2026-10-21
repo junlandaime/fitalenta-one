@@ -10,5 +10,5 @@ export function normalizeRole(role: unknown): AuthRole {
 export function getHomeByRole(role: AuthRole): string {
     if (role === "admin") return "/admin/dashboard";
     if (role === "editor") return "/editor/dashboard";
-    return "/dashboard";
+    return "/user/dashboard";
 }

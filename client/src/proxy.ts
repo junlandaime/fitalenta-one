@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { getHomeByRole, normalizeRole, type AuthRole } from "@/lib/auth-role";
 
-const API_URL = process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5001/api";
+const API_URL = process.env.INTERNAL_API_URL || "http://127.0.0.1:5000/api";
 
 async function getSessionRole(request: NextRequest): Promise<AuthRole | null> {
     try {
@@ -34,6 +34,10 @@ export async function proxy(request: NextRequest) {
         return NextResponse.redirect(new URL("/login", request.url));
     }
 
+    if (pathname.startsWith("/dashboard")) {
+        return NextResponse.redirect(new URL(getHomeByRole(role), request.url));
+    }
+
     if (pathname.startsWith("/admin") && role !== "admin") {
         return NextResponse.redirect(new URL(getHomeByRole(role), request.url));
     }
@@ -50,5 +54,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-    matcher: ["/login", "/register", "/admin/:path*", "/editor/:path*", "/user/:path*"],
+    matcher: ["/login", "/register", "/admin/:path*", "/editor/:path*", "/user/:path*", "/dashboard/:path*"],
 };

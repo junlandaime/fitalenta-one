@@ -4,6 +4,19 @@ const nextConfig: NextConfig = {
   experimental: {
     cpus: 1,
   },
+  async rewrites() {
+    const internalApi = process.env.INTERNAL_API_URL || "http://127.0.0.1:5000";
+    return [
+      {
+        source: "/api/:path*",
+        destination: `${internalApi}/api/:path*`,
+      },
+      {
+        source: "/uploads/:path*",
+        destination: `${internalApi}/uploads/:path*`,
+      },
+    ];
+  },
   images: {
     dangerouslyAllowLocalIP: process.env.NODE_ENV === "development",
     remotePatterns: [

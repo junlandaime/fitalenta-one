@@ -11,7 +11,8 @@ function toFieldErrors(value: unknown): ApiFieldError[] | undefined {
 }
 
 export const api = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_URL,
+    baseURL: process.env.NEXT_PUBLIC_API_URL || "/api",
+    timeout: 6000,
     withCredentials: true,
     headers: {
         "Content-Type": "application/json",
@@ -23,13 +24,16 @@ api.interceptors.request.use((config) => {
     // and connect directly to the Express backend on localhost for maximum speed and reliability
     if (typeof window === "undefined") {
         const internalApi = process.env.INTERNAL_API_URL || "http://127.0.0.1:5000/api";
+        config.baseURL = internalApi;
+    } else {
+        // In browser: if baseURL is missing or points to the broken api subdomain or old port,
+        // route through Next.js rewrites via relative "/api"
         if (
             !config.baseURL ||
             config.baseURL.includes("api.fitalenta.co.id") ||
-            config.baseURL.includes("fitalenta.co.id") ||
             config.baseURL.includes("5001")
         ) {
-            config.baseURL = internalApi;
+            config.baseURL = "/api";
         }
     }
     return config;
