@@ -7,15 +7,17 @@ import { getGalleryById } from "@/services/gallery-service";
 import { formatDate, imageUrl, stripHtml } from "@/lib/utils";
 import PageHero from "@/components/common/page-hero";
 
-type Props = { params: Promise<{ id: string }> };
+type Props = { params: Promise<{ slug?: string; id?: string }> };
 
-function parseId(raw: string) {
+function parseId(raw?: string) {
+    if (!raw) return null;
     const id = Number(raw);
     return Number.isInteger(id) && id > 0 ? id : null;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-    const id = parseId((await params).id);
+    const p = await params;
+    const id = parseId(p.id ?? p.slug);
     const detail = id ? await getGalleryById(id) : undefined;
     if (!detail) return { title: "Gallery not found - FITALENTA" };
 
@@ -29,7 +31,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function GalleryDetailPage({ params }: Props) {
-    const id = parseId((await params).id);
+    const p = await params;
+    const id = parseId(p.id ?? p.slug);
     if (!id) notFound();
 
     const detail = await getGalleryById(id);
