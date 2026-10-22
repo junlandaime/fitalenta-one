@@ -3,7 +3,7 @@
     "name": "Agus Ismail S.T., M.B.A",
     "position": "HR and Sales Expert",
     "bio": null,
-    "image": "team-members/Agus Ismail, S.T., MBA - HR and Sales Expert.png",
+    "image": "team-members/agus-ismail.png",
     "order": 1,
     "isActive": true
   },
@@ -11,7 +11,7 @@
     "name": "Achmad Zakaria, S.Si",
     "position": "Leadership Expert",
     "bio": null,
-    "image": "team-members/Achmad Zakaria, S.Si - Leadership Expert.png",
+    "image": "team-members/achmad-zakaria.png",
     "order": 2,
     "isActive": true
   },
@@ -19,7 +19,7 @@
     "name": "Anindya Wadhani, S.T. MBA",
     "position": "Personal Branding Expert",
     "bio": null,
-    "image": "team-members/Anindya K. Wardhani, S.T., MBA - Personal Branding Expert.png",
+    "image": "team-members/anindya-wardhani.png",
     "order": 3,
     "isActive": true
   },

@@ -18,6 +18,7 @@ const nextConfig: NextConfig = {
     ];
   },
   images: {
+    unoptimized: true,
     dangerouslyAllowLocalIP: process.env.NODE_ENV === "development",
     remotePatterns: [
       {

@@ -68,6 +68,11 @@ export function imageUrl(image?: string | null): string | undefined {
     // Normalize: strip leading/trailing whitespace
     let clean = image.trim();
 
+    // Normalize legacy team member filenames that had commas/characters which trigger Next.js Image Optimizer 400 errors
+    clean = clean.replace(/team-members\/Agus Ismail.*\.png$/i, "team-members/agus-ismail.png");
+    clean = clean.replace(/team-members\/Achmad Zakaria.*\.png$/i, "team-members/achmad-zakaria.png");
+    clean = clean.replace(/team-members\/Anindya.*\.png$/i, "team-members/anindya-wardhani.png");
+
     // If the image URL contains api.fitalenta.co.id or fitalenta.co.id or localhost,
     // strip the origin so it always resolves locally via relative path (/uploads/...)
     // This avoids external roundtrips and 503 upstream errors from Next.js Image Optimization.

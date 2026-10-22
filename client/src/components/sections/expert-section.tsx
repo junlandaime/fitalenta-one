@@ -26,6 +26,7 @@ function ExpertCard({ member, index }: { member: Team; index: number }) {
                         src={photo}
                         alt={member.name}
                         fill
+                        unoptimized
                         sizes="(min-width: 1024px) 384px, (min-width: 640px) 50vw, 100vw"
                         className="object-cover"
                     />
