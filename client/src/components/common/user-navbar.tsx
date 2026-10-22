@@ -42,7 +42,7 @@ export function UserNavbar() {
     return (
         <header className="sticky top-0 z-50 border-b border-[#10302B]/10 bg-primary text-white">
             <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-6 px-6 md:px-8">
-                <Logo width={108} height={50} />
+                <Logo width={110} height={40} />
 
                 <div className="flex items-center gap-2">
                     <nav
