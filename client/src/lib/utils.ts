@@ -64,16 +64,39 @@ const ASSET_URL = process.env.NEXT_PUBLIC_ASSET_URL ?? "";
 
 export function imageUrl(image?: string | null): string | undefined {
     if (!image) return undefined;
-    if (/^https?:\/\//.test(image)) {
+
+    // Normalize: strip leading/trailing whitespace
+    let clean = image.trim();
+
+    // If the image URL contains api.fitalenta.co.id or fitalenta.co.id or localhost,
+    // strip the origin so it always resolves locally via relative path (/uploads/...)
+    // This avoids external roundtrips and 503 upstream errors from Next.js Image Optimization.
+    clean = clean.replace(/^https?:\/\/(?:api\.)?fitalenta\.co\.id/i, "");
+    clean = clean.replace(/^https?:\/\/(?:localhost|127\.0\.0\.1)(?::\d+)?/i, "");
+
+    // If it's still an external URL (e.g. from an external CDN or cloud storage), keep it
+    if (/^https?:\/\//.test(clean)) {
         try {
-            return encodeURI(decodeURI(image));
+            return encodeURI(decodeURI(clean));
         } catch {
-            return encodeURI(image);
+            return encodeURI(clean);
         }
     }
 
-    const path = image.startsWith("/") ? image : `/${image}`;
-    const fullUrl = ASSET_URL ? `${ASSET_URL}${path}` : path;
+    const path = clean.startsWith("/") ? clean : `/${clean}`;
+
+    // Never prepend api.fitalenta.co.id or localhost from ASSET_URL
+    let base = ASSET_URL;
+    if (
+        base.includes("api.fitalenta.co.id") ||
+        base.includes("fitalenta.co.id") ||
+        base.includes("localhost") ||
+        base.includes("127.0.0.1")
+    ) {
+        base = "";
+    }
+
+    const fullUrl = base ? `${base}${path}` : path;
 
     try {
         return encodeURI(decodeURI(fullUrl));
