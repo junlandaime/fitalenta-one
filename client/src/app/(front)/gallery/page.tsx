@@ -8,6 +8,7 @@ export const metadata: Metadata = {
     description: "Empowering businesses and individuals with tailored solutions.",
 };
 
+export const dynamic = "force-dynamic";
 
 export default async function GalleryPage() {
     const items = await getGallery();

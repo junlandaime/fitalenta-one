@@ -9,6 +9,8 @@ export const metadata: Metadata = {
     description: "Empowering businesses and individuals with tailored solutions.",
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function ServicesPage() {
     const services = await getServices();
 

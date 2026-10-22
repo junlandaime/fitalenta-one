@@ -11,6 +11,8 @@ export const metadata: Metadata = {
     description: "Kenali FITALENTA: cerita, visi misi, nilai, dan tim kami.",
 };
 
+export const dynamic = "force-dynamic";
+
 const wrap = "mx-auto w-full max-w-6xl px-6";
 
 function Heading({ eyebrow, title, sub }: { eyebrow?: string; title: string; sub?: string }) {

@@ -14,6 +14,8 @@ export const metadata: Metadata = {
     description: "Empowering businesses and individuals to grow.",
 };
 
+export const dynamic = "force-dynamic";
+
 export default function Home() {
   return (
     <>
