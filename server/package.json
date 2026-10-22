@@ -19,10 +19,11 @@
     "seed:gallery": "node prisma/seeds/seed-galleries.js",
     "seed:featured": "node prisma/seeds/seed-featured.js",
     "seed:all": "node prisma/seeds/seed-admin.js && node prisma/seeds/seed-superadmin.js && node prisma/seeds/seed-programs.js && node prisma/seeds/seed-events-articles.js && node prisma/seeds/seed-testimonials-clients-services.js && node prisma/seeds/seed-team-members.js && node prisma/seeds/seed-galleries.js && node prisma/seeds/seed-featured.js",
+    "migrate:role": "node prisma/seeds/apply-role-migration.js || tsx prisma/apply-role-migration.ts",
     "migrate:participants": "node prisma/seeds/migrate-participants.js",
     "reset:passwords": "tsx src/scripts/reset-participant-passwords.ts",
     "verify:passwords": "tsx src/scripts/verify-participant-passwords.ts",
-    "build:seeds": "esbuild prisma/seed-admin.ts prisma/seed-superadmin.ts prisma/seed-programs.ts prisma/seed-events-articles.ts prisma/seed-testimonials-clients-services.ts prisma/seed-team-members.ts prisma/seed-galleries.ts prisma/seed-featured.ts src/scripts/migrate-participants.ts --bundle --platform=node --format=esm --packages=external --outdir=prisma/seeds --entry-names=[name]",
+    "build:seeds": "esbuild prisma/seed-admin.ts prisma/seed-superadmin.ts prisma/apply-role-migration.ts prisma/seed-programs.ts prisma/seed-events-articles.ts prisma/seed-testimonials-clients-services.ts prisma/seed-team-members.ts prisma/seed-galleries.ts prisma/seed-featured.ts src/scripts/migrate-participants.ts --bundle --platform=node --format=esm --packages=external --outdir=prisma/seeds --entry-names=[name]",
     "seed:testimonials-clients-services": "node prisma/seeds/seed-testimonials-clients-services.js"
   },
   "author": "fitalenta-dev",

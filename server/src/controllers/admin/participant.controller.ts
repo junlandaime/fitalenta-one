@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import type ExcelJS from "exceljs";
 import { matchedData } from "express-validator";
 import { XLSX_MIME } from "../../config/participant.config";
@@ -17,14 +17,22 @@ async function sendWorkbook(res: Response, filename: string, workbook: ExcelJS.W
   res.end();
 }
 
-export async function exportXlsx(req: Request, res: Response) {
-  const filters = matchedData<ParticipantExportFilters>(req);
-  const rows = await exportParticipants(filters);
-  return sendWorkbook(res, `data-peserta-${todayStamp()}.xlsx`, buildParticipantWorkbook(rows));
+export async function exportXlsx(req: Request, res: Response, next: NextFunction) {
+  try {
+    const filters = matchedData<ParticipantExportFilters>(req);
+    const rows = await exportParticipants(filters);
+    return await sendWorkbook(res, `data-peserta-${todayStamp()}.xlsx`, buildParticipantWorkbook(rows));
+  } catch (err) {
+    next(err);
+  }
 }
 
-export async function template(_req: Request, res: Response) {
-  return sendWorkbook(res, "template-data-peserta-fitalenta.xlsx", buildParticipantTemplateWorkbook());
+export async function template(_req: Request, res: Response, next: NextFunction) {
+  try {
+    return await sendWorkbook(res, "template-data-peserta-fitalenta.xlsx", buildParticipantTemplateWorkbook());
+  } catch (err) {
+    next(err);
+  }
 }
 
 export async function importXlsx(req: Request, res: Response) {

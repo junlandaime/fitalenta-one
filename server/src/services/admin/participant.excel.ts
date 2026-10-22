@@ -47,7 +47,12 @@ export interface ParticipantExportRow {
   amountPaid: string | null;
 }
 
-const toExcelDate = (date: Date) => new Date(date.getTime() + JAKARTA_OFFSET_MS);
+function toExcelDate(date: unknown): Date | null {
+  if (!date) return null;
+  const d = date instanceof Date ? date : new Date(date as string | number);
+  if (isNaN(d.getTime())) return null;
+  return new Date(d.getTime() + JAKARTA_OFFSET_MS);
+}
 
 function createParticipantWorkbook(): { workbook: ExcelJS.Workbook; sheet: ExcelJS.Worksheet } {
   const workbook = new ExcelJS.Workbook();
@@ -122,7 +127,7 @@ export function buildParticipantWorkbook(rows: ParticipantExportRow[]): ExcelJS.
       companyName: row.companyName,
       placementDate: row.placementDate ? toExcelDate(row.placementDate) : null,
       paymentStatus: row.paymentStatus ? (PAYMENT_STATUS_LABELS_PARTICIPANT[row.paymentStatus] ?? row.paymentStatus) : null,
-      amountPaid: row.amountPaid ? Number(row.amountPaid) : null,
+      amountPaid: row.amountPaid && !isNaN(Number(row.amountPaid)) ? Number(row.amountPaid) : null,
     });
   });
 
