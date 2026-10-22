@@ -38,11 +38,11 @@ export async function proxy(request: NextRequest) {
         return NextResponse.redirect(new URL(getHomeByRole(role), request.url));
     }
 
-    if (pathname.startsWith("/admin") && role !== "admin") {
+    if (pathname.startsWith("/admin") && role !== "admin" && role !== "superadmin") {
         return NextResponse.redirect(new URL(getHomeByRole(role), request.url));
     }
 
-    if (pathname.startsWith("/editor") && role === "user") {
+    if (pathname.startsWith("/editor") && role !== "editor" && role !== "admin" && role !== "superadmin") {
         return NextResponse.redirect(new URL(getHomeByRole(role), request.url));
     }
 

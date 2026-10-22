@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { CircleAlert, ClipboardCheck, RefreshCw } from "lucide-react";
+import Link from "next/link";
+import { CircleAlert, ClipboardCheck, FileSpreadsheet, RefreshCw } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
@@ -59,10 +60,18 @@ export function SelectionManagementView() {
                         Kelola proses seleksi, kelulusan, penempatan, dan status penyaluran peserta.
                     </p>
                 </div>
-                <Button onClick={refresh} disabled={refreshing}>
-                    <RefreshCw className={refreshing ? "animate-spin" : undefined} data-icon="inline-start" aria-hidden />
-                    Refresh Data
-                </Button>
+                <div className="flex items-center gap-2">
+                    <Button variant="outline" asChild>
+                        <Link href="/admin/peserta">
+                            <FileSpreadsheet data-icon="inline-start" aria-hidden />
+                            Export / Import Peserta
+                        </Link>
+                    </Button>
+                    <Button onClick={refresh} disabled={refreshing}>
+                        <RefreshCw className={refreshing ? "animate-spin" : undefined} data-icon="inline-start" aria-hidden />
+                        Refresh Data
+                    </Button>
+                </div>
             </div>
 
             {summary.isError ? (

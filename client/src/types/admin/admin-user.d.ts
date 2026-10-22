@@ -1,4 +1,4 @@
-export type AdminUserRole = "user" | "editor" | "admin";
+export type AdminUserRole = "user" | "editor" | "admin" | "superadmin";
 
 export type AdminUser = {
     id: number;
@@ -8,6 +8,7 @@ export type AdminUser = {
     role: AdminUserRole;
     createdAt: string;
     updatedAt: string;
+    registrationsCount: number;
     relatedDataCount: number;
     canDelete: boolean;
 };

@@ -18,10 +18,17 @@ interface AdminSeed {
   password: string;
   name: string;
   phone?: string;
-  role: "admin" | "editor";
+  role: "superadmin" | "admin" | "editor";
 }
 
 const admins: AdminSeed[] = [
+  {
+    email: "superadmin@fitalenta.id",
+    password: "SuperAdmin@123",
+    name: "Super Admin",
+    phone: "081234567899",
+    role: "superadmin",
+  },
   {
     email: "admin@fitalenta.id",
     password: "Admin@123",

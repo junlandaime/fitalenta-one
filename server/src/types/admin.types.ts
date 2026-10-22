@@ -110,6 +110,7 @@ export interface RegistrationDetail {
 export interface UserSummary {
   total: number;
   participants: number;
+  superAdmins: number;
   administrators: number;
   editors: number;
   withPhone: number;
@@ -128,6 +129,7 @@ export interface UserItem {
   role: Role;
   createdAt: Date;
   updatedAt: Date;
+  registrationsCount: number;
   relatedDataCount: number;
   canDelete: boolean;
 }

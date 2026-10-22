@@ -30,6 +30,7 @@ function toUserItem(user: UserRecord, currentUserId: number): UserItem {
     role: user.role,
     createdAt: user.createdAt,
     updatedAt: user.updatedAt,
+    registrationsCount: user._count.registrations,
     relatedDataCount,
     canDelete: user.id !== currentUserId && relatedDataCount === 0,
   };
@@ -71,6 +72,7 @@ export async function getSummary(): Promise<UserSummary> {
   return {
     total,
     participants: countByRole("user"),
+    superAdmins: countByRole("superadmin"),
     administrators: countByRole("admin"),
     editors: countByRole("editor"),
     withPhone,

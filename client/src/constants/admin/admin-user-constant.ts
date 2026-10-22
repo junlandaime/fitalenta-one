@@ -1,6 +1,6 @@
 import type { AdminUserRole } from "@/types/admin/admin-user";
 
-export const ADMIN_USER_ROLES = ["user", "editor", "admin"] as const satisfies readonly AdminUserRole[];
+export const ADMIN_USER_ROLES = ["user", "editor", "admin", "superadmin"] as const satisfies readonly AdminUserRole[];
 
 type RoleMeta = {
     label: string;
@@ -26,6 +26,12 @@ export const ROLE_META: Record<AdminUserRole, RoleMeta> = {
         subtitle: "Administrator",
         className:
             "border-transparent bg-violet-500/10 text-violet-700 dark:text-violet-400",
+    },
+    superadmin: {
+        label: "Super Admin",
+        subtitle: "Akses Penuh (Admin & Editor)",
+        className:
+            "border-transparent bg-amber-500/10 text-amber-700 dark:text-amber-400",
     },
 };
 

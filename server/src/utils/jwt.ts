@@ -1,9 +1,10 @@
 import jwt, { SignOptions } from "jsonwebtoken";
+import { Role } from "../../generated/prisma/client";
 
 export interface TokenPayload {
   userId: number;
   email: string;
-  role: "admin" | "editor" | "user";
+  role: Role;
 }
 
 const JWT_SECRET = process.env.JWT_SECRET as string;

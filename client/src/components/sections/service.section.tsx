@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { getServices } from "@/services/service-service";
+import { safely } from "@/lib/utils";
 import type { ServiceItem } from "@/types/service";
 
 const HEADING_ID = "services-heading";
@@ -33,7 +34,7 @@ function ServiceItem({ service }: { service: ServiceItem }) {
 }
 
 export async function ServicesSection() {
-    const services = await getServices();
+    const services = await safely(getServices, [], "services");
     if (services.length === 0) return null;
 
     return (
@@ -48,22 +49,19 @@ export async function ServicesSection() {
                         <span aria-hidden className="h-2.5 w-2.5 bg-secondary" />
                         OUR SERVICES
                     </p>
-
                     <h2
                         id={HEADING_ID}
-                        className="mt-5 text-balance text-3xl font-semibold leading-tight tracking-tight sm:text-4xl lg:text-5xl"
+                        className="mt-4 font-serif text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl"
                     >
-                        Solutions for People, Business, and Organizations.
+                        Solusi terintegrasi untuk pertumbuhan Anda.
                     </h2>
-
-                    <p className="mt-6 max-w-md text-pretty text-base leading-relaxed text-[#10302B]/75 sm:text-lg">
-                        Our services cover different needs across human capital, education,
-                        business development, branding, events, and professional
-                        development.
+                    <p className="mt-4 max-w-md text-base leading-relaxed text-[#10302B]/75">
+                        Kami menyediakan layanan menyeluruh yang dirancang untuk
+                        menjawab tantangan dan kebutuhan spesifik Anda.
                     </p>
                 </header>
 
-                <ul>
+                <ul className="divide-y divide-[#10302B]/15">
                     {services.map((service) => (
                         <ServiceItem key={service.slug} service={service} />
                     ))}

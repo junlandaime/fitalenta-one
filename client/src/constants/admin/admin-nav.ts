@@ -17,7 +17,7 @@ export type AdminAreaConfig = {
     nav: AdminNavEntry[];
 };
 
-export const ADMIN_ROLES: readonly string[] = ["admin", "editor"];
+export const ADMIN_ROLES: readonly string[] = ["superadmin", "admin", "editor"];
 
 export const ADMIN_NAV: AdminNavEntry[] = [
     { type: "link", title: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
@@ -28,6 +28,7 @@ export const ADMIN_NAV: AdminNavEntry[] = [
         items: [
             { title: "Pembayaran", href: "/admin/pembayaran" },
             { title: "Seleksi & Penempatan", href: "/admin/seleksi" },
+            { title: "Data Peserta", href: "/admin/peserta" },
             { title: "Program", href: "/admin/program" },
             { title: "Kategori Program", href: "/admin/kategori-program" },
             { title: "User", href: "/admin/user" },

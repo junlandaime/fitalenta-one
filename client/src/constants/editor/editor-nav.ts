@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import type { AdminAreaConfig } from "@/constants/admin/admin-nav";
 
-export const EDITOR_ROLES: readonly string[] = ["admin", "editor"];
+export const EDITOR_ROLES: readonly string[] = ["superadmin", "admin", "editor"];
 
 export const EDITOR_AREA: AdminAreaConfig = {
     basePath: "/editor",

@@ -27,6 +27,7 @@ import adminSelectionPlacementRoutes from "./admin/selectionPlacement.routes";
 import adminFinancialReportRoutes from "./admin/financialReport.routes";
 import adminCmsRoutes from "./admin/cms.routes";
 import adminProgramCategoryRoutes from "./admin/programCategory.routes";
+import adminParticipantRoutes from "./admin/participant.routes";
 
 const router = Router();
 
@@ -58,5 +59,6 @@ router.use("/admin/selection-placements", adminSelectionPlacementRoutes);
 router.use("/admin/financial-reports", adminFinancialReportRoutes);
 router.use("/admin/cms", adminCmsRoutes);
 router.use("/admin/program-categories", adminProgramCategoryRoutes);
+router.use("/admin/participants", adminParticipantRoutes);
 
 export default router;

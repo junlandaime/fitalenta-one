@@ -4,6 +4,7 @@ import { useEffect, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ADMIN_AREA, type AdminAreaConfig } from "@/constants/admin/admin-nav";
+import { SUPERADMIN_AREA } from "@/constants/admin/superadmin-nav";
 import { useCurrentUser } from "@/hooks/auth/use-current-user";
 import { AdminHeader } from "./admin-header";
 import { AdminSidebarContent } from "./admin-sidebar";
@@ -32,23 +33,26 @@ type AdminShellProps = {
 export function AdminShell({ children, area = ADMIN_AREA }: AdminShellProps) {
     const router = useRouter();
     const { data: user, isError } = useCurrentUser();
-    const allowed = user ? area.roles.includes(user.role) : false;
+
+    // Superadmin gets the combined area config
+    const resolvedArea = user?.role === "superadmin" ? SUPERADMIN_AREA : area;
+    const allowed = user ? resolvedArea.roles.includes(user.role) : false;
 
     useEffect(() => {
-        if (isError) router.replace(`/login?next=${area.basePath}`);
+        if (isError) router.replace(`/login?next=${resolvedArea.basePath}`);
         else if (user && !allowed) router.replace("/user/dashboard");
-    }, [isError, user, allowed, router, area.basePath]);
+    }, [isError, user, allowed, router, resolvedArea.basePath]);
 
     if (!user || !allowed) return <ShellSkeleton />;
 
     return (
         <div className="flex min-h-svh bg-muted/30">
             <aside className="sticky top-0 hidden h-svh w-64 shrink-0 border-r bg-sidebar text-sidebar-foreground lg:block">
-                <AdminSidebarContent user={user} area={area} />
+                <AdminSidebarContent user={user} area={resolvedArea} />
             </aside>
 
             <div className="flex min-w-0 flex-1 flex-col">
-                <AdminHeader user={user} area={area} />
+                <AdminHeader user={user} area={resolvedArea} />
                 <div className="flex-1 p-4 md:p-6">{children}</div>
             </div>
         </div>
