@@ -37,6 +37,8 @@ cd ..
 
 echo "[5/6] Menyalakan kembali seluruh service di PM2..."
 npx pm2 start ecosystem.config.cjs || npx pm2 restart all
+npx pm2 save
+chmod +x keep-alive.sh 2>/dev/null || true
 
 echo "[6/6] Status PM2 terkini:"
 npx pm2 status
