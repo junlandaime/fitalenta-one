@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CalendarDays, CalendarPlus, Clock, MapPin, Tag, Users } from "lucide-react";
-import { formatDate, formatTime, imageUrl, isPastEvent, stripHtml } from "@/lib/utils";
+import { formatDate, formatTime, formatPlainText, imageUrl, isPastEvent, stripHtml } from "@/lib/utils";
 import PageHero from "@/components/common/page-hero";
 import { EventCard } from "../features/event-card";
 import { getEventBySlug } from "@/services/event-service";
@@ -74,7 +74,7 @@ export default async function EventDetailPage({ params }: Props) {
                         </div>
                         <h2 className="mt-4 text-2xl font-bold text-primary md:text-3xl">About the Event</h2>
                         <div className="mt-4 whitespace-pre-line leading-8 text-slate-700">
-                            {stripHtml(event.description)}
+                            {formatPlainText(event.description)}
                         </div>
                     </article>
 

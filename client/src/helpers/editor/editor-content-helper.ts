@@ -1,5 +1,5 @@
 import { CONTENT_IMAGE_RULES, JAKARTA_OFFSET } from "@/constants/editor/editor-content-constant";
-import { isPastEvent } from "@/lib/utils";
+import { formatPlainText, isPastEvent } from "@/lib/utils";
 import type { EditorArticle, EditorArticleStatus } from "@/types/editor/editor-article";
 
 const HOUR_MS = 60 * 60 * 1000;
@@ -32,36 +32,11 @@ export function validateImageFile(file: File): string | null {
 }
 
 export function looksLikeHtml(text: string) {
-    return /<\/?[a-z][^>]*>/i.test(text);
+    return /<\/?[a-z][^>]*>/i.test(text) || /&[a-z0-9#]+;/i.test(text) || /\\r|\\n/.test(text);
 }
 
 export function htmlToPlainText(html: string) {
-    const text = html
-        .replace(/<br\s*\/?>/gi, "\n")
-        .replace(/<li[^>]*>/gi, "- ")
-        .replace(/<\/(p|div|h[1-6]|li|ul|ol|blockquote|tr|table|section|article)>/gi, "\n\n")
-        .replace(/<[^>]*>/g, "");
-
-    let decoded: string;
-    if (typeof document !== "undefined") {
-        const textarea = document.createElement("textarea");
-        textarea.innerHTML = text;
-        decoded = textarea.value;
-    } else {
-        decoded = text
-            .replace(/&nbsp;/g, " ")
-            .replace(/&lt;/g, "<")
-            .replace(/&gt;/g, ">")
-            .replace(/&quot;/g, '"')
-            .replace(/&#39;/g, "'")
-            .replace(/&amp;/g, "&");
-    }
-
-    return decoded
-        .replace(/\u00a0/g, " ")
-        .replace(/[ \t]+\n/g, "\n")
-        .replace(/\n{3,}/g, "\n\n")
-        .trim();
+    return formatPlainText(html);
 }
 
 export function getArticleStatus(article: Pick<EditorArticle, "eventDate">): EditorArticleStatus {

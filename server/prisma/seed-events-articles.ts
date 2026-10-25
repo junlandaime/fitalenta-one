@@ -55,10 +55,68 @@ interface ScrapedArticle {
   image_url: string;
   excerpt: string;
   content_html: string;
+  content_text?: string;
+}
+
+const HTML_ENTITIES: Record<string, string> = {
+  "&nbsp;": " ",
+  "&amp;": "&",
+  "&lt;": "<",
+  "&gt;": ">",
+  "&quot;": '"',
+  "&#39;": "'",
+  "&apos;": "'",
+  "&mdash;": "—",
+  "&ndash;": "–",
+  "&hellip;": "…",
+  "&bull;": "•",
+  "&middot;": "·",
+  "&rsquo;": "’",
+  "&lsquo;": "‘",
+  "&rdquo;": "”",
+  "&ldquo;": "“",
+  "&copy;": "©",
+  "&reg;": "®",
+  "&trade;": "™",
+};
+
+export function cleanToPlainText(input?: string | null): string {
+  if (!input) return "";
+  let text = input.replace(/\\r\\n/g, "\n").replace(/\\n/g, "\n").replace(/\\r/g, "\n");
+  for (const [entity, replacement] of Object.entries(HTML_ENTITIES)) {
+    text = text.replaceAll(entity, replacement);
+  }
+  text = text.replace(/&#(\d+);/g, (_, dec) => {
+    try {
+      return String.fromCodePoint(Number(dec));
+    } catch {
+      return "";
+    }
+  });
+  text = text.replace(/&#x([0-9a-fA-F]+);/g, (_, hex) => {
+    try {
+      return String.fromCodePoint(parseInt(hex, 16));
+    } catch {
+      return "";
+    }
+  });
+  text = text
+    .replace(/<br\s*\/?>/gi, "\n")
+    .replace(/<li[^>]*>/gi, "\n- ")
+    .replace(/<\/(p|div|h[1-6]|li|ul|ol|blockquote|tr|table|section|article)>/gi, "\n\n")
+    .replace(/<hr\s*\/?>/gi, "\n\n")
+    .replace(/<[^>]*>/g, "");
+  text = text
+    .replace(/\u00a0/g, " ")
+    .replace(/[ \t]+\n/g, "\n")
+    .replace(/\n[ \t]+/g, "\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+  return text;
 }
 
 function buildEventDescription(e: ScrapedEvent): string {
-  let text = e.description.trim();
+  let text = cleanToPlainText(e.description);
 
   if (e.what_to_expect?.length) {
     text += "\n\nYang Akan Didapat:\n";
@@ -137,7 +195,7 @@ async function main() {
     const imagePath = a.image_url ? a.image_url.replace(/^https?:\/\/[^\/]+\/storage\/articles\//, "/uploads/articles/") : null;
     const articleData = {
       title: a.title,
-      content: a.content_html,
+      content: a.content_text ? a.content_text.trim() : cleanToPlainText(a.content_html),
       excerpt: a.excerpt,
       eventDate: new Date(a.published_at),
       image: imagePath,

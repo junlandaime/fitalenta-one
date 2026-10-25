@@ -6,7 +6,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ServiceIcon } from "../features/service-icon";
 import { getClientInfo } from "@/actions/action";
-import { imageUrl } from "@/lib/utils";
+import { formatPlainText, imageUrl } from "@/lib/utils";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -54,11 +54,11 @@ export default async function ServiceDetailPage({ params }: Props) {
 
                         {service.summary && (
                             <p className="mb-5 text-lg font-medium leading-relaxed text-slate-900">
-                                {service.summary}
+                                {formatPlainText(service.summary)}
                             </p>
                         )}
 
-                        <p className="whitespace-pre-line leading-relaxed text-slate-700">{content.intro}</p>
+                        <p className="whitespace-pre-line leading-relaxed text-slate-700">{formatPlainText(content.intro)}</p>
 
                         {content.sections?.map((section, sIdx) => {
                             const ListTag = section.ordered ? "ol" : "ul";
@@ -80,7 +80,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                                                     className={section.ordered ? "pl-2" : "border-l-4 border-secondary pl-4"}
                                                 >
                                                     <h4 className="font-bold text-slate-900">{p.title}</h4>
-                                                    <p className="mt-1 leading-relaxed text-slate-600">{p.desc}</p>
+                                                    <p className="mt-1 leading-relaxed text-slate-600">{formatPlainText(p.desc)}</p>
                                                 </li>
                                             ))}
                                         </ListTag>
@@ -113,7 +113,7 @@ export default async function ServiceDetailPage({ params }: Props) {
 
                         {content.closing && (
                             <p className="mt-8 whitespace-pre-line leading-relaxed text-slate-700">
-                                {content.closing}
+                                {formatPlainText(content.closing)}
                             </p>
                         )}
                     </article>

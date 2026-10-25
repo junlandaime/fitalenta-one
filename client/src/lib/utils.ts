@@ -56,8 +56,94 @@ export function isPastEvent(iso: string) {
     return date.getTime() < Date.now();
 }
 
-export function stripHtml(html: string) {
-    return html.replace(/<[^>]*>/g, " ").replace(/[ \t]+/g, " ").trim();
+const HTML_ENTITIES: Record<string, string> = {
+    "&nbsp;": " ",
+    "&amp;": "&",
+    "&lt;": "<",
+    "&gt;": ">",
+    "&quot;": '"',
+    "&#39;": "'",
+    "&apos;": "'",
+    "&mdash;": "—",
+    "&ndash;": "–",
+    "&hellip;": "…",
+    "&bull;": "•",
+    "&middot;": "·",
+    "&rsquo;": "’",
+    "&lsquo;": "‘",
+    "&rdquo;": "”",
+    "&ldquo;": "“",
+    "&copy;": "©",
+    "&reg;": "®",
+    "&trade;": "™",
+};
+
+export function decodeHtmlEntities(str?: string | null): string {
+    if (!str) return "";
+    let text = str;
+    for (const [entity, replacement] of Object.entries(HTML_ENTITIES)) {
+        text = text.replaceAll(entity, replacement);
+    }
+    text = text.replace(/&#(\d+);/g, (_, dec) => {
+        try {
+            return String.fromCodePoint(Number(dec));
+        } catch {
+            return "";
+        }
+    });
+    text = text.replace(/&#x([0-9a-fA-F]+);/g, (_, hex) => {
+        try {
+            return String.fromCodePoint(parseInt(hex, 16));
+        } catch {
+            return "";
+        }
+    });
+    return text;
+}
+
+export function formatPlainText(htmlOrText?: string | null): string {
+    if (!htmlOrText) return "";
+
+    // 1. Unescape literal string escape sequences if any (\r\n, \n, \r)
+    let text = htmlOrText.replace(/\\r\\n/g, "\n").replace(/\\n/g, "\n").replace(/\\r/g, "\n");
+
+    // 2. Decode entities
+    text = decodeHtmlEntities(text);
+
+    // 3. Convert block HTML tags to appropriate newlines
+    text = text
+        .replace(/<br\s*\/?>/gi, "\n")
+        .replace(/<li[^>]*>/gi, "\n- ")
+        .replace(/<\/(p|div|h[1-6]|li|ul|ol|blockquote|tr|table|section|article)>/gi, "\n\n")
+        .replace(/<hr\s*\/?>/gi, "\n\n")
+        .replace(/<[^>]*>/g, "");
+
+    // 4. Handle non-breaking spaces and line cleaning
+    text = text
+        .replace(/\u00a0/g, " ")
+        .replace(/[ \t]+\n/g, "\n")
+        .replace(/\n[ \t]+/g, "\n")
+        .replace(/\n{3,}/g, "\n\n")
+        .trim();
+
+    return text;
+}
+
+export function stripHtml(htmlOrText?: string | null): string {
+    if (!htmlOrText) return "";
+
+    // Unescape literal escapes
+    let text = htmlOrText.replace(/\\r\\n/g, " ").replace(/\\n/g, " ").replace(/\\r/g, " ");
+
+    // Decode HTML entities
+    text = decodeHtmlEntities(text);
+
+    // Strip HTML tags and normalize whitespace
+    return text
+        .replace(/<[^>]*>/g, " ")
+        .replace(/\u00a0/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
 }
 
 const ASSET_URL = process.env.NEXT_PUBLIC_ASSET_URL ?? "";
@@ -133,7 +219,7 @@ export function formatIDR(value?: number | string | null) {
 
 export function toLines(text?: string | null): string[] {
     if (!text) return [];
-    return text
+    return formatPlainText(text)
         .split(/\r?\n/)
         .map((l) => l.replace(/^\s*(?:[-•*]|\d+[.)])\s+/, "").trim())
         .filter(Boolean);

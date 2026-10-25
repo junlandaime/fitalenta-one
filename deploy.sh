@@ -22,6 +22,7 @@ npx prisma generate
 node prisma/seeds/apply-role-migration.js || true
 node prisma/seeds/seed-galleries.js || true
 node prisma/seeds/seed-testimonials-clients-services.js || true
+node prisma/seeds/clean-content.js || true
 npm run build
 cd ..
 

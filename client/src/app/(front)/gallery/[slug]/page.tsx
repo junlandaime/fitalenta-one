@@ -4,7 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, CalendarDays } from "lucide-react";
 import { getGalleryById } from "@/services/gallery-service";
-import { formatDate, imageUrl, stripHtml } from "@/lib/utils";
+import { formatDate, formatPlainText, imageUrl, stripHtml } from "@/lib/utils";
 import PageHero from "@/components/common/page-hero";
 
 type Props = { params: Promise<{ slug?: string; id?: string }> };
@@ -83,7 +83,7 @@ export default async function GalleryDetailPage({ params }: Props) {
                             <div className="mt-3 h-1 w-12 rounded-full bg-primary" />
                             {item.description && (
                                 <p className="mt-8 whitespace-pre-line text-lg leading-8 text-slate-600">
-                                    {stripHtml(item.description)}
+                                    {formatPlainText(item.description)}
                                 </p>
                             )}
                         </div>

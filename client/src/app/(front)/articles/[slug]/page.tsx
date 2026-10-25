@@ -1,5 +1,5 @@
 import { getArticleBySlug } from "@/services/article-service";
-import { formatDate, imageUrl, stripHtml } from "@/lib/utils";
+import { formatDate, formatPlainText, imageUrl, stripHtml } from "@/lib/utils";
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -74,7 +74,7 @@ export default async function ArticleDetailPage({ params }: Props) {
                                 )}
                             </header>
                             <div className="mt-6 whitespace-pre-line leading-8 text-slate-700">
-                                {stripHtml(article.content)}
+                                {formatPlainText(article.content)}
                             </div>
                         </div>
                     </article>
