@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { QueryProvider } from "@/lib/providers/query-provider";
 import { ReactNode, Suspense } from "react";
 import { RouteProgress } from "@/components/common/route-progress";
+import Script from "next/script";
 
 const geistHeading = Geist({ subsets: ['latin'], variable: '--font-heading' });
 
@@ -25,6 +26,8 @@ export const metadata: Metadata = {
   description: "Empowering businesses and individuals to grow.",
 };
 
+const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || "GTM-M6LQMD8N";
+
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
@@ -33,6 +36,16 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
+        {GTM_ID && (
+          <noscript>
+            <iframe
+              src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+              height="0"
+              width="0"
+              style={{ display: "none", visibility: "hidden" }}
+            />
+          </noscript>
+        )}
         <Suspense fallback={null}>
           <RouteProgress />
         </Suspense>
@@ -41,6 +54,21 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             {children}
           </main>
         </QueryProvider>
+        {GTM_ID && (
+          <Script
+            id="google-tag-manager"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `
+                (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                })(window,document,'script','dataLayer','${GTM_ID}');
+              `,
+            }}
+          />
+        )}
       </body>
     </html>
   );
