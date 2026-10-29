@@ -82,8 +82,23 @@ JWT_EXPIRES_IN=7d
 DEFAULT_PARTICIPANT_PASSWORD=Fitalenta2026!
 
 # Layanan Email (Resend / SMTP)
-RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxxxxxx
-MAIL_FROM="Fitalenta <no-reply@fitalenta.co.id>"
+# URL Frontend untuk Tautan Aktivasi Email
+CLIENT_URL=https://fitalenta.co.id
+
+# Layanan Email: SMTP cPanel (100% Gratis - Rekomendasi Utama)
+SMTP_HOST=mail.fitalenta.co.id
+SMTP_PORT=465
+SMTP_SECURE=true
+SMTP_USER=noreply@fitalenta.co.id
+SMTP_PASS=PasswordEmailCpanelAnda
+SMTP_REJECT_UNAUTHORIZED=false
+AUTH_EMAIL_FROM="Fitalenta <noreply@fitalenta.co.id>"
+CONTACT_EMAIL_FROM="Fitalenta <noreply@fitalenta.co.id>"
+CONTACT_EMAIL_TO=info@fitalenta.co.id
+
+# Alternatif: Resend API
+# RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxxxxxx
+MAIL_FROM="Fitalenta <noreply@fitalenta.co.id>"
 
 # Cloudflare Turnstile (Captcha)
 TURNSTILE_SECRET_KEY=0x4AAAAAAxxxxxxxxxxxxxxxxxxxx

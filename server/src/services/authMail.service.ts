@@ -1,9 +1,9 @@
 import { getClientBaseUrl } from "../config/email.config";
 import { PASSWORD_RESET_TTL_MINUTES } from "../config/password.config";
-import resend from "../config/resend";
 import { signEmailVerificationToken } from "../utils/emailVerification";
 import { signPasswordResetToken } from "../utils/passwordResetToken";
 import { renderActionEmail } from "../utils/templates/email/actionEmail";
+import { sendMail } from "./mailer.service";
 
 interface MailRecipient {
   id: number;
@@ -20,18 +20,13 @@ function buildClientLink(path: string, token: string): string {
 }
 
 async function deliver(to: string, subject: string, { html, text }: { html: string; text: string }): Promise<void> {
-  const { error } = await resend.emails.send({
-    from: (process.env.AUTH_EMAIL_FROM || process.env.CONTACT_EMAIL_FROM) as string,
-    to,
-    subject,
-    html,
-    text,
-  });
-  if (error) throw new Error(error.message);
+  await sendMail({ to, subject, html, text });
 }
 
 function dispatch(task: Promise<void>, context: string): void {
-  task.catch((error) => console.error(`${context} error:`, error));
+  task
+    .then(() => console.log(`[Mail] ${context} berhasil dikirim.`))
+    .catch((error) => console.error(`[Mail Error] ${context} gagal:`, error?.message || error));
 }
 
 export function queueVerificationEmail(user: MailRecipient): void {

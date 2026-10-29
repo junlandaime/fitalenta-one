@@ -1,6 +1,6 @@
 import prisma from "../config/prisma";
-import resend from "../config/resend";
 import { renderContactEmail } from "../utils/templates/email/contactEmail";
+import { sendMail } from "./mailer.service";
 
 interface ContactInput {
   name: string;
@@ -16,9 +16,11 @@ export async function submitContactMessage(data: ContactInput) {
 
   const { html, text } = renderContactEmail(data);
 
-  await resend.emails.send({
-    from: process.env.CONTACT_EMAIL_FROM as string,
-    to: process.env.CONTACT_EMAIL_TO as string,
+  const to = process.env.CONTACT_EMAIL_TO || process.env.SMTP_USER || "info@fitalenta.co.id";
+
+  await sendMail({
+    to,
+    from: process.env.CONTACT_EMAIL_FROM,
     replyTo: data.email,
     subject: `[Contact Form] ${data.subject}`,
     html,
