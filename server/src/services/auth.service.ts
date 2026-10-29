@@ -4,7 +4,6 @@ import { signToken } from "../utils/jwt";
 import { verifyEmailVerificationToken } from "../utils/emailVerification";
 import { queueVerificationEmail } from "./authMail.service";
 
-const DUMMY_HASH = "$2a$12$CwTycUXWue0Thq9StjUM0uJ8vE1eV6nNKD.krgO0.7q0vQqJqkq0O";
 const PRISMA_UNIQUE_VIOLATION = "P2002";
 
 interface RegisterInput {
@@ -20,7 +19,18 @@ export async function registerUser(data: RegisterInput): Promise<void> {
 
   const existing = await prisma.user.findUnique({ where: { email } });
   if (existing) {
-    if (!existing.emailVerifiedAt) queueVerificationEmail(existing);
+    if (!existing.emailVerifiedAt) {
+      // Jika akun lama belum diverifikasi, perbarui password dan profil ke input pendaftaran terbaru
+      const updatedUser = await prisma.user.update({
+        where: { id: existing.id },
+        data: {
+          password: hashedPassword,
+          name: data.name.trim(),
+          phone: data.phone.trim(),
+        },
+      });
+      queueVerificationEmail(updatedUser);
+    }
     return;
   }
 
@@ -45,11 +55,21 @@ export async function loginUser(email: string, password: string) {
   const normalizedEmail = email.trim().toLowerCase();
 
   const user = await prisma.user.findUnique({ where: { email: normalizedEmail } });
+  if (!user) {
+    console.warn(`[Auth Warning] Login gagal: Email tidak terdaftar (${normalizedEmail})`);
+    throw new Error("INVALID_CREDENTIALS");
+  }
 
-  const valid = await comparePassword(password, user?.password ?? DUMMY_HASH);
-  if (!user || !valid) throw new Error("INVALID_CREDENTIALS");
+  const valid = await comparePassword(password, user.password);
+  if (!valid) {
+    console.warn(`[Auth Warning] Login gagal: Password tidak cocok untuk email (${normalizedEmail})`);
+    throw new Error("INVALID_CREDENTIALS");
+  }
 
-  if (user.role === "user" && !user.emailVerifiedAt) throw new Error("EMAIL_NOT_VERIFIED");
+  if (user.role === "user" && !user.emailVerifiedAt) {
+    console.warn(`[Auth Warning] Login ditolak: Email belum diverifikasi (${normalizedEmail})`);
+    throw new Error("EMAIL_NOT_VERIFIED");
+  }
 
   const token = signToken({ userId: user.id, email: user.email, role: user.role });
   return { user, token };

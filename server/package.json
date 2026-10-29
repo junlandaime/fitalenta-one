@@ -26,7 +26,8 @@
     "build:seeds": "esbuild prisma/seed-admin.ts prisma/seed-superadmin.ts prisma/apply-role-migration.ts prisma/seed-programs.ts prisma/seed-events-articles.ts prisma/seed-testimonials-clients-services.ts prisma/seed-team-members.ts prisma/seed-galleries.ts prisma/seed-featured.ts prisma/clean-content.ts src/scripts/migrate-participants.ts --bundle --platform=node --format=esm --packages=external --outdir=prisma/seeds --entry-names=[name]",
     "clean:content": "node prisma/seeds/clean-content.js || tsx prisma/clean-content.ts",
     "seed:testimonials-clients-services": "node prisma/seeds/seed-testimonials-clients-services.js",
-    "test:email": "tsx src/scripts/test-email.ts"
+    "test:email": "tsx src/scripts/test-email.ts",
+    "user:password": "tsx src/scripts/set-user-password.ts"
   },
   "author": "fitalenta-dev",
   "license": "ISC",
