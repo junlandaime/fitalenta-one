@@ -38,7 +38,11 @@ export function ResetPasswordForm({ token }: { token: string }) {
             return;
         }
 
-        mutate({ token, newPassword: result.data.newPassword });
+        mutate({
+            token,
+            newPassword: result.data.newPassword,
+            confirmPassword: result.data.confirmPassword,
+        });
     }
 
     return (
@@ -65,11 +69,12 @@ export function ResetPasswordForm({ token }: { token: string }) {
             />
 
             {error && (
-                <div role="alert" className="space-y-1 rounded-md bg-destructive/10 px-4 py-3 text-sm text-destructive">
-                    <p>{error.message}</p>
-                    <p>
-                        <Link href="/forgot-password" className="font-semibold underline underline-offset-2">
-                            Minta tautan reset baru
+                <div role="alert" className="space-y-1.5 rounded-md bg-destructive/10 px-4 py-3 text-sm text-destructive">
+                    <p className="font-medium">{error.message}</p>
+                    <p className="text-xs text-muted-foreground">
+                        Tautan kedaluwarsa atau bermasalah?{" "}
+                        <Link href="/forgot-password" className="font-semibold text-primary underline underline-offset-2">
+                            Minta tautan reset baru di sini
                         </Link>
                     </p>
                 </div>

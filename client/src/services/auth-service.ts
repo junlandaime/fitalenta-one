@@ -36,12 +36,20 @@ export async function forgotPassword(payload: ForgotPasswordInput & CaptchaPaylo
     return data.message;
 }
 
-export async function resetPassword(payload: { token: string; newPassword: string }): Promise<string> {
+export async function resetPassword(payload: {
+    token: string;
+    newPassword: string;
+    confirmPassword?: string;
+}): Promise<string> {
     const { data } = await api.post<ApiResponse<null>>("/auth/reset-password", payload);
     return data.message;
 }
 
-export async function changePassword(payload: { currentPassword: string; newPassword: string }): Promise<string> {
+export async function changePassword(payload: {
+    currentPassword: string;
+    newPassword: string;
+    confirmPassword?: string;
+}): Promise<string> {
     const { data } = await api.post<ApiResponse<null>>("/auth/change-password", payload);
     return data.message;
 }

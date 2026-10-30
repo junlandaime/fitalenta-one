@@ -21,7 +21,8 @@ const newPasswordRule: ValidationChain = body("newPassword")
   .withMessage(`Password baru harus ${PASSWORD_MIN_LENGTH} sampai ${PASSWORD_MAX_LENGTH} karakter`);
 
 const confirmPasswordRule: ValidationChain = body("confirmPassword")
-  .custom((value, { req }) => value === req.body.newPassword)
+  .optional({ values: "falsy" })
+  .custom((value, { req }) => !value || value === req.body.newPassword)
   .withMessage("Konfirmasi password tidak cocok");
 
 const emailRule: ValidationChain = body("email")

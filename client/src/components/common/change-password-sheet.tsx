@@ -39,7 +39,11 @@ export function ChangePasswordSheet({ onClose }: { onClose: () => void }) {
         }
 
         mutate(
-            { currentPassword: result.data.currentPassword, newPassword: result.data.newPassword },
+            {
+                currentPassword: result.data.currentPassword,
+                newPassword: result.data.newPassword,
+                confirmPassword: result.data.confirmPassword,
+            },
             { onSuccess: () => setValues(initialValues) },
         );
     }

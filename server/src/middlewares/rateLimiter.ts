@@ -32,7 +32,7 @@ export const contactRateLimiter = limiter({
 
 export const registerRateLimiter = limiter({
   windowMs: HOUR,
-  limit: 5,
+  limit: 10,
   message: "Terlalu banyak percobaan registrasi. Silakan coba lagi nanti.",
 });
 
@@ -54,34 +54,34 @@ export const loginAccountRateLimiter = rateLimit({
 
 export const emailVerificationRateLimiter = limiter({
   windowMs: HOUR,
-  limit: 10,
+  limit: 15,
   message: "Terlalu banyak permintaan. Silakan coba lagi nanti.",
 });
 
 export const forgotPasswordIpRateLimiter = limiter({
-  windowMs: HOUR,
-  limit: 5,
-  message: "Terlalu banyak permintaan reset password. Silakan coba lagi nanti.",
+  windowMs: 15 * MINUTE,
+  limit: 20,
+  message: "Terlalu banyak permintaan reset password. Silakan coba lagi dalam beberapa menit.",
 });
 
 export const forgotPasswordEmailRateLimiter = rateLimit({
-  windowMs: HOUR,
-  limit: 3,
+  windowMs: 15 * MINUTE,
+  limit: 10,
   keyGenerator: emailKey,
-  message: { success: false, message: "Terlalu banyak permintaan reset password untuk email ini. Silakan coba lagi nanti." },
+  message: { success: false, message: "Terlalu banyak permintaan reset password untuk email ini. Silakan coba lagi dalam beberapa menit." },
   standardHeaders: true,
   legacyHeaders: false,
 });
 
 export const resetPasswordRateLimiter = limiter({
-  windowMs: HOUR,
-  limit: 10,
-  message: "Terlalu banyak percobaan reset password. Silakan coba lagi nanti.",
+  windowMs: 15 * MINUTE,
+  limit: 20,
+  message: "Terlalu banyak percobaan reset password. Silakan coba lagi dalam beberapa menit.",
 });
 
 export const changePasswordRateLimiter = rateLimit({
   windowMs: 15 * MINUTE,
-  limit: 5,
+  limit: 10,
   skipSuccessfulRequests: true,
   keyGenerator: userKey,
   message: { success: false, message: "Terlalu banyak percobaan ubah password. Silakan coba lagi dalam 15 menit." },
