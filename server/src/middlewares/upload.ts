@@ -19,6 +19,14 @@ interface UploaderOptions {
   maxFileSizeMB?: number;
 }
 
+const EXTENSION_BY_MIME: Record<string, string> = {
+  "image/jpeg": ".jpg",
+  "image/png": ".png",
+  "image/webp": ".webp",
+  "image/gif": ".gif",
+  "application/pdf": ".pdf",
+};
+
 function createUploader(folder: string, options: UploaderOptions = {}) {
   const {
     allowedMimeTypes = IMAGE_MIME_TYPES,
@@ -34,7 +42,10 @@ function createUploader(folder: string, options: UploaderOptions = {}) {
   const storage = multer.diskStorage({
     destination: (req, file, cb) => cb(null, uploadPath),
     filename: (req, file, cb) => {
-      const ext = path.extname(file.originalname);
+      const ext = EXTENSION_BY_MIME[file.mimetype];
+      if (!ext) {
+        return cb(new AppError("INVALID_FILE_TYPE", 400, invalidTypeMessage), "");
+      }
       const name = `${Date.now()}-${Math.round(Math.random() * 1e9)}${ext}`;
       cb(null, name);
     },
