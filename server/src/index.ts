@@ -6,6 +6,7 @@ import morgan from "morgan";
 import dotenv from "dotenv";
 import routes from "./routes";
 import { errorHandler } from "./middlewares/error-handler";
+import helmet from "helmet";
 
 dotenv.config();
 
@@ -24,13 +25,14 @@ allowedOrigins.forEach((origin) => {
   }
 });
 
+app.use(helmet({ crossOriginResourcePolicy: { policy: "cross-origin" } }));
 app.use(
   cors({
     origin: (origin, callback) => {
       if (!origin || allowedOrigins.includes(origin)) {
         return callback(null, true);
       }
-      return callback(null, true);
+      return callback(null, false);
     },
     credentials: true,
   })

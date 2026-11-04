@@ -11,7 +11,11 @@ export async function verifyTurnstile(req: Request, res: Response, next: NextFun
 
   const token = req.body?.turnstileToken;
   if (!token) {
-    return next();
+    return res.status(400).json({
+      success: false,
+      code: "CAPTCHA_REQUIRED",
+      message: "Verifikasi CAPTCHA wajib diselesaikan",
+    });
   }
   if (typeof token !== "string" || token.length > 2048) {
     return res.status(400).json({
