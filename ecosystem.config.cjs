@@ -8,8 +8,8 @@ module.exports = {
       exec_mode: "fork",
       autorestart: true,
       restart_delay: 3000,
-      max_memory_restart: "350M",
-      node_args: "--max-old-space-size=256",
+      max_memory_restart: "200M",
+      node_args: "--max-old-space-size=160",
       env: {
         NODE_ENV: "production",
         PORT: 5000,
@@ -24,8 +24,8 @@ module.exports = {
       exec_mode: "fork",
       autorestart: true,
       restart_delay: 3000,
-      max_memory_restart: "600M",
-      node_args: "--max-old-space-size=512",
+      max_memory_restart: "420M",
+      node_args: "--max-old-space-size=350",
       env: {
         NODE_ENV: "production",
         PORT: 3000,
