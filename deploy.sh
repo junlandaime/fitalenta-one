@@ -1,8 +1,14 @@
 #!/usr/bin/env bash
 set -e
 
+# Pastikan file lock dihapus saat script selesai atau diinterupsi
+APP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+LOCK_FILE="$APP_DIR/.deploying"
+touch "$LOCK_FILE"
+trap 'rm -f "$LOCK_FILE"' EXIT
+
 echo "=========================================="
-echo "  FITALENTA AUTOMATED DEPLOYMENT SCRIPT   "
+echo "  FITALENTA ZERO-DOWNTIME DEPLOYMENT      "
 echo "=========================================="
 
 # 1. Pastikan Node.js 20 CloudLinux aktif di PATH
@@ -10,13 +16,12 @@ if [ -d "/opt/alt/alt-nodejs20/root/usr/bin" ]; then
     export PATH=/opt/alt/alt-nodejs20/root/usr/bin:$PATH
 fi
 
-echo "[1/6] Menarik kode terbaru dari GitHub..."
+echo "[1/5] Menangani potensi konflik lokal & Menarik kode terbaru..."
+# Hindari kegagalan git pull karena package-lock.json lokal tersentuh npm di server
+git checkout -- server/package-lock.json client/package-lock.json 2>/dev/null || true
 git pull origin main
 
-echo "[2/6] Mengosongkan RAM server (stop sementara PM2)..."
-npx pm2 stop all || true
-
-echo "[3/6] Memperbarui Prisma & Build Backend (Express)..."
+echo "[2/5] Memperbarui Prisma & Build Backend (Express)..."
 cd server
 npx prisma generate
 node prisma/seeds/apply-role-migration.js || true
@@ -26,24 +31,24 @@ node prisma/seeds/clean-content.js || true
 npm run build
 cd ..
 
-echo "[4/6] Melakukan build Next.js frontend (mode hemat RAM)..."
+echo "[3/5] Melakukan build Next.js frontend (PM2 tetap melayani pengunjung)..."
 cd client
-rm -rf .next
+# Tidak menghapus folder .next sebelum build agar chunk lama tetap aktif melayani traffic
 export RAYON_NUM_THREADS=1
 export UV_THREADPOOL_SIZE=1
 export NEXT_CPU_NUM=1
-export NODE_OPTIONS="--max-old-space-size=1024"
+export NODE_OPTIONS="--max-old-space-size=768"
 npx next build --webpack
 cd ..
 
-echo "[5/6] Menyalakan kembali seluruh service di PM2..."
-npx pm2 start ecosystem.config.cjs || npx pm2 restart all
+echo "[4/5] Melakukan reload PM2 (pergantian instan tanpa downtime)..."
+npx pm2 reload all || npx pm2 restart all || npx pm2 start ecosystem.config.cjs
 npx pm2 save
 chmod +x keep-alive.sh 2>/dev/null || true
 
-echo "[6/6] Status PM2 terkini:"
+echo "[5/5] Status PM2 terkini:"
 npx pm2 status
 
 echo "=========================================="
-echo "  DEPLOY SELESAI & WEBSITE AKTIF!         "
+echo "  DEPLOY SUKSES & WEBSITE TETAP AKTIF!   "
 echo "=========================================="

@@ -14,6 +14,11 @@ export PATH="/opt/alt/alt-nodejs20/root/usr/bin:$HOME/.npm-global/bin:$HOME/bin:
 APP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$APP_DIR" || exit 1
 
+# Jangan lakukan auto-heal jika proses deploy sedang berjalan
+if [ -f "$APP_DIR/.deploying" ]; then
+    exit 0
+fi
+
 LOG_FILE="$APP_DIR/keep-alive.log"
 
 # Cari binary PM2 yang tersedia
@@ -29,12 +34,17 @@ elif command -v npx >/dev/null 2>&1; then
 fi
 
 # Cek apakah Next.js (port 3000) dan Express (port 5000) merespons
-WEB_STATUS=$(curl -s -o /dev/null -w "%{http_code}" -m 5 "http://127.0.0.1:3000" 2>/dev/null || echo "000")
-API_STATUS=$(curl -s -o /dev/null -w "%{http_code}" -m 5 "http://127.0.0.1:5000/api/health" 2>/dev/null || echo "000")
+RAW_WEB=$(curl -s -o /dev/null -w "%{http_code}" -m 5 "http://127.0.0.1:3000" 2>/dev/null)
+RAW_API=$(curl -s -o /dev/null -w "%{http_code}" -m 5 "http://127.0.0.1:5000/api/health" 2>/dev/null)
 
-# Jika salah satu service mati (HTTP code 000 atau koneksi ditolak)
-if [ "$WEB_STATUS" = "000" ] || [ "$API_STATUS" = "000" ]; then
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] Service down detected (Web: $WEB_STATUS, API: $API_STATUS). Restarting PM2 with '${PM2_CMD}'..." >> "$LOG_FILE"
+WEB_STATUS="${RAW_WEB:-000}"
+API_STATUS="${RAW_API:-000}"
+WEB_STATUS="${WEB_STATUS:0:3}"
+API_STATUS="${API_STATUS:0:3}"
+
+# Jika salah satu service bermasalah (HTTP code 000, 502, 503)
+if [ "$WEB_STATUS" = "000" ] || [ "$API_STATUS" = "000" ] || [ "$WEB_STATUS" = "502" ] || [ "$WEB_STATUS" = "503" ]; then
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] Service issue detected (Web: $WEB_STATUS, API: $API_STATUS). Restarting PM2 with '${PM2_CMD}'..." >> "$LOG_FILE"
     
     if [ -n "$PM2_CMD" ]; then
         # Coba resurrect dari saved dump terlebih dahulu, jika gagal jalankan ecosystem
