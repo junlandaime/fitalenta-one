@@ -3,6 +3,7 @@ import path from "path";
 import fs from "fs";
 import { AppError } from "../utils/app-error";
 import { TEAM_MEMBER_UPLOAD_FOLDER } from "../config/team.config";
+import { BANNER_UPLOAD_FOLDER } from "../config/banner.config";
 import {
   REGISTRATION_ALLOWED_MIME_TYPES,
   REGISTRATION_FILES,
@@ -66,6 +67,7 @@ export const uploadArticleImage = createUploader("articles");
 export const uploadGalleryImage = createUploader("gallery");
 export const uploadTestimonialImage = createUploader("testimonials");
 export const uploadTeamMemberImage = createUploader(TEAM_MEMBER_UPLOAD_FOLDER);
+export const uploadBannerImage = createUploader(BANNER_UPLOAD_FOLDER);
 export const uploadPaymentProof = createUploader(PAYMENT_PROOF_UPLOAD_FOLDER);
 export const uploadRegistrationFiles = createUploader(REGISTRATION_UPLOAD_FOLDER, {
   allowedMimeTypes: REGISTRATION_ALLOWED_MIME_TYPES,
