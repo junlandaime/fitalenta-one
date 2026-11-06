@@ -42,7 +42,7 @@ npx next build --webpack
 cd ..
 
 echo "[4/5] Melakukan reload PM2 (pergantian instan tanpa downtime)..."
-npx pm2 reload all || npx pm2 restart all || npx pm2 start ecosystem.config.cjs
+npx pm2 reload ecosystem.config.cjs || npx pm2 restart all
 npx pm2 save
 chmod +x keep-alive.sh 2>/dev/null || true
 
