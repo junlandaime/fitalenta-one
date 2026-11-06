@@ -19,7 +19,8 @@ fi
 echo "[1/5] Menangani potensi konflik lokal & Menarik kode terbaru..."
 # Hindari kegagalan git pull karena package-lock.json lokal tersentuh npm di server
 git checkout -- server/package-lock.json client/package-lock.json 2>/dev/null || true
-git pull origin main
+git fetch origin main
+git reset --hard origin/main
 
 echo "[2/5] Memperbarui Prisma & Build Backend (Express)..."
 cd server
