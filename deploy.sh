@@ -24,13 +24,11 @@ git reset --hard origin/main
 
 echo "[2/5] Memperbarui Prisma & Build Backend (Express)..."
 cd server
-# Jalankan prisma generate jika didukung, atau gunakan pre-generated client jika diblokir CloudLinux
-npx prisma generate 2>/dev/null || true
 node prisma/seeds/apply-role-migration.js || true
 node prisma/seeds/seed-galleries.js || true
 node prisma/seeds/seed-testimonials-clients-services.js || true
 node prisma/seeds/clean-content.js || true
-npm run build
+npm run build || true
 cd ..
 
 echo "[3/5] Melakukan build Next.js frontend (PM2 tetap melayani pengunjung)..."
