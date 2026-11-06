@@ -10,8 +10,6 @@ build/
 .env.local
 .env.*.local
 
-# Result Generate Prisma
-generated/
 
 # Logs
 *.log

@@ -13,7 +13,6 @@ server/uploads/*
 !server/uploads/clients/
 !server/uploads/partners/
 !server/uploads/hero-slides/
-server/generated/
 server/prisma/data/legacy-participants.json
 legacy-participants.json
 
