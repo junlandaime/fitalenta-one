@@ -4,6 +4,7 @@ import {
     CalendarDays,
     Images,
     LayoutDashboard,
+    Megaphone,
     MessageSquareQuote,
     Newspaper,
     Users,
@@ -26,6 +27,7 @@ export const EDITOR_AREA: AdminAreaConfig = {
                 { title: "Artikel", href: "/editor/articles" },
                 { title: "Event", href: "/editor/events" },
                 { title: "Galeri", href: "/editor/gallery" },
+                { title: "Banner Promo", href: "/editor/banners" },
             ],
         },
         {
@@ -62,6 +64,13 @@ export const EDITOR_SHORTCUTS = [
         href: "/editor/gallery",
         createHref: null,
         icon: Images,
+    },
+    {
+        title: "Banner Promo",
+        description: "Atur slide promo di halaman utama beserta jadwal tayang dan urutannya.",
+        href: "/editor/banners",
+        createHref: null,
+        icon: Megaphone,
     },
     {
         title: "Layanan",
