@@ -10,6 +10,7 @@ import { TestimonialsSection } from "@/components/sections/testimonial-section";
 import { Metadata } from "next";
 import { Reveal } from "@/components/common/reveal";
 import { FeaturedEventsSection } from "@/components/sections/featured-events-section";
+import { PromoBannerSection } from "@/components/sections/promo-banner-section";
 
 export const metadata: Metadata = {
     title: "FITALENTA - Wellcome to FITALENTA",
@@ -22,6 +23,9 @@ export default function Home() {
   return (
     <>
       <HeroSection />
+      <Reveal><PromoBannerSection /></Reveal>
+      <Reveal><FeaturedEventsSection /></Reveal>
+      <Reveal><AboutSection /></Reveal>
       <Reveal><FeaturedEventsSection /></Reveal>
       <Reveal><AboutSection /></Reveal>
       <Reveal><ServicesSection /></Reveal>
