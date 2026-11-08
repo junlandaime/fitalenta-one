@@ -134,7 +134,7 @@ export function DashboardView() {
                             <h2 className="mt-6 text-lg font-bold text-primary">Data tidak tersedia</h2>
                             <p className="mt-2 text-sm text-muted-foreground">Anda belum terdaftar dalam program magang.</p>
                             <Button asChild className="mt-6 bg-primary hover:bg-primary/90">
-                                <Link href="/programs">Daftar Program Magang</Link>
+                                <Link href="/user/program">Daftar Program Magang</Link>
                             </Button>
                         </div>
                     )}

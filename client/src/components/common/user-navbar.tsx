@@ -24,7 +24,7 @@ import { useLogout } from "@/hooks/auth/use-logout";
 
 const LINKS = [
     { href: "/user/dashboard", label: "Dashboard" },
-    { href: "/programs", label: "Program" },
+    { href: "/user/program", label: "Program" },
     { href: "/user/pendaftaran", label: "Pendaftaran" },
     { href: "/user/pembayaran", label: "Pembayaran" },
 ];

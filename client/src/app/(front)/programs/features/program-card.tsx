@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ProgramRegisterButton, type ProgramArea } from "./program-register-button";
 import { ArrowRight, Calendar, Clock, CreditCard, MapPin, Tag, Users, type LucideIcon } from "lucide-react";
 import type { Program } from "@/types/program";
 import { installmentLabel, isFull, quotaLabel, quotaPercent } from "@/helpers/program-helper";
@@ -27,9 +28,12 @@ function CostBox({ label, value }: { label: string; value: string }) {
     );
 }
 
-export function ProgramCard({ program }: { program: Program }) {
+type ProgramCardProps = { program: Program; area?: ProgramArea };
+
+export function ProgramCard({ program, area = "public" }: ProgramCardProps) {
     const full = isFull(program);
     const percent = quotaPercent(program);
+    const detailHref = area === "user" ? `/user/program/${program.id}` : `/programs/${program.id}`;
 
     return (
         <article className="flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition hover:shadow-md">
@@ -99,7 +103,7 @@ export function ProgramCard({ program }: { program: Program }) {
 
                 <div className="flex gap-3">
                     <Link
-                        href={`/programs/${program.id}`}
+                        href={detailHref}
                         className="flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-primary px-3 py-2.5 text-sm font-semibold text-primary transition hover:bg-primary/5"
                     >
                         Detail Program <ArrowRight className="size-4" aria-hidden />
@@ -109,12 +113,13 @@ export function ProgramCard({ program }: { program: Program }) {
                             Kuota Penuh
                         </span>
                     ) : (
-                        <Link
-                            href={"/user/pendaftaran"}
+                        <ProgramRegisterButton
+                            programId={program.id}
+                            area={area}
                             className="flex flex-1 items-center justify-center rounded-lg bg-secondary px-3 py-2.5 text-sm font-semibold text-white transition hover:opacity-90"
                         >
                             Daftar Sekarang
-                        </Link>
+                        </ProgramRegisterButton>
                     )}
                 </div>
             </div>
