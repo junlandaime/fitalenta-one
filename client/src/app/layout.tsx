@@ -22,11 +22,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://www.fitalenta.co.id"),
   title: "FITALENTA",
   description: "Empowering businesses and individuals to grow.",
 };
 
-const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || "GTM-M6LQMD8N";
+const GTM_ID = process.env.NODE_ENV === "production" ? process.env.NEXT_PUBLIC_GTM_ID || "GTM-M6LQMD8N" : undefined;
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
