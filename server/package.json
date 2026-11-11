@@ -27,7 +27,8 @@
     "clean:content": "node prisma/seeds/clean-content.js || tsx prisma/clean-content.ts",
     "seed:testimonials-clients-services": "node prisma/seeds/seed-testimonials-clients-services.js",
     "test:email": "tsx src/scripts/test-email.ts",
-    "user:password": "tsx src/scripts/set-user-password.ts"
+    "user:password": "tsx src/scripts/set-user-password.ts",
+    "images:optimize": "tsx src/scripts/optimize-existing-images.ts"
   },
   "author": "fitalenta-dev",
   "license": "ISC",
