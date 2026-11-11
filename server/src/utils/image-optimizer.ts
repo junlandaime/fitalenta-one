@@ -27,6 +27,8 @@ export type FileStatus = "converted" | "skipped" | "missing" | "error";
 
 export interface FileResult {
   path: string;
+  variants?: string[];
+  relative?: string;
   status: FileStatus;
   reason?: string;
   before?: number;
@@ -38,6 +40,7 @@ export interface FileResult {
 export interface RollbackEntry {
   oldPath: string;
   newPath: string;
+  oldRelative?: string;
 }
 
 const CONVERTIBLE = new Set([".png", ".jpg", ".jpeg"]);
@@ -50,6 +53,24 @@ function toRelative(publicPath: string): string {
 function resolveInside(root: string, relative: string): string | null {
   const target = path.resolve(root, relative);
   return target.startsWith(root + path.sep) ? target : null;
+}
+
+function safeDecode(value: string): string {
+  try {
+    return decodeURIComponent(value);
+  } catch {
+    return value;
+  }
+}
+
+async function locate(publicPath: string, root: string): Promise<{ relative: string; found: boolean }> {
+  const raw = toRelative(publicPath);
+  const decoded = safeDecode(raw);
+  for (const candidate of [...new Set([raw, decoded])]) {
+    const file = resolveInside(root, candidate);
+    if (file && (await exists(file))) return { relative: candidate, found: true };
+  }
+  return { relative: decoded, found: false };
 }
 
 function slugify(name: string): string {
@@ -84,25 +105,29 @@ async function exists(file: string): Promise<boolean> {
 }
 
 async function processOne(
-  publicPath: string,
+  relative: string,
+  found: boolean,
+  variants: string[],
   inline: Set<string>,
   adapter: OptimizerAdapter,
   options: OptimizerOptions
 ): Promise<FileResult> {
-  const skip = (reason: string): FileResult => ({ path: publicPath, status: "skipped", reason });
-
-  if (!publicPath.startsWith(PUBLIC_PREFIX)) return skip("alamat bukan /uploads/");
-  const relative = toRelative(publicPath);
+  const publicPath = variants[0];
+  const base = { path: publicPath, variants, relative };
+  const skip = (reason: string): FileResult => ({ ...base, status: "skipped", reason });
   const folder = relative.split("/")[0];
+  const displayPaths = [...variants, `${PUBLIC_PREFIX}${relative}`];
 
   if (options.folders && !options.folders.includes(folder)) return skip("folder dikecualikan");
   if (!CONVERTIBLE.has(path.extname(relative).toLowerCase())) return skip("bukan PNG atau JPEG");
-  if (options.protectedPatterns.some((pattern) => pattern.test(publicPath))) return skip("dirujuk aturan khusus di frontend");
-  if (inline.has(publicPath)) return skip("dipakai di dalam teks atau konten");
+  if (options.protectedPatterns.some((pattern) => displayPaths.some((candidate) => pattern.test(candidate)))) {
+    return skip("dirujuk aturan khusus di frontend");
+  }
+  if (variants.some((variant) => inline.has(variant))) return skip("dipakai di dalam teks atau konten");
 
   const source = resolveInside(options.uploadsRoot, relative);
   if (!source) return skip("alamat di luar folder uploads");
-  if (!(await exists(source))) return { path: publicPath, status: "missing", reason: "berkas tidak ada di disk" };
+  if (!found) return { ...base, status: "missing", reason: "berkas tidak ada di disk" };
 
   const before = (await fs.stat(source)).size;
 
@@ -122,31 +147,48 @@ async function processOne(
 
     const newName = targetName(relative);
     const newPublic = `${PUBLIC_PREFIX}${folder}/${newName}`;
-    const result: FileResult = { path: publicPath, status: "converted", before, after: buffer.length, newPath: newPublic };
+    const result: FileResult = { ...base, status: "converted", before, after: buffer.length, newPath: newPublic };
     if (!options.apply) return result;
 
     const target = path.join(path.dirname(source), newName);
     await fs.writeFile(target, buffer, { flag: "wx" });
+
+    const replaced: string[] = [];
+    let rows = 0;
     try {
-      result.rows = await adapter.replacePath(publicPath, newPublic);
+      for (const variant of variants) {
+        rows += await adapter.replacePath(variant, newPublic);
+        replaced.push(variant);
+      }
     } catch (error) {
+      for (const variant of replaced) await adapter.replacePath(newPublic, variant).catch(() => undefined);
       await fs.unlink(target).catch(() => undefined);
       throw error;
     }
+    result.rows = rows;
+
     await moveFile(source, path.join(options.backupDir, relative));
     return result;
   } catch (error) {
-    return { path: publicPath, status: "error", reason: error instanceof Error ? error.message : String(error), before };
+    return { ...base, status: "error", reason: error instanceof Error ? error.message : String(error), before };
   }
 }
 
 export async function optimizeExistingImages(adapter: OptimizerAdapter, options: OptimizerOptions): Promise<FileResult[]> {
-  const paths = [...new Set(await adapter.listImagePaths())];
+  const paths = [...new Set(await adapter.listImagePaths())].filter((p) => p.startsWith(PUBLIC_PREFIX));
   const inline = await adapter.findInlineUsage(paths);
-  const results: FileResult[] = [];
 
+  const groups = new Map<string, { found: boolean; variants: string[] }>();
   for (const publicPath of paths) {
-    results.push(await processOne(publicPath, inline, adapter, options));
+    const { relative, found } = await locate(publicPath, options.uploadsRoot);
+    const group = groups.get(relative) ?? { found, variants: [] };
+    group.variants.push(publicPath);
+    groups.set(relative, group);
+  }
+
+  const results: FileResult[] = [];
+  for (const [relative, group] of groups) {
+    results.push(await processOne(relative, group.found, group.variants, inline, adapter, options));
   }
   return results;
 }
@@ -156,29 +198,34 @@ export async function rollbackOptimization(
   entries: RollbackEntry[],
   options: Pick<OptimizerOptions, "uploadsRoot" | "backupDir">
 ): Promise<FileResult[]> {
+  const groups = new Map<string, RollbackEntry[]>();
+  for (const entry of entries) groups.set(entry.newPath, [...(groups.get(entry.newPath) ?? []), entry]);
+
   const results: FileResult[] = [];
 
-  for (const { oldPath, newPath } of entries) {
-    const backup = resolveInside(options.backupDir, toRelative(oldPath));
+  for (const [newPath, group] of groups) {
+    const first = group[0];
+    const oldRelative = first.oldRelative ?? safeDecode(toRelative(first.oldPath));
+    const backup = resolveInside(options.backupDir, oldRelative);
     const current = resolveInside(options.uploadsRoot, toRelative(newPath));
-    const original = resolveInside(options.uploadsRoot, toRelative(oldPath));
+    const original = resolveInside(options.uploadsRoot, oldRelative);
 
     if (!backup || !current || !original || !(await exists(backup))) {
-      results.push({ path: oldPath, status: "error", reason: "cadangan tidak ditemukan" });
+      results.push({ path: first.oldPath, status: "error", reason: "cadangan tidak ditemukan" });
       continue;
     }
     if (await exists(original)) {
-      results.push({ path: oldPath, status: "skipped", reason: "berkas asli sudah ada" });
+      results.push({ path: first.oldPath, status: "skipped", reason: "berkas asli sudah ada" });
       continue;
     }
 
     try {
-      const rows = await adapter.replacePath(newPath, oldPath);
+      const rows = await adapter.replacePath(newPath, first.oldPath);
       await moveFile(backup, original);
       await fs.unlink(current).catch(() => undefined);
-      results.push({ path: oldPath, status: "converted", newPath, rows });
+      results.push({ path: first.oldPath, status: "converted", newPath, rows });
     } catch (error) {
-      results.push({ path: oldPath, status: "error", reason: error instanceof Error ? error.message : String(error) });
+      results.push({ path: first.oldPath, status: "error", reason: error instanceof Error ? error.message : String(error) });
     }
   }
   return results;

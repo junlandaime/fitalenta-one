@@ -133,7 +133,9 @@ async function main() {
   if (apply) {
     const entries: RollbackEntry[] = results
       .filter((r) => r.status === "converted" && r.newPath)
-      .map((r) => ({ oldPath: r.path, newPath: r.newPath as string }));
+      .flatMap((r) =>
+        (r.variants ?? [r.path]).map((variant) => ({ oldPath: variant, newPath: r.newPath as string, oldRelative: r.relative }))
+      );
     await fs.mkdir(BACKUP_DIR, { recursive: true });
     const logFile = path.join(BACKUP_DIR, `rollback-${new Date().toISOString().replace(/[:.]/g, "-")}.json`);
     await fs.writeFile(logFile, JSON.stringify(entries, null, 2));
