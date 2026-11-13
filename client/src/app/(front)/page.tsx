@@ -13,7 +13,7 @@ import { FeaturedEventsSection } from "@/components/sections/featured-events-sec
 import { PromoBannerSection } from "@/components/sections/promo-banner-section";
 
 export const metadata: Metadata = {
-    title: "FITALENTA - Wellcome to FITALENTA",
+    title: "FITALENTA - Welcome to FITALENTA",
     description: "Empowering businesses and individuals to grow.",
 };
 

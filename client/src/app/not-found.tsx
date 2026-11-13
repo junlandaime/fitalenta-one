@@ -16,8 +16,6 @@ export default function NotFound() {
 
     return (
         <div className="flex min-h-full flex-col">
-            <Navbar />
-
             <section className="relative flex flex-1 items-center justify-center overflow-hidden px-6 py-20 sm:py-28">
                 <div className="relative mx-auto w-full max-w-xl text-center">
                     <p
@@ -71,8 +69,6 @@ export default function NotFound() {
                     )}
                 </div>
             </section>
-
-            <Footer />
         </div>
     );
 }

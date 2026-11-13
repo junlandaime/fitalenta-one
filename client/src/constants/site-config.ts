@@ -7,7 +7,7 @@ export const siteConfig = {
     logo: "/fitalenta.png",
     name: "FITALENTA",
     tagline: "Empowering people",
-    description: "We are dedicated to empowering businesses and individuals through innovative talent managementand business consulting solutions.",
+    description: "We are dedicated to empowering businesses and individuals through innovative talent management and business consulting solutions.",
 } as const;
 
 export const navItems: readonly NavItem[] = [

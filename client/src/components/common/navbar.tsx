@@ -36,6 +36,15 @@ function isActive(pathname: string, href: string) {
         : pathname === href || pathname.startsWith(`${href}/`);
 }
 
+// Tambahkan daftar submenu Programs di sini agar mudah diatur
+const programSubmenus = [
+    { label: "Program Reguler", href: "/programs/reguler" },
+    { label: "Program Asrama", href: "/programs/asrama" },
+    { label: "Program Hybrid", href: "/programs/hybrid" },
+    { label: "Program Fast Track", href: "/programs/fast-track" },
+    { label: "Gijingoku", href: "/programs/gijingoku" },
+];
+
 export function Navbar() {
     const pathname = usePathname();
     const [open, setOpen] = useState(false);
@@ -47,9 +56,54 @@ export function Navbar() {
             <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-6 px-6 md:px-8">
                 <Logo width={110} height={40} />
 
+                {/* --- DESKTOP NAVIGATION --- */}
                 <nav aria-label="Main" className="hidden items-center gap-1 lg:flex">
                     {navItems.map((item) => {
                         const active = isActive(pathname, item.href);
+
+                        // 1. Jika menu "Programs", jadikan Dropdown Hover
+                        if (item.label === "Programs") {
+                            return (
+                                <div key={item.href} className="group relative">
+                                    <Link
+                                        href={item.href}
+                                        aria-current={active ? "page" : undefined}
+                                        className={cn(
+                                            "flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium transition-colors",
+                                            active
+                                                ? "bg-muted-foreground/30 text-secondary"
+                                                : "text-white hover:bg-muted-foreground/30"
+                                        )}
+                                    >
+                                        {item.label}
+                                        <ChevronDown className="size-4 transition-transform duration-300 group-hover:rotate-180" />
+                                    </Link>
+
+                                    {/* 2. Kotak Dropdown (Muncul saat hover) */}
+                                    <div className="invisible absolute left-0 top-full z-50 pt-2 opacity-0 transition-all duration-300 group-hover:visible group-hover:opacity-100">
+                                        <ul className="flex w-52 flex-col overflow-hidden rounded-xl bg-white p-2 shadow-xl ring-1 ring-slate-100">
+                                            {programSubmenus.map((sub) => (
+                                                <li key={sub.href}>
+                                                    <Link
+                                                        href={sub.href}
+                                                        className={cn(
+                                                            "block rounded-lg px-4 py-2.5 text-sm font-medium transition-colors",
+                                                            pathname === sub.href
+                                                                ? "bg-slate-100 text-primary"
+                                                                : "text-slate-600 hover:bg-slate-50 hover:text-primary"
+                                                        )}
+                                                    >
+                                                        {sub.label}
+                                                    </Link>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                </div>
+                            );
+                        }
+
+                        // 3. Jika menu lain, jadikan Link biasa
                         return (
                             <Link
                                 key={item.href}
@@ -144,7 +198,7 @@ export function Navbar() {
                     )}
                 </div>
 
-                {/* Mobile */}
+                {/* --- MOBILE NAVIGATION --- */}
                 <Sheet open={open} onOpenChange={setOpen}>
                     <SheetTrigger asChild>
                         <Button
@@ -166,10 +220,49 @@ export function Navbar() {
                             Site navigation
                         </SheetDescription>
 
-                        <nav aria-label="Mobile" className="mt-8 flex-1">
+                        <nav aria-label="Mobile" className="mt-8 flex-1 overflow-y-auto">
                             <ul className="space-y-1">
                                 {navItems.map((item) => {
                                     const active = isActive(pathname, item.href);
+
+                                    // 4. Dropdown di Mobile Menu
+                                    if (item.label === "Programs") {
+                                        return (
+                                            <li key={item.href} className="space-y-1">
+                                                <Link
+                                                    href={item.href}
+                                                    onClick={() => setOpen(false)}
+                                                    className={cn(
+                                                        "flex items-center justify-between rounded-md px-3 py-3 text-lg font-medium",
+                                                        active
+                                                            ? "bg-muted-foreground/30 text-secondary"
+                                                            : "text-white hover:bg-muted-foreground/30"
+                                                    )}
+                                                >
+                                                    {item.label}
+                                                </Link>
+                                                <ul className="ml-4 space-y-1 border-l-2 border-white/20 pl-4">
+                                                    {programSubmenus.map((sub) => (
+                                                        <li key={sub.href}>
+                                                            <Link
+                                                                href={sub.href}
+                                                                onClick={() => setOpen(false)}
+                                                                className={cn(
+                                                                    "block rounded-md py-2 text-base font-medium transition-colors",
+                                                                    pathname === sub.href
+                                                                        ? "text-secondary"
+                                                                        : "text-white/80 hover:text-white"
+                                                                )}
+                                                            >
+                                                                {sub.label}
+                                                            </Link>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </li>
+                                        );
+                                    }
+
                                     return (
                                         <li key={item.href}>
                                             <Link
