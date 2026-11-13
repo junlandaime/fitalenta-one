@@ -52,11 +52,8 @@ export default async function EventDetailPage({ params }: Props) {
     return (
         <section>
             <PageHero
-                badge="FITALENTA Events"
-                title="Upcoming Events"
-                subtitle="Join us for exciting events and expand your network"
-                crumbs={[{ label: "Home", href: "/" }, { label: "Events" }, { label: event.title }]}
-                chips={[event.eventDate, event.location]}
+                hideHero
+                crumbs={[{ label: "Home", href: "/" }, { label: "Events", href: "/events" }]}
             />
             <div className="bg-slate-50 py-12">
                 <div className="mx-auto grid max-w-6xl gap-8 px-4 lg:grid-cols-[1fr_22rem] lg:items-start">
@@ -72,8 +69,9 @@ export default async function EventDetailPage({ params }: Props) {
                             </span>
                             <span className="text-slate-500">{date}</span>
                         </div>
-                        <h2 className="mt-4 text-2xl font-bold text-primary md:text-3xl">About the Event</h2>
-                        <div className="mt-4 whitespace-pre-line leading-8 text-slate-700">
+                        <h1 className="mt-4 text-2xl font-bold text-primary md:text-3xl">{event.title}</h1>
+                        <h2 className="mt-6 text-lg font-semibold text-slate-900">About the Event</h2>
+                        <div className="mt-3 whitespace-pre-line leading-8 text-slate-700">
                             {formatPlainText(event.description)}
                         </div>
                     </article>

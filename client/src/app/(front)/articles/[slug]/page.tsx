@@ -40,7 +40,7 @@ export default async function ArticleDetailPage({ params }: Props) {
             <PageHero
                 badge="FITALENTA Blog"
                 title={article.title}
-                crumbs={[{ label: "Home", href: "/" }, { label: "Articles" }, { label: article.title }]}
+                crumbs={[{ label: "Home", href: "/" }, { label: "Articles", href: "/articles" }, { label: article.title }]}
             />
 
             <section className="bg-slate-50 py-12">

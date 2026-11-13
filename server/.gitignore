@@ -2,7 +2,8 @@
 node_modules/
 
 # Build output
-dist/
+dist/*
+!dist/index.js
 build/
 
 # Environment variables
@@ -10,8 +11,6 @@ build/
 .env.local
 .env.*.local
 
-# Result Generate Prisma
-generated/
 
 # Logs
 *.log
