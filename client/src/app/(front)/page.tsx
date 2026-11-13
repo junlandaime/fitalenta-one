@@ -10,7 +10,7 @@ import { TestimonialsSection } from "@/components/sections/testimonial-section";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "FITALENTA - Wellcome to FITALENTA",
+    title: "FITALENTA - Welcome to FITALENTA",
     description: "Empowering businesses and individuals to grow.",
 };
 

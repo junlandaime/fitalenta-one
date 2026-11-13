@@ -1,5 +1,5 @@
 import Link from "next/link";
-import {  Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 import { Logo } from "./logo";
 import { navItems, siteConfig } from "@/constants/site-config";
 import { getContactMock } from "@/constants/contact-constant";
@@ -12,9 +12,12 @@ const socialIcons = { facebook: FaFacebookF, instagram: FaInstagram, linkedin: F
 
 function FooterHeading({ children }: { children: React.ReactNode }) {
     return (
-        <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-white/50">
-            {children}
-        </h2>
+        <div className="mb-6">
+            <h2 className="relative inline-block pb-2 text-lg font-bold text-white">
+                {children}
+                <span className="absolute bottom-0 left-0 h-1 w-10 rounded-full bg-secondary"></span>
+            </h2>
+        </div>
     );
 }
 
@@ -24,17 +27,47 @@ export async function Footer() {
     return (
         <footer className="bg-primary text-white">
             <div className="mx-auto max-w-7xl px-6 py-16 md:px-8 lg:py-20">
-                <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1.2fr_1.2fr] lg:gap-10">
+                <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-[1.5fr_1.2fr_1.2fr_1.3fr] lg:gap-10">
+                    
                     <div className="max-w-xs">
-                        <Logo tone="light" width={108} height={25} />
-                        <p className="mt-5 text-base leading-relaxed text-white/70">
+                        <FooterHeading>Tentang kami</FooterHeading>
+                        <div className="mb-6 mt-2">
+                           <Logo tone="light" width={700} height={90} />
+                        </div>
+                        <p className="mb-6 text-sm leading-relaxed text-white/70">
                             {siteConfig.description}
                         </p>
+                        <Link
+                            href="/about"
+                            className="mb-8 inline-block rounded-full bg-secondary px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-secondary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                        >
+                            Tentang kami
+                        </Link>
+                        
+                        {contact.socials.length > 0 && (
+                            <ul className="flex flex-wrap gap-3 text-sm">
+                                {contact.socials.map((social) => {
+                                    const Icon = socialIcons[social.name];
+                                    return (
+                                        <li key={social.href}>
+                                            <a
+                                                href={social.href}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="flex size-10 items-center justify-center rounded-md bg-white/10 text-white transition-colors hover:bg-secondary"
+                                            >
+                                                <Icon size={18} />
+                                            </a>
+                                        </li>
+                                    );
+                                })}
+                            </ul>
+                        )}
                     </div>
 
                     <nav aria-label="Footer">
-                        <FooterHeading>Explore</FooterHeading>
-                        <ul className="mt-5 space-y-3 text-base">
+                        <FooterHeading>Navigasi</FooterHeading>
+                        <ul className="grid grid-cols-2 gap-x-4 gap-y-4 text-sm">
                             {navItems.map((item) => (
                                 <li key={item.href}>
                                     <Link href={item.href} className={`${linkClass}`}>
@@ -46,15 +79,15 @@ export async function Footer() {
                     </nav>
 
                     <div>
-                        <FooterHeading>Contact us</FooterHeading>
-                        <address className="mt-5 space-y-4 text-base not-italic">
+                        <FooterHeading>Kantor FITALENTA</FooterHeading>
+                        <address className="space-y-4 text-sm not-italic">
                             <p className="flex items-start gap-3">
-                                <MapPin className="mt-1 h-4 w-4 shrink-0" aria-hidden />
+                                <MapPin className="mt-0.5 size-5 shrink-0 text-secondary" aria-hidden />
                                 <a
                                     href={contact.mapsUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className={`${linkClass}`}
+                                    className={`${linkClass} leading-relaxed`}
                                 >
                                     {contact.addressLines.map((line) => (
                                         <span key={line} className="block">{line}</span>
@@ -62,57 +95,47 @@ export async function Footer() {
                                 </a>
                             </p>
                             <p className="flex items-center gap-3">
-                                <Phone className="h-4 w-4 shrink-0" aria-hidden />
+                                <Phone className="size-5 shrink-0 text-secondary" aria-hidden />
                                 <span className={`${linkClass}`}>
                                     {contact.phone}
                                 </span>
                             </p>
                             <p className="flex items-center gap-3">
-                                <Mail className="h-4 w-4 shrink-0" aria-hidden />
+                                <Mail className="size-5 shrink-0 text-secondary" aria-hidden />
                                 <span className={`${linkClass}`}>
                                     {contact.email}
                                 </span>
                             </p>
-                            <Link
-                                href="/contact"
-                                className="mt-6 inline-block rounded-md bg-white px-5 py-2.5 text-sm font-semibold text-primary transition-colors hover:bg-white/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#10302B]"
-                            >
-                                Contact Us
-                            </Link>
+                            
+                            <div className="pt-3">
+                                <p className="font-bold text-white">Jam Buka:</p>
+                                <p className="mt-1 text-white/70">Senin – Jumat : 08:00 – 17:00</p>
+                                <p className="text-white/70">Sabtu & Minggu : Libur</p>
+                            </div>
                         </address>
                     </div>
 
                     <div>
-                        <FooterHeading>Follow Us</FooterHeading>
-                        {contact.socials.length > 0 && (
-                            <ul className="mt-8 flex flex-wrap gap-x-5 gap-y-2 text-sm">
-                                {contact.socials.map((social) => {
-                                    const Icon = socialIcons[social.name]
-                                    return (
-                                        <li key={social.href}>
-                                            <a
-                                                href={social.href}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className={linkClass}
-                                            >
-                                                <Icon size={24}/>
-                                            </a>
-                                        </li>
-                                    )
-                                })}
-                            </ul>
-                        )}
+                        <FooterHeading>Portal FITALENTA</FooterHeading>
+                        <p className="mb-6 text-sm leading-relaxed text-white/70">
+                            Portal web untuk mengelola data peserta pelatihan FITALENTA. Bagi yang ingin mendaftar kelas atau mengikuti proses job matching, harap login ke situs web di bawah ini. Jika Anda belum memiliki akun, silakan melakukan registrasi terlebih dahulu.
+                        </p>
+                        <Link
+                            href="/user/dashboard"
+                            className="inline-block rounded-full bg-secondary px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-secondary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                        >
+                            Portal FITALENTA
+                        </Link>
                     </div>
                 </div>
 
-                <div className="mt-14 border-t border-white/15 pt-6 text-sm text-white/50">
+                <div className="mt-16 border-t border-white/10 pt-6 text-sm text-white/50">
                     <p>
                         &copy; {new Date().getFullYear()} {siteConfig.name}. All rights
                         reserved.
                     </p>
                 </div>
             </div>
-        </footer >
+        </footer>
     );
 }

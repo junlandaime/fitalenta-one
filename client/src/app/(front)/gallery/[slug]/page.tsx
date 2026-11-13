@@ -45,10 +45,13 @@ export default async function GalleryDetailPage({ params }: Props) {
     return (
         <>
             <PageHero
-                badge="Gallery FITALENTA"
-                title={item.title}
-                crumbs={[{ label: "Home", href: "/" }, { label: "Gallery" }, { label: item.title }]}
+                 badge="Gallery FITALENTA"
+                 title={item.title} 
+                 subtitle=" Empowering businesses and individuals with tailored solutions "
+                 crumbs={[{ label: "Home", href: "/" }, { label: "Gallery", href: "/gallery" }, { label: item.title }]}
+                 bgImage="/gallery-hero.png" 
             />
+        
 
             <section className="bg-slate-50 py-14">
                 <div className="mx-auto max-w-4xl px-4">
