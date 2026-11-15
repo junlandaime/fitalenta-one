@@ -3,6 +3,8 @@ import type { RegistrationValues } from "@/schemas/user/registration";
 import type { ApiResponse } from "@/types/api";
 import type { CreatedRegistration } from "@/types/user/registration";
 
+const cleanPhone = (value: string) => value.replace(/[\s\-().]/g, "");
+
 function toFormData(values: RegistrationValues): FormData {
     const { ktp, domicile } = values;
 
@@ -13,14 +15,14 @@ function toFormData(values: RegistrationValues): FormData {
         gender: values.gender,
         birthPlace: values.birthPlace,
         birthDate: values.birthDate,
-        phone: values.phone,
+        phone: cleanPhone(values.phone),
         lastEducation: values.lastEducation,
         major: values.major,
         educationInstitution: values.institution,
         currentActivity: values.currentActivity,
         maritalStatus: values.maritalStatus,
         parentRelationship: values.guardianRelation,
-        parentPhone: values.guardianPhone,
+        parentPhone: cleanPhone(values.guardianPhone),
         ktpProvinceCode: ktp.provinceCode,
         ktpProvinceName: ktp.provinceName,
         ktpCityCode: ktp.cityCode,

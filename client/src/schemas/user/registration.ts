@@ -11,7 +11,16 @@ import type { FieldErrors, RegistrationDraft, RegistrationStep } from "@/types/u
 const required = (label: string) => z.string().trim().min(1, `${label} wajib diisi`);
 
 const phone = (label: string) =>
-    required(label).regex(/^\+?\d[\d\s-]{7,18}\d$/, `${label} tidak valid`);
+    required(label)
+        .transform((value) => value.replace(/[\s\-().]/g, ""))
+        .pipe(
+            z
+                .string()
+                .regex(
+                    /^(\+62|62|0)8\d{7,12}$/,
+                    `${label} harus berupa nomor HP valid (contoh: 081234567890 atau +6281234567890)`,
+                ),
+        );
 
 const choice = <T extends readonly [string, ...string[]]>(values: T, label: string) =>
     z.enum(values, { error: `${label} wajib dipilih` });

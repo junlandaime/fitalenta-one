@@ -14,6 +14,7 @@ import { useCurrentUser } from "@/hooks/auth/use-current-user";
 import { useRegistrationHydrated } from "@/hooks/user/use-registration-hydrated";
 import { useSubmitRegistration } from "@/hooks/user/use-submit-registration";
 import { registrationSchema, validateStep } from "@/schemas/user/registration";
+import { isApiError } from "@/lib/api-error";
 import { useRegistrationStore } from "@/store/registration-store";
 import type { Program } from "@/types/program";
 import type { CreatedRegistration, RegistrationStep } from "@/types/user/registration";
@@ -145,7 +146,18 @@ export function RegistrationWizard({ programs, initialProgramId }: RegistrationW
                             <Alert variant="destructive">
                                 <CircleAlert aria-hidden />
                                 <AlertTitle>Pendaftaran gagal dikirim</AlertTitle>
-                                <AlertDescription>{submitRegistration.error.message}</AlertDescription>
+                                <AlertDescription className="space-y-1.5">
+                                    <p>{submitRegistration.error.message}</p>
+                                    {isApiError(submitRegistration.error) &&
+                                        submitRegistration.error.details &&
+                                        submitRegistration.error.details.length > 0 && (
+                                            <ul className="list-disc space-y-0.5 pl-4 text-xs">
+                                                {submitRegistration.error.details.map((detail, idx) => (
+                                                    <li key={`${detail.field}-${idx}`}>{detail.message}</li>
+                                                ))}
+                                            </ul>
+                                        )}
+                                </AlertDescription>
                             </Alert>
                         )}
                     </CardContent>
