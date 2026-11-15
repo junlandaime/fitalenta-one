@@ -37,7 +37,7 @@ cd client
 export RAYON_NUM_THREADS=1
 export UV_THREADPOOL_SIZE=1
 export NEXT_CPU_NUM=1
-export NODE_OPTIONS="--max-old-space-size=768"
+export NODE_OPTIONS="--max-old-space-size=1280"
 npx next build --webpack
 cd ..
 
