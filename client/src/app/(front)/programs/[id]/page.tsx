@@ -10,7 +10,7 @@ import { CostSection } from "../features/section/cost";
 import { SummarySection } from "../features/section/summary";
 import { RequirementsSection } from "../features/section/requirement";
 import { InfoSection } from "../features/section/info";
-import SlideIn from "@/components/common/slide-in"; // Import komponen SlideIn
+import SlideIn from "@/components/common/slide-in";
 
 type Props = { params: Promise<{ id: string }> };
 
@@ -41,21 +41,21 @@ export default async function ProgramDetailPage({ params }: Props) {
 
     // --- LOGIKA OTOMATIS BACKGROUND GAMBAR ---
     let bgImage = "";
-    
+
     const fullText = `${program.category?.name || ""} ${program.name || ""} ${program.description || ""}`.toLowerCase();
-    
+
     // 1. Cek Gijinkoku / Engineer
     if (fullText.includes("gijinkoku") || fullText.includes("gijingoku") || fullText.includes("engineer")) {
         bgImage = "url(/cardgijingoku2.png)";
-    } 
+    }
     // 2. Cek Korea
     else if (fullText.includes("korea")) {
         bgImage = "url(/belajarbahasakorea.png)";
-    } 
+    }
     // 3. Cek Jepang dan kawan-kawan
     else if (
-        fullText.includes("jepang") || 
-        fullText.includes("tokutei") || 
+        fullText.includes("jepang") ||
+        fullText.includes("tokutei") ||
         fullText.includes("jlpt") ||
         fullText.includes("ssw")
     ) {
@@ -65,13 +65,13 @@ export default async function ProgramDetailPage({ params }: Props) {
     return (
         <section>
             {/* Background Diperbarui */}
-            <div 
+            <div
                 className={`relative flex min-h-[55vh] flex-col justify-center bg-cover bg-center text-white ${
                     !bgImage ? "bg-linear-to-br from-[#071d40] to-[#0e4a8f]" : ""
                 }`}
                 style={bgImage ? { backgroundImage: bgImage } : {}}
             >
-                {/* 2. Overlay Gradient */}
+                {/* Overlay Gradient */}
                 {bgImage && (
                     <div className="absolute inset-0 bg-gradient-to-b from-[#071d40]/90 via-[#071d40]/40 to-[#071d40]/90" />
                 )}
@@ -91,37 +91,40 @@ export default async function ProgramDetailPage({ params }: Props) {
                                 </span>
                             )}
                         </div>
-                        
+
                         <h1 className="text-balance text-4xl font-extrabold tracking-tight drop-shadow-md md:text-6xl">
                             {program.name}
                         </h1>
-                        
+
                         {program.description && (
                             <p className="max-w-3xl text-lg leading-relaxed text-white/90 drop-shadow-sm">
                                 {program.description}
                             </p>
                         )}
-                        
+
                         <div className="mt-4 flex flex-wrap justify-center gap-4">
                             {!full && (
-                                <Link href={"/register"} className="rounded-lg bg-white px-7 py-3 font-bold text-primary shadow-lg transition-transform hover:-translate-y-1 hover:shadow-xl">
+                                <Link
+                                    href="/register"
+                                    className="rounded-lg bg-white px-7 py-3 font-bold text-primary shadow-lg transition-transform hover:-translate-y-1 hover:shadow-xl"
+                                >
                                     Daftar Sekarang
                                 </Link>
                             )}
-                            <Link href="/programs" className="rounded-lg px-7 py-3 font-bold text-white ring-1 ring-white/40 backdrop-blur-sm transition-all hover:bg-white/20 hover:ring-white">
+                            <Link
+                                href="/programs"
+                                className="rounded-lg px-7 py-3 font-bold text-white ring-1 ring-white/40 backdrop-blur-sm transition-all hover:bg-white/20 hover:ring-white"
+                            >
                                 Lihat Program Lain
                             </Link>
                         </div>
                     </div>
                 </SlideIn>
             </div>
-            {/* Akhir Bagian Background */}
 
             {/* Bagian Rincian Program */}
             <div className="bg-white overflow-hidden">
                 <div className="mx-auto max-w-6xl space-y-14 px-4 py-14">
-                    
-                    {/* Setiap section rincian diberi animasi dengan delay bertahap */}
                     <SlideIn direction="up" delay={0.1}>
                         <OverviewSection program={program} />
                     </SlideIn>
@@ -146,22 +149,27 @@ export default async function ProgramDetailPage({ params }: Props) {
                         <InfoSection program={program} />
                     </SlideIn>
 
-                    {/* Animasi untuk kotak pendaftaran di paling bawah */}
                     <SlideIn direction="up" delay={0.3}>
                         <div className="rounded-2xl bg-primary px-6 py-14 text-center text-white shadow-lg transition-transform hover:-translate-y-1">
                             <Rocket className="mx-auto size-10" strokeWidth={1.5} aria-hidden />
                             <h2 className="mt-4 text-3xl font-extrabold">Tertarik dengan {program.name}?</h2>
-                            <p className="mt-3 text-white/80">Lengkapi formulir pendaftaran dan mulai proses seleksi bersama FITALENTA.</p>
+                            <p className="mt-3 text-white/80">
+                                Lengkapi formulir pendaftaran dan mulai proses seleksi bersama FITALENTA.
+                            </p>
                             {full ? (
-                                <p className="mt-6 inline-block rounded-lg bg-white/15 px-6 py-3 font-semibold">Kuota program sudah penuh</p>
+                                <p className="mt-6 inline-block rounded-lg bg-white/15 px-6 py-3 font-semibold">
+                                    Kuota program sudah penuh
+                                </p>
                             ) : (
-                                <Link href={"/register"} className="mt-6 inline-flex items-center gap-2 rounded-lg bg-white px-6 py-3 font-bold text-primary shadow hover:opacity-90">
+                                <Link
+                                    href="/register"
+                                    className="mt-6 inline-flex items-center gap-2 rounded-lg bg-white px-6 py-3 font-bold text-primary shadow hover:opacity-90"
+                                >
                                     Daftar Program <ArrowRight className="size-4" aria-hidden />
                                 </Link>
                             )}
                         </div>
                     </SlideIn>
-
                 </div>
             </div>
         </section>

@@ -18,7 +18,8 @@ export async function index(req: Request, res: Response) {
 
 export async function featured(req: Request, res: Response) {
   try {
-    const events = await eventService.getFeaturedEvents(3);
+    const upcomingOnly = req.query.upcoming === "true";
+    const events = await eventService.getFeaturedEvents(5, upcomingOnly);
     return res.json({ success: true, data: events });
   } catch (error) {
     console.error("Get featured events error:", error);

@@ -37,6 +37,7 @@ export const SUPERADMIN_AREA: AdminAreaConfig = {
                 { title: "Artikel", href: "/editor/articles" },
                 { title: "Event", href: "/editor/events" },
                 { title: "Galeri", href: "/editor/gallery" },
+                { title: "Banner Promo", href: "/editor/banners" },
             ],
         },
         {

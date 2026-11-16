@@ -34,7 +34,6 @@ export default async function AboutPage() {
 
     return (
         <main className="text-slate-800">
-            {/* PERBAIKAN: Menambahkan bgImage="/bg-about.png" pada komponen PageHero */}
             <PageHero
                 badge="FITALENTA About Us"
                 title="About FITALENTA"

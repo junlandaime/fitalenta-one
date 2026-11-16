@@ -52,9 +52,10 @@ export async function getPublicEvents({ search, page = 1 }: PublicEventQuery) {
   };
 }
 
-export async function getFeaturedEvents(limit = 3) {
+export async function getFeaturedEvents(limit = 3, upcomingOnly = false) {
   return prisma.event.findMany({
-    where: { isFeatured: true },
+    where: { isFeatured: true,
+      ...(upcomingOnly ? { eventDate: { gte: new Date() } } : {}), },
     orderBy: { eventDate: "asc" },
     take: limit,
     include: { category: true },

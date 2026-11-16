@@ -2,11 +2,19 @@ import Link from "next/link";
 import { ChevronDown, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+const ENTER =
+    "motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-6 motion-safe:duration-700";
+
+const enterStyle = (delayMs: number) => ({
+    animationDelay: `${delayMs}ms`,
+    animationFillMode: "backwards" as const,
+});
+
 export function HeroSection() {
     return (
         <section id="home" className="relative isolate overflow-hidden text-[#EEF3F1]">
             <div
-                className="absolute inset-0 -z-20 bg-cover bg-center"
+                className="absolute inset-0 -z-20 bg-cover bg-center motion-safe:animate-[hero-zoom_14s_ease-out_both]"
                 style={{ backgroundImage: "url('/images/hero.jpg')" }}
             />
 
@@ -14,23 +22,35 @@ export function HeroSection() {
 
             <div className="mx-auto flex min-h-[calc(100svh-4rem)] max-w-7xl items-center px-6 py-16 md:px-8 lg:py-24">
                 <div className="max-w-2xl">
-                    <p className="flex items-center gap-3 text-xs font-semibold tracking-[0.18em] text-[#EEF3F1] sm:text-sm">
+                    <p
+                        className={`flex items-center gap-3 text-xs font-semibold tracking-[0.18em] text-[#EEF3F1] sm:text-sm ${ENTER}`}
+                        style={enterStyle(0)}
+                    >
                         <span aria-hidden className="h-2.5 w-2.5 bg-secondary" />
                         TALENT MANAGEMENT &amp; BUSINESS CONSULTING
                     </p>
 
-                    <h1 className="mt-6 text-balance text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl xl:text-7xl">
+                    <h1
+                        className={`mt-6 text-balance text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl xl:text-7xl ${ENTER}`}
+                        style={enterStyle(120)}
+                    >
                         Empowering Businesses and Individuals to Grow
                     </h1>
 
-                    <p className="mt-6 max-w-xl text-pretty text-base leading-relaxed text-[#EEF3F1]/75 sm:text-lg">
+                    <p
+                        className={`mt-6 max-w-xl text-pretty text-base leading-relaxed text-[#EEF3F1]/75 sm:text-lg ${ENTER}`}
+                        style={enterStyle(240)}
+                    >
                         <span className="font-semibold">FITALENTA</span> provides talent
                         management and business consulting solutions through human
                         capital, education, business development, training, and
                         professional programs.
                     </p>
 
-                    <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
+                    <div
+                        className={`mt-10 flex flex-col gap-3 sm:flex-row sm:items-center ${ENTER}`}
+                        style={enterStyle(360)}
+                    >
                         <Button
                             asChild
                             size="lg"

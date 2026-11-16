@@ -3,6 +3,7 @@ import path from "path";
 import fs from "fs";
 import { AppError } from "../utils/app-error";
 import { TEAM_MEMBER_UPLOAD_FOLDER } from "../config/team.config";
+import { BANNER_UPLOAD_FOLDER } from "../config/banner.config";
 import {
   REGISTRATION_ALLOWED_MIME_TYPES,
   REGISTRATION_FILES,
@@ -19,6 +20,14 @@ interface UploaderOptions {
   maxFileSizeMB?: number;
 }
 
+const EXTENSION_BY_MIME: Record<string, string> = {
+  "image/jpeg": ".jpg",
+  "image/png": ".png",
+  "image/webp": ".webp",
+  "image/gif": ".gif",
+  "application/pdf": ".pdf",
+};
+
 function createUploader(folder: string, options: UploaderOptions = {}) {
   const {
     allowedMimeTypes = IMAGE_MIME_TYPES,
@@ -34,7 +43,10 @@ function createUploader(folder: string, options: UploaderOptions = {}) {
   const storage = multer.diskStorage({
     destination: (req, file, cb) => cb(null, uploadPath),
     filename: (req, file, cb) => {
-      const ext = path.extname(file.originalname);
+      const ext = EXTENSION_BY_MIME[file.mimetype];
+      if (!ext) {
+        return cb(new AppError("INVALID_FILE_TYPE", 400, invalidTypeMessage), "");
+      }
       const name = `${Date.now()}-${Math.round(Math.random() * 1e9)}${ext}`;
       cb(null, name);
     },
@@ -55,6 +67,7 @@ export const uploadArticleImage = createUploader("articles");
 export const uploadGalleryImage = createUploader("gallery");
 export const uploadTestimonialImage = createUploader("testimonials");
 export const uploadTeamMemberImage = createUploader(TEAM_MEMBER_UPLOAD_FOLDER);
+export const uploadBannerImage = createUploader(BANNER_UPLOAD_FOLDER);
 export const uploadPaymentProof = createUploader(PAYMENT_PROOF_UPLOAD_FOLDER);
 export const uploadRegistrationFiles = createUploader(REGISTRATION_UPLOAD_FOLDER, {
   allowedMimeTypes: REGISTRATION_ALLOWED_MIME_TYPES,

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ProgramRegisterButton, type ProgramArea } from "./program-register-button";
 import { ArrowRight, Calendar, Clock, CreditCard, MapPin, Tag, Users, type LucideIcon } from "lucide-react";
 import type { Program } from "@/types/program";
 import { installmentLabel, isFull, quotaLabel, quotaPercent } from "@/helpers/program-helper";
@@ -27,22 +28,23 @@ function CostBox({ label, value }: { label: string; value: string }) {
     );
 }
 
-export function ProgramCard({ program }: { program: Program }) {
+type ProgramCardProps = { program: Program; area?: ProgramArea };
+
+export function ProgramCard({ program, area = "public" }: ProgramCardProps) {
     const full = isFull(program);
     const percent = quotaPercent(program);
+    const detailHref = area === "user" ? `/user/program/${program.id}` : `/programs/${program.id}`;
 
     let bgImage = "";
     const fullText = `${program.category?.name || ""} ${program.name || ""} ${program.description || ""}`.toLowerCase();
-    
+
     if (fullText.includes("gijinkoku") || fullText.includes("gijingoku") || fullText.includes("engineer")) {
         bgImage = "url(/cardgijingoku.png)";
-    } 
-    else if (fullText.includes("korea")) {
+    } else if (fullText.includes("korea")) {
         bgImage = "url(/cardkorea.png)";
-    } 
-    else if (
-        fullText.includes("jepang") || 
-        fullText.includes("tokutei") || 
+    } else if (
+        fullText.includes("jepang") ||
+        fullText.includes("tokutei") ||
         fullText.includes("jlpt") ||
         fullText.includes("ssw")
     ) {
@@ -51,8 +53,7 @@ export function ProgramCard({ program }: { program: Program }) {
 
     return (
         <article className="group relative flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition-all duration-500 hover:scale-[1.03] hover:shadow-xl z-0 hover:z-10 before:absolute before:inset-0 before:-z-10 before:origin-top before:scale-y-0 before:bg-primary before:transition-transform before:duration-500 before:ease-out hover:before:scale-y-100 hover:ring-primary/50">
-            
-            <header 
+            <header
                 className={`relative z-10 overflow-hidden p-6 text-white bg-cover bg-center h-[9.75rem] ${
                     !bgImage ? "bg-linear-to-br from-primary to-[#0e4a8f]" : ""
                 }`}
@@ -60,17 +61,17 @@ export function ProgramCard({ program }: { program: Program }) {
             >
                 {bgImage && <div className="absolute inset-0 bg-black/40" />}
                 {!bgImage && <div className="pointer-events-none absolute -right-10 -top-10 size-36 rounded-full bg-white/10" />}
-                
+
                 {program.category && (
                     <span className="relative z-10 inline-block rounded-full bg-white px-3 py-1 text-xs font-semibold text-primary transition-colors duration-300 group-hover:bg-secondary group-hover:text-white shadow-sm">
                         {program.category.name}
                     </span>
                 )}
-                
+
                 <h2 className="relative z-10 mt-4 text-xl font-bold leading-snug line-clamp-2" title={program.name}>
                     {program.name}
                 </h2>
-                
+
                 {program.programFormat && (
                     <p className="relative z-10 mt-2 text-xs text-white/75">
                         Format Program <span className="font-semibold text-white">{program.programFormat}</span>
@@ -85,7 +86,7 @@ export function ProgramCard({ program }: { program: Program }) {
                             {program.description}
                         </p>
                     ) : (
-                        <p className="text-sm text-transparent select-none">-</p> 
+                        <p className="text-sm text-transparent select-none">-</p>
                     )}
                 </div>
 
@@ -108,7 +109,9 @@ export function ProgramCard({ program }: { program: Program }) {
                         <div className="mt-3 flex items-center justify-between rounded-lg bg-primary/5 p-3 transition-colors duration-300 group-hover:bg-white/10">
                             <div>
                                 <p className="text-xs text-slate-500 transition-colors duration-300 group-hover:text-slate-300">Skema Pembayaran</p>
-                                <p className="mt-1 text-sm font-bold text-primary transition-colors duration-300 group-hover:text-white">{installmentLabel(program.installmentPlan)}</p>
+                                <p className="mt-1 text-sm font-bold text-primary transition-colors duration-300 group-hover:text-white">
+                                    {installmentLabel(program.installmentPlan)}
+                                </p>
                             </div>
                             <CreditCard className="size-5 text-primary transition-colors duration-300 group-hover:text-secondary" aria-hidden />
                         </div>
@@ -119,7 +122,9 @@ export function ProgramCard({ program }: { program: Program }) {
                             <span className="flex items-center gap-2 text-slate-500 transition-colors duration-300 group-hover:text-slate-300">
                                 <Users className="size-4" aria-hidden /> Kuota
                             </span>
-                            <span className="font-semibold text-primary transition-colors duration-300 group-hover:text-white">{quotaLabel(program)}</span>
+                            <span className="font-semibold text-primary transition-colors duration-300 group-hover:text-white">
+                                {quotaLabel(program)}
+                            </span>
                         </div>
                         {percent !== undefined && (
                             <div
@@ -134,7 +139,7 @@ export function ProgramCard({ program }: { program: Program }) {
 
                     <div className="flex gap-3">
                         <Link
-                            href={`/programs/${program.id}`}
+                            href={detailHref}
                             className="flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-primary px-3 py-2.5 text-sm font-semibold text-primary transition-all duration-300 hover:bg-primary/5 group-hover:border-white group-hover:text-white group-hover:hover:bg-white/20"
                         >
                             Detail Program <ArrowRight className="size-4" aria-hidden />
@@ -144,12 +149,13 @@ export function ProgramCard({ program }: { program: Program }) {
                                 Kuota Penuh
                             </span>
                         ) : (
-                            <Link
-                                href={"/user/pendaftaran"}
+                            <ProgramRegisterButton
+                                programId={program.id}
+                                area={area}
                                 className="flex flex-1 items-center justify-center rounded-lg bg-secondary px-3 py-2.5 text-sm font-semibold text-white transition hover:opacity-90 shadow-sm group-hover:bg-white group-hover:text-primary group-hover:hover:bg-slate-100"
                             >
                                 Daftar Sekarang
-                            </Link>
+                            </ProgramRegisterButton>
                         )}
                     </div>
                 </div>

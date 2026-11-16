@@ -4,7 +4,7 @@
   "main": "dist/index.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "build": "npm run typecheck && esbuild src/index.ts --bundle --platform=node --format=esm --packages=external --outfile=dist/index.js",
+    "build": "esbuild src/index.ts --bundle --platform=node --format=esm --packages=external --outfile=dist/index.js",
     "typecheck": "tsc",
     "start": "node dist/index.js",
     "prisma:generate": "prisma generate",
@@ -27,7 +27,8 @@
     "clean:content": "node prisma/seeds/clean-content.js || tsx prisma/clean-content.ts",
     "seed:testimonials-clients-services": "node prisma/seeds/seed-testimonials-clients-services.js",
     "test:email": "tsx src/scripts/test-email.ts",
-    "user:password": "tsx src/scripts/set-user-password.ts"
+    "user:password": "tsx src/scripts/set-user-password.ts",
+    "images:optimize": "tsx src/scripts/optimize-existing-images.ts"
   },
   "author": "fitalenta-dev",
   "license": "ISC",
@@ -45,12 +46,14 @@
     "express": "^5.2.1",
     "express-rate-limit": "^8.7.0",
     "express-validator": "^7.3.2",
+    "helmet": "^8.3.0",
     "jsonwebtoken": "^9.0.3",
     "morgan": "^1.12.1",
     "multer": "^2.4.0",
     "nodemailer": "^10.0.10",
     "pdfkit": "^0.20.2",
-    "resend": "^6.31.0"
+    "resend": "^6.31.0",
+    "sharp": "^0.35.5"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.10",

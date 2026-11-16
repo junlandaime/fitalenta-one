@@ -6,7 +6,7 @@ import { notFound } from "next/navigation";
 import { RelatedArticles } from "../features/related-article";
 import PageHero from "@/components/common/page-hero";
 import { ShareButtons } from "../features/share-section";
-import SlideIn from "@/components/common/slide-in"; // 1. Import komponen SlideIn
+import SlideIn from "@/components/common/slide-in"; 
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -39,11 +39,15 @@ export default async function ArticleDetailPage({ params }: Props) {
     return (
         <>
             <PageHero
-              badge="FITALENTA Blog"
-              title={article.title}
-              crumbs={[{ label: "Home", href: "/" }, { label: "Articles" }, { label: article.title }]}
-              bgImage="/blog-hero.png"
-        />
+                badge="FITALENTA Blog"
+                title={article.title}
+                crumbs={[
+                    { label: "Home", href: "/" },
+                    { label: "Articles", href: "/articles" },
+                    { label: article.title },
+                ]}
+                bgImage="/blog-hero.png"
+            />
 
             <section className="bg-slate-50 py-12">
                 <div className="mx-auto grid max-w-6xl gap-8 px-4 lg:grid-cols-[1fr_22rem] lg:items-start">

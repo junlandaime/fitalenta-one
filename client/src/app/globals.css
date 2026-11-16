@@ -119,33 +119,37 @@
 
 @layer base {
   @keyframes smooth-bounce {
-  0%, 100% {
-    transform: translateY(0) scaleY(1);
+    0%, 100% {
+      transform: translateY(0) scaleY(1);
+    }
+    40% {
+      transform: translateY(-10px) scaleY(1.05);
+    }
+    50% {
+      transform: translateY(-10px) scaleY(1);
+    }
+    80% {
+      transform: translateY(0) scaleY(0.95);
+    }
   }
-  40% {
-    transform: translateY(-10px) scaleY(1.05);
-  }
-  50% {
-    transform: translateY(-10px) scaleY(1);
-  }
-  80% {
-    transform: translateY(0) scaleY(0.95);
-  }
-}
 
-.icon-bounce {
-  display: inline-block;
-  animation: smooth-bounce 2s ease-in-out infinite;
-}
+  .icon-bounce {
+    display: inline-block;
+    animation: smooth-bounce 2s ease-in-out infinite;
+  }
+
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+
   button:not(:disabled), [role="button"]:not(:disabled) {
     cursor: pointer;
   }
+
   html {
     @apply font-sans;
   }
@@ -174,13 +178,18 @@
 
 @keyframes calc-type {
   0%, 100% { transform: translateY(0) scale(1); }
-  10% { transform: translateY(3px) scale(0.95); } /* Ditekan */
+  10% { transform: translateY(3px) scale(0.95); }
   20% { transform: translateY(0) scale(1); }
-  30% { transform: translateY(3px) scale(0.95); } /* Ditekan lagi */
+  30% { transform: translateY(3px) scale(0.95); }
   40% { transform: translateY(0) scale(1); }
-  50%, 90% { transform: translateY(0) scale(1); } /* Jeda sebentar */
+  50%, 90% { transform: translateY(0) scale(1); }
 }
 .icon-calc {
   display: inline-block;
   animation: calc-type 3s ease-in-out infinite;
+}
+
+@keyframes hero-zoom {
+  from { transform: scale(1.08); }
+  to { transform: scale(1); }
 }
