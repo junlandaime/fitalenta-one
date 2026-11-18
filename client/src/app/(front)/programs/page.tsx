@@ -4,6 +4,7 @@ import { getPrograms } from "@/services/program-service";
 import { CategoryFilter } from "./features/category-filter";
 import { ProgramCard } from "./features/program-card";
 import PageHero from "@/components/common/page-hero";
+import SlideIn from "@/components/common/slide-in"; // Import komponen animasi kita
 
 export const metadata: Metadata = {
     title: "Program - FITALENTA",
@@ -33,19 +34,27 @@ export default async function ProgramsPage({ searchParams }: Props) {
                 title="Our Programs"
                 subtitle="Persiapkan kompetensi, karier, dan peluang kerja Anda melalui program FITALENTA."
                 crumbs={[{ label: "Home", href: "/" }, { label: "Programs" }]}
+                bgImage="/bgourprogram.png"
             />
 
-            <section className="bg-slate-50 py-12">
+            <section className="bg-slate-50 py-12 overflow-hidden">
                 <div className="mx-auto max-w-6xl px-4">
-                    <CategoryFilter categories={categories} activeId={activeId} />
+                    
+                    <SlideIn direction="down" delay={0.1}>
+                        <CategoryFilter categories={categories} activeId={activeId} />
+                    </SlideIn>
 
                     {programs.length === 0 ? (
                         <p className="py-20 text-center text-slate-500">Belum ada program pada kategori ini.</p>
                     ) : (
                         <ul className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                            {programs.map((program) => (
-                                <li key={program.id} className="flex">
-                                    <div className="w-full"><ProgramCard program={program} /></div>
+                            {programs.map((program, index) => (
+                                <li key={program.id} className="flex h-full w-full">
+                                    <div className="w-full h-full">
+                                        <SlideIn direction="up" delay={index * 0.15}>
+                                            <ProgramCard program={program} />
+                                        </SlideIn>
+                                    </div>
                                 </li>
                             ))}
                         </ul>

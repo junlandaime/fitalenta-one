@@ -25,7 +25,9 @@ export async function getEvents(
 
 export async function getFeaturedEvents(): Promise<EventItem[]> {
     try {
-        const { data } = await api.get<ApiResponse<EventItem[]>>("/events/featured");
+        const { data } = await api.get<ApiResponse<EventItem[]>>("/events/featured", {
+        params: { upcoming: "true" },
+    });
         return data.data ?? [];
     } catch {
         return [];

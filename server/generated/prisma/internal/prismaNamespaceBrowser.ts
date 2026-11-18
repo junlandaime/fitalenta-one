@@ -71,7 +71,8 @@ export const ModelName = {
   Payment: 'Payment',
   PaymentHistory: 'PaymentHistory',
   Notification: 'Notification',
-  ContactMessage: 'ContactMessage'
+  ContactMessage: 'ContactMessage',
+  Banner: 'Banner'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -458,6 +459,24 @@ export const ContactMessageScalarFieldEnum = {
 export type ContactMessageScalarFieldEnum = (typeof ContactMessageScalarFieldEnum)[keyof typeof ContactMessageScalarFieldEnum]
 
 
+export const BannerScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  subtitle: 'subtitle',
+  ctaLabel: 'ctaLabel',
+  linkUrl: 'linkUrl',
+  image: 'image',
+  startsAt: 'startsAt',
+  endsAt: 'endsAt',
+  order: 'order',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BannerScalarFieldEnum = (typeof BannerScalarFieldEnum)[keyof typeof BannerScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -729,4 +748,15 @@ export const ContactMessageOrderByRelevanceFieldEnum = {
 } as const
 
 export type ContactMessageOrderByRelevanceFieldEnum = (typeof ContactMessageOrderByRelevanceFieldEnum)[keyof typeof ContactMessageOrderByRelevanceFieldEnum]
+
+
+export const BannerOrderByRelevanceFieldEnum = {
+  title: 'title',
+  subtitle: 'subtitle',
+  ctaLabel: 'ctaLabel',
+  linkUrl: 'linkUrl',
+  image: 'image'
+} as const
+
+export type BannerOrderByRelevanceFieldEnum = (typeof BannerOrderByRelevanceFieldEnum)[keyof typeof BannerOrderByRelevanceFieldEnum]
 

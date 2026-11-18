@@ -122,3 +122,8 @@ export type Notification = Prisma.NotificationModel
  * 
  */
 export type ContactMessage = Prisma.ContactMessageModel
+/**
+ * Model Banner
+ * 
+ */
+export type Banner = Prisma.BannerModel

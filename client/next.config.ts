@@ -20,6 +20,16 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+
+  async redirects() {
+  return [
+    { source: "/pendaftaran", destination: "/user/pendaftaran", permanent: false },
+    { source: "/pembayaran", destination: "/user/pembayaran", permanent: false },
+    { source: "/notifikasi", destination: "/user/notifikasi", permanent: false },
+    { source: "/profil", destination: "/user/profil", permanent: false },
+  ];
+},
+
   images: {
     unoptimized: true,
     dangerouslyAllowLocalIP: process.env.NODE_ENV === "development",

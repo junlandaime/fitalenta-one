@@ -118,16 +118,78 @@
 }
 
 @layer base {
+  @keyframes smooth-bounce {
+    0%, 100% {
+      transform: translateY(0) scaleY(1);
+    }
+    40% {
+      transform: translateY(-10px) scaleY(1.05);
+    }
+    50% {
+      transform: translateY(-10px) scaleY(1);
+    }
+    80% {
+      transform: translateY(0) scaleY(0.95);
+    }
+  }
+
+  .icon-bounce {
+    display: inline-block;
+    animation: smooth-bounce 2s ease-in-out infinite;
+  }
+
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+
   button:not(:disabled), [role="button"]:not(:disabled) {
     cursor: pointer;
   }
+
   html {
     @apply font-sans;
   }
+}
+
+@keyframes fly-plane {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(8px, -8px) rotate(15deg) scale(1.1); }
+}
+.icon-fly {
+  display: inline-block;
+  animation: fly-plane 3s ease-in-out infinite;
+}
+
+@keyframes wallet-pop {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  20% { transform: scale(1.15) rotate(-5deg); }
+  40% { transform: scale(1) rotate(0deg); }
+  60% { transform: scale(1.15) rotate(5deg); }
+  80% { transform: scale(1) rotate(0deg); }
+}
+.icon-wallet {
+  display: inline-block;
+  animation: wallet-pop 3s ease-in-out infinite;
+}
+
+@keyframes calc-type {
+  0%, 100% { transform: translateY(0) scale(1); }
+  10% { transform: translateY(3px) scale(0.95); }
+  20% { transform: translateY(0) scale(1); }
+  30% { transform: translateY(3px) scale(0.95); }
+  40% { transform: translateY(0) scale(1); }
+  50%, 90% { transform: translateY(0) scale(1); }
+}
+.icon-calc {
+  display: inline-block;
+  animation: calc-type 3s ease-in-out infinite;
+}
+
+@keyframes hero-zoom {
+  from { transform: scale(1.08); }
+  to { transform: scale(1); }
 }
