@@ -31,7 +31,7 @@ export default async function BlogPage({ searchParams }: Props) {
                 title="FITALENTA Blog"
                 subtitle="Insights, tips, and news from the world of business and talent management"
                 crumbs={[{ label: "Home", href: "/" }, { label: "Articles" }]}
-                bgImage="/blog-hero.png" 
+                bgImage="/blog-hero.webp" 
             />
 
             {featured[0] && (

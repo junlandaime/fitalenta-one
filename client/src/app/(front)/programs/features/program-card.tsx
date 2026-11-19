@@ -108,7 +108,9 @@ export function ProgramCard({ program, area = "public" }: ProgramCardProps) {
                         <div className="mt-3 flex items-center justify-between rounded-lg bg-primary/5 p-3 transition-colors duration-300 group-hover:bg-white/10">
                             <div>
                                 <p className="text-xs text-slate-500 transition-colors duration-300 group-hover:text-slate-300">Skema Pembayaran</p>
-                                <p className="mt-1 text-sm font-bold text-primary transition-colors duration-300 group-hover:text-white">{installmentLabel(program.installmentPlan)}</p>
+                                <p className="mt-1 text-sm font-bold text-primary transition-colors duration-300 group-hover:text-white">
+                                    {installmentLabel(program.installmentPlan)}
+                                </p>
                             </div>
                             <CreditCard className="size-5 text-primary transition-colors duration-300 group-hover:text-secondary" aria-hidden />
                         </div>
@@ -119,7 +121,9 @@ export function ProgramCard({ program, area = "public" }: ProgramCardProps) {
                             <span className="flex items-center gap-2 text-slate-500 transition-colors duration-300 group-hover:text-slate-300">
                                 <Users className="size-4" aria-hidden /> Kuota
                             </span>
-                            <span className="font-semibold text-primary transition-colors duration-300 group-hover:text-white">{quotaLabel(program)}</span>
+                            <span className="font-semibold text-primary transition-colors duration-300 group-hover:text-white">
+                                {quotaLabel(program)}
+                            </span>
                         </div>
                         {percent !== undefined && (
                             <div

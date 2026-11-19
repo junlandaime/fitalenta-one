@@ -6,9 +6,9 @@ export const dynamic = "force-dynamic";
 
 export default function UserLayout({ children }: { children: ReactNode }) {
     return (
-        <div className="flex min-h-full flex-col">
+        <div className="flex min-h-full flex-col pb-20 lg:pb-0">
             <Navbar />
-            <div>
+            <div className="flex-1">
                 {children}
             </div>
             <Footer />

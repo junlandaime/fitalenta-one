@@ -34,7 +34,7 @@ export default async function ProgramsPage({ searchParams }: Props) {
                 title="Our Programs"
                 subtitle="Persiapkan kompetensi, karier, dan peluang kerja Anda melalui program FITALENTA."
                 crumbs={[{ label: "Home", href: "/" }, { label: "Programs" }]}
-                bgImage="/bgourprogram.png"
+                bgImage="/bgourprogram.webp"
             />
 
             <section className="bg-slate-50 py-12 overflow-hidden">

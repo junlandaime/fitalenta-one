@@ -24,6 +24,7 @@ export default function PageHero({
         <>
             {!hideHero && title && (
                 <section
+                    // 2. Tambahkan overflow-hidden agar scrollbar aman saat animasi meluncur
                     className={`relative overflow-hidden bg-cover bg-center px-6 py-20 text-center text-white ${
                         !bgImage ? "bg-linear-to-br from-[#071d40] to-[#0e4a8f]" : ""
                     }`}
@@ -32,6 +33,7 @@ export default function PageHero({
                     {bgImage && <div className="absolute inset-0 bg-black/20" />}
 
                     <div className="relative z-10 flex flex-col items-center">
+                        {/* Badge muncul duluan (delay 0.1) */}
                         {badge && (
                             <SlideIn direction="up" delay={0.1}>
                                 <span className="mb-5 inline-block rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-sm backdrop-blur-sm">
@@ -58,7 +60,10 @@ export default function PageHero({
                             <SlideIn direction="up" delay={0.4}>
                                 <div className="mt-6 flex flex-wrap justify-center gap-3">
                                     {chips.map((chip) => (
-                                        <span key={chip} className="rounded-full bg-white/10 px-4 py-1.5 text-sm backdrop-blur-sm">
+                                        <span
+                                            key={chip}
+                                            className="rounded-full bg-white/10 px-4 py-1.5 text-sm backdrop-blur-sm"
+                                        >
                                             {chip}
                                         </span>
                                     ))}

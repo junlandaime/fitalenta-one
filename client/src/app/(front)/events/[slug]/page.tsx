@@ -56,9 +56,13 @@ export default async function EventDetailPage({ params }: Props) {
                 badge="FITALENTA Events"
                 title="Upcoming Events"
                 subtitle="Join us for exciting events and expand your network"
-                crumbs={[{ label: "Home", href: "/" }, { label: "Events" }, { label: event.title }]}
+                crumbs={[
+                    { label: "Home", href: "/" },
+                    { label: "Events", href: "/events" },
+                    { label: event.title },
+                ]}
                 chips={[event.eventDate, event.location]}
-                bgImage="/bg-events.png" 
+                bgImage="/bg-events.webp"
             />
             
             <div className="bg-slate-50 py-12 overflow-hidden">
@@ -73,7 +77,14 @@ export default async function EventDetailPage({ params }: Props) {
                         <article className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-slate-100 sm:p-6 lg:p-8 relative z-0">
                             {image && (
                                 <div className="relative aspect-video overflow-hidden rounded-xl bg-slate-100 mb-6">
-                                    <Image src={image} alt={event.title} fill priority sizes="(min-width: 1024px) 720px, 100vw" className="object-cover" />
+                                    <Image
+                                        src={image}
+                                        alt={event.title}
+                                        fill
+                                        priority
+                                        sizes="(min-width: 1024px) 720px, 100vw"
+                                        className="object-cover"
+                                    />
                                 </div>
                             )}
                             
@@ -113,7 +124,11 @@ export default async function EventDetailPage({ params }: Props) {
                                             <dt className="text-xs text-slate-500">{label}</dt>
                                             <dd className="flex items-center gap-2 text-sm font-semibold text-primary">
                                                 {value}
-                                                {badge && <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-normal text-slate-600 shrink-0">{badge}</span>}
+                                                {badge && (
+                                                    <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-normal text-slate-600 shrink-0">
+                                                        {badge}
+                                                    </span>
+                                                )}
                                             </dd>
                                         </div>
                                     </div>
@@ -122,13 +137,21 @@ export default async function EventDetailPage({ params }: Props) {
 
                             <div className="mt-8 space-y-3">
                                 {past ? (
-                                    <Link href={`/gallery?event=${event.slug}`} className={`${primary} bg-secondary text-white hover:opacity-90 transition-opacity w-full`}>
+                                    <Link
+                                        href={`/gallery?event=${event.slug}`}
+                                        className={`${primary} bg-secondary text-white hover:opacity-90 transition-opacity w-full`}
+                                    >
                                         See Gallery
                                     </Link>
                                 ) : (
                                     <>
                                         {event.link && (
-                                            <a href={event.link} target="_blank" rel="noopener noreferrer" className={`${primary} bg-secondary text-white hover:opacity-90 transition-opacity w-full`}>
+                                            <a
+                                                href={event.link}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className={`${primary} bg-secondary text-white hover:opacity-90 transition-opacity w-full`}
+                                            >
                                                 Register Now
                                             </a>
                                         )}
