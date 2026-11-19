@@ -43,6 +43,10 @@ export interface ParticipantItem {
     programFormat: string | null;
     duration: string | null;
   };
+  interview: {
+  status: RegistrationStatus;
+  notes: string | null;
+  };
   selection: {
     status: RegistrationStatus;
     notes: string | null;
@@ -71,6 +75,7 @@ export interface PlacementInput {
 }
 
 export interface ParticipantUpdateInput {
+  interview?: SelectionInput;
   selection?: SelectionInput;
   placement?: PlacementInput;
 }

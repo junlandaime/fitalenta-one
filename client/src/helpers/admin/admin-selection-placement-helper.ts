@@ -22,6 +22,8 @@ export function toFormValues(participant: Participant): SelectionPlacementFormVa
     const { selection, placement } = participant;
 
     return {
+        interviewStatus: participant.interview.status,
+        interviewNotes: participant.interview.notes ?? "",
         selectionStatus: selection.status,
         selectionNotes: selection.notes ?? "",
         placementStatus: placement.status,
@@ -37,6 +39,11 @@ export function buildUpdatePayload(
 ): ParticipantUpdatePayload {
     const { selection, placement } = participant;
     const payload: ParticipantUpdatePayload = {};
+
+    const interviewNotes = blankToNull(values.interviewNotes);
+    if (values.interviewStatus !== participant.interview.status || interviewNotes !== participant.interview.notes) {
+        payload.interview = { status: values.interviewStatus, notes: interviewNotes };
+    }
 
     const selectionNotes = blankToNull(values.selectionNotes);
     if (values.selectionStatus !== selection.status || selectionNotes !== selection.notes) {

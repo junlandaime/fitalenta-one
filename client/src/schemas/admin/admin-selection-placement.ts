@@ -11,6 +11,8 @@ const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 
 export const selectionPlacementSchema = z
     .object({
+        interviewStatus: z.enum(SELECTION_STATUS_VALUES, { error: "Status interview wajib dipilih" }),
+        interviewNotes: z.string().trim(),
         selectionStatus: z.enum(SELECTION_STATUS_VALUES, { error: "Status seleksi wajib dipilih" }),
         selectionNotes: z.string().trim(),
         placementStatus: z.enum(PLACEMENT_STATUS_VALUES, { error: "Status penyaluran wajib dipilih" }),

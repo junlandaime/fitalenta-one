@@ -1,6 +1,6 @@
 import prisma from "../../config/prisma";
 import { PlacementStage, Prisma, RegistrationStatus } from "../../../generated/prisma/client";
-import { DEFAULT_PLACEMENT_STATUS, DEFAULT_SELECTION_STATUS } from "../../config/selection.config";
+import { DEFAULT_PLACEMENT_STATUS, DEFAULT_SELECTION_STATUS, PASSED_SELECTION_STATUS } from "../../config/selection.config";
 import { SelectionPlacementErrors } from "../../errors/selectionPlacement.errors";
 import {
   ParticipantFilters,
@@ -15,12 +15,13 @@ import {
 import { PaginationMeta, buildPaginationMeta, resolvePagination } from "../../utils/pagination";
 import { blankToNull } from "../../utils/value";
 import {
+  buildInterviewNotification,
   buildPlacementNotification,
   buildSelectionNotification,
   createNotification,
 } from "./selectionPlacement.notifications";
 import { participantInclude, toParticipantItem } from "./selectionPlacement.mapper";
-import { assertPlacementAllowed } from "./selectionPlacement.policy";
+import { assertPlacementAllowed, isPlacementDetermined } from "./selectionPlacement.policy";
 
 type Tx = Prisma.TransactionClient;
 type ParticipantRecord = Prisma.RegistrationGetPayload<{ include: typeof participantInclude }>;
@@ -151,7 +152,7 @@ export async function updateParticipant(
   input: ParticipantUpdateInput,
   adminId: number
 ): Promise<ParticipantItem> {
-  if (!input.selection && !input.placement) throw SelectionPlacementErrors.nothingToUpdate();
+  if (!input.interview && !input.selection && !input.placement) throw SelectionPlacementErrors.nothingToUpdate();
 
   return prisma.$transaction(async (tx) => {
     const registration = await tx.registration.findUnique({ where: { id }, include: participantInclude });
@@ -159,17 +160,38 @@ export async function updateParticipant(
 
     const [currentSelection] = registration.selectionStatuses;
     const [currentPlacement] = registration.placementStatuses;
+    if (input.interview) {
+      const next = input.interview.status;
+      if (next !== registration.registrationStatus) {
+        await tx.registrationStatusHistory.create({
+          data: { registrationId: id, oldStatus: registration.registrationStatus, newStatus: next,
+                  notes: blankToNull(input.interview.notes), changedBy: adminId },
+        });
+        if (registration.userId) {
+          await createNotification(tx, registration.userId, id, buildInterviewNotification(next));
+        }
+      }
+      await tx.registration.update({
+        where: { id },
+        data: { registrationStatus: next, selectionNotes: blankToNull(input.interview.notes) },
+      });
+    }
     const selection = resolveSelection(input.selection, currentSelection);
-    const placement = resolvePlacement(input.placement, currentPlacement);
+    let placement = resolvePlacement(input.placement, currentPlacement);
+
+    const mustReset = selection.status !== PASSED_SELECTION_STATUS;
+    if (mustReset) {
+      placement = { status: DEFAULT_PLACEMENT_STATUS, companyName: null, placementDate: null, notes: null };
+    }
 
     assertPlacementAllowed(selection.status, placement);
 
     if (input.selection) await saveSelection(tx, id, currentSelection, selection, adminId);
-    if (input.placement) await savePlacement(tx, id, currentPlacement, placement);
+    if (input.placement || mustReset) await savePlacement(tx, id, currentPlacement, placement);
 
     if (registration.userId) {
       const selectionChanged = input.selection && selection.status !== (currentSelection?.status ?? DEFAULT_SELECTION_STATUS);
-      const placementChanged = input.placement && placement.status !== (currentPlacement?.status ?? DEFAULT_PLACEMENT_STATUS);
+      const placementChanged = (input.placement || mustReset) && placement.status !== (currentPlacement?.status ?? DEFAULT_PLACEMENT_STATUS);
 
       if (selectionChanged) {
         await createNotification(tx, registration.userId, id, buildSelectionNotification(selection.status));

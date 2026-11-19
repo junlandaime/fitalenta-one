@@ -32,10 +32,8 @@ function collectPlacementIssues({ status, companyName, placementDate }: Placemen
 }
 
 export function assertPlacementAllowed(selection: RegistrationStatus, placement: PlacementState): void {
+  if (selection !== PASSED_SELECTION_STATUS) return;
+
   const issues = collectPlacementIssues(placement);
   if (issues.length > 0) throw SelectionPlacementErrors.invalidPlacement(issues);
-
-  if (selection !== PASSED_SELECTION_STATUS && isPlacementDetermined(placement)) {
-    throw SelectionPlacementErrors.selectionNotPassed();
-  }
 }

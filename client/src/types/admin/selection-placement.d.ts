@@ -33,6 +33,10 @@ export type Participant = {
         programFormat: string | null;
         duration: string | null;
     };
+    interview: {
+        status: SelectionStatus;
+        notes: string | null;
+    };
     selection: {
         status: SelectionStatus;
         notes: string | null;
@@ -73,6 +77,7 @@ export type PlacementPayload = {
 };
 
 export type ParticipantUpdatePayload = {
+    interview?: SelectionPayload;
     selection?: SelectionPayload;
     placement?: PlacementPayload;
 };

@@ -154,6 +154,7 @@
 @keyframes hero-zoom {
   from { transform: scale(1.08); }
   to { transform: scale(1); }
+}
 @keyframes fly-plane {
   0%, 100% { transform: translate(0, 0) rotate(0deg); }
   50% { transform: translate(8px, -8px) rotate(15deg) scale(1.1); }

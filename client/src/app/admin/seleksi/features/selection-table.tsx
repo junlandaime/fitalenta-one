@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { PLACEMENT_STATUS, SELECTION_STATUS } from "@/constants/admin/admin-status";
+import { INTERVIEW_STATUS, PLACEMENT_STATUS, SELECTION_STATUS } from "@/constants/admin/admin-status";
 import { cn } from "@/lib/utils";
 import type { AdminPageMeta } from "@/types/pagination";
 import type { Participant } from "@/types/admin/selection-placement";
@@ -13,7 +13,16 @@ import { StatusBadge, ToneBadge } from "@/app/admin/dashboard/features/status-ba
 import { EmptyRow } from "@/app/admin/dashboard/features/table-card";
 import { ParticipantAvatar } from "@/components/admin/participant-avatar";
 
-const COLUMNS = ["Peserta", "Program", "Seleksi Diklat", "Penyaluran Kerja", "Perusahaan", "Penempatan", "Aksi"];
+const COLUMNS = [
+    "Peserta",
+    "Program",
+    "Seleksi Wawancara",
+    "Seleksi Diklat",
+    "Penyaluran Kerja",
+    "Perusahaan",
+    "Penempatan",
+    "Aksi",
+];
 
 const manageHref = (id: number) => `/admin/seleksi/${id}?mode=edit`;
 
@@ -180,6 +189,10 @@ export function SelectionTable({ rows, meta, stale, refreshing, onRefresh, onPag
                                                 {row.program.duration}
                                             </div>
                                         )}
+                                    </TableCell>
+                                    <TableCell>
+                                        <StatusBadge map={INTERVIEW_STATUS} value={row.interview.status} />
+                                        <Note>{row.interview.notes}</Note>
                                     </TableCell>
                                     <TableCell>
                                         <StatusBadge map={SELECTION_STATUS} value={row.selection.status} />

@@ -19,6 +19,11 @@ export const participantIdRules: ValidationChain[] = [idParamRule];
 export const updateParticipantRules: ValidationChain[] = [
   idParamRule,
 
+  body("interview").optional().isObject().withMessage("interview harus berupa object"),
+  body("interview.status").if(body("interview").exists()).isIn(SELECTION_VALUES)
+    .withMessage(`Status interview harus salah satu dari: ${SELECTION_VALUES.join(", ")}`),
+  textRule("interview.notes", { label: "Catatan interview", max: SELECTION_PLACEMENT_LIMITS.notes, nullable: true }),
+
   body("selection").optional().isObject().withMessage("selection harus berupa object"),
   body("selection.status")
     .if(body("selection").exists())

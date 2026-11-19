@@ -52,3 +52,9 @@ export async function createNotification(
 
   await tx.notification.create({ data: { userId, relatedEntityId: registrationId, ...draft } });
 }
+
+export function buildInterviewNotification(status: RegistrationStatus) {
+  if (status === "lolos") return { title: "Hasil interview", message: "Selamat, Anda dinyatakan lolos interview.", type: "success" as const, relatedEntity: "registration" as const };
+  if (status === "tidak_lolos") return { title: "Hasil interview", message: "Mohon maaf, Anda belum dinyatakan lolos interview.", type: "error" as const, relatedEntity: "registration" as const };
+  return null;
+}
