@@ -5,9 +5,17 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { isAxiosError } from "axios";
-import { Bell, Briefcase, ClipboardCheck, Inbox, NotebookText } from "lucide-react";
+import {
+    ArrowRight,
+    Bell,
+    Briefcase,
+    ClipboardCheck,
+    Inbox,
+    NotebookText,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { RegistrationGuide } from "@/components/user/program-journey-guide";
 import { useCurrentUser } from "@/hooks/auth/use-current-user";
 import { getUserDashboard } from "@/services/user/dashboard-service";
 import { RefreshButton } from "./refresh";
@@ -82,11 +90,15 @@ export function DashboardView() {
                     <p className="mt-1 text-sm text-slate-600">
                         {data.hasRegistration
                             ? "Berikut perkembangan program yang Anda ikuti."
-                            : "Anda belum memiliki program yang terdaftar."}
+                            : "Akun Anda sudah aktif. Lengkapi formulir pendaftaran program agar nomor pendaftaran (FTL) terbit."}
                     </p>
                 </div>
                 <RefreshButton onRefresh={() => refetch()} loading={isFetching} />
             </header>
+
+            {!data.hasRegistration && (
+                <RegistrationGuide ctaHref="/user/pendaftaran" hasRegistration={false} />
+            )}
 
             {data.unreadNotifications > 0 && (
                 <Alert>
@@ -131,15 +143,22 @@ export function DashboardView() {
                             <span className="grid size-20 place-items-center rounded-2xl bg-slate-50 ring-1 ring-slate-100">
                                 <Inbox className="size-9 text-slate-400" strokeWidth={1.5} aria-hidden />
                             </span>
-                            <h2 className="mt-6 text-lg font-bold text-primary">Data tidak tersedia</h2>
-                            <p className="mt-2 text-sm text-muted-foreground">Anda belum terdaftar dalam program magang.</p>
+                            <h2 className="mt-6 text-lg font-bold text-primary">Belum ada pendaftaran aktif</h2>
+                            <p className="mt-2 max-w-md text-sm text-muted-foreground">
+                                Anda belum terdaftar dalam program Fitalenta. Lengkapi data diri dan pilih program untuk mendapatkan nomor pendaftaran.
+                            </p>
                             <Button asChild className="mt-6 bg-primary hover:bg-primary/90">
-                                <Link href="/user/program">Daftar Program Magang</Link>
+                                <Link href="/user/pendaftaran">
+                                    Lengkapi Pendaftaran Program
+                                    <ArrowRight className="ml-1.5 size-4" aria-hidden />
+                                </Link>
                             </Button>
                         </div>
                     )}
                 </CardContent>
             </Card>
+
+            {data.hasRegistration && <RegistrationGuide hasRegistration={true} />}
         </div>
     );
 }

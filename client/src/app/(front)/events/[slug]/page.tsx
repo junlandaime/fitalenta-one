@@ -62,7 +62,7 @@ export default async function EventDetailPage({ params }: Props) {
                     { label: event.title },
                 ]}
                 chips={[event.eventDate, event.location]}
-                bgImage="/bg-events.png"
+                bgImage="/bg-events.webp"
             />
             
             <div className="bg-slate-50 py-12 overflow-hidden">

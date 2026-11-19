@@ -22,7 +22,7 @@ export default function ProgramHybridPage() {
                     { label: "Programs", href: "/programs" },
                     { label: "Hybrid" }
                 ]}
-                bgImage="/bgourprogram.png"
+                bgImage="/bgourprogram.webp"
             />
 
             <div className="bg-slate-50 py-16">

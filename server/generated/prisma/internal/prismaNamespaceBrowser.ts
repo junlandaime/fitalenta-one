@@ -217,6 +217,7 @@ export const GalleryScalarFieldEnum = {
   title: 'title',
   description: 'description',
   image: 'image',
+  images: 'images',
   categoryId: 'categoryId',
   isFeatured: 'isFeatured',
   eventDate: 'eventDate',

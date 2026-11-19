@@ -39,7 +39,7 @@ export default async function AboutPage() {
                 title="About FITALENTA"
                 subtitle="Become a company partner to provide a reliable workforce, improve the capabilities of employees, and achieve financial growth through target-based business assistance"
                 crumbs={[{ label: "Home", href: "/" }, { label: "About" }]}
-                bgImage="/bg-about.png" 
+                bgImage="/bg-about.webp" 
             />
 
             <section className={`${section} overflow-hidden`}>

@@ -22,7 +22,7 @@ export default function ProgramAsramaPage() {
                     { label: "Programs", href: "/programs" },
                     { label: "Asrama" }
                 ]}
-                bgImage="/bgourprogram.png"
+                bgImage="/bgourprogram.webp"
             />
 
             <div className="bg-slate-50 py-16">

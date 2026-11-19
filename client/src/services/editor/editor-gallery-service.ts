@@ -11,6 +11,14 @@ function toFormData(payload: EditorGalleryPayload): FormData {
     body.append("order", String(payload.order));
     if (payload.eventDate) body.append("eventDate", payload.eventDate);
     if (payload.image) body.append("image", payload.image);
+    if (payload.existingImages !== undefined) {
+        body.append("existingImages", JSON.stringify(payload.existingImages));
+    }
+    if (payload.newImages && payload.newImages.length > 0) {
+        for (const file of payload.newImages) {
+            body.append("images", file);
+        }
+    }
     return body;
 }
 

@@ -30,7 +30,7 @@ export default async function EventsPage({ searchParams }: Props) {
                 title="Upcoming Events"
                 subtitle="Join us for exciting events and expand your network"
                 crumbs={[{ label: "Home", href: "/" }, { label: "Events" }]}
-                bgImage="/bg-events.png" 
+                bgImage="/bg-events.webp" 
             />
 
             {/* Tambahkan overflow-hidden agar scrollbar tidak goyang */}

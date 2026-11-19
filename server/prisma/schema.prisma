@@ -220,6 +220,7 @@ model Gallery {
   title       String
   description String?   @db.Text
   image       String
+  images      Json?
   categoryId  Int       @map("category_id")
   category    Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   isFeatured  Boolean   @default(false) @map("is_featured")

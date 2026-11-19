@@ -22,7 +22,7 @@ export default async function ServicesPage() {
                 title="Our Services"
                 subtitle="Empowering businesses and individuals with tailored solutions"
                 crumbs={[{ label: "Home", href: "/" }, { label: "Services" }]}
-                bgImage="/bg-services.png" 
+                bgImage="/bg-services.webp" 
             />
 
             <section className="bg-slate-50 py-20 overflow-hidden">

@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Spinner } from "@/components/ui/spinner";
 import { UserNavbar } from "@/components/common/user-navbar";
+import { UserBottomNav } from "@/components/user/user-bottom-nav";
 import { useCurrentUser } from "@/hooks/auth/use-current-user";
 import { getHomeByRole, normalizeRole } from "@/lib/auth-role";
 
@@ -41,10 +42,11 @@ export function UserShell({ children, footer }: { children: ReactNode; footer: R
     if (!user || !allowed) return <UserShellSkeleton />;
 
     return (
-        <div className="flex min-h-svh flex-col">
+        <div className="flex min-h-svh flex-col pb-16 lg:pb-0">
             <UserNavbar />
             <div className="flex-1">{children}</div>
             {footer}
+            <UserBottomNav />
         </div>
     );
 }

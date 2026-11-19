@@ -22,7 +22,7 @@ export default function ProgramGijingokuPage() {
                     { label: "Programs", href: "/programs" },
                     { label: "Gijingoku" }
                 ]}
-                bgImage="/cardgijingoku2.png" 
+                bgImage="/cardgijingoku2.webp" 
             />
 
             <div className="bg-slate-50 py-16">
