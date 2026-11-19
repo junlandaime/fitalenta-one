@@ -2,7 +2,7 @@ import { Footer } from "@/components/common/footer";
 import { Navbar } from "@/components/common/navbar";
 import type { ReactNode } from "react";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 30;
 
 export default function UserLayout({ children }: { children: ReactNode }) {
     return (

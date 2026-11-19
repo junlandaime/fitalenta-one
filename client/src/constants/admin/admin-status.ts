@@ -9,7 +9,7 @@ export const INTERVIEW_STATUS: StatusMap = {
 };
 
 export const SELECTION_STATUS: StatusMap = {
-    menunggu: { label: "Menunggu", tone: "warning" },
+    menunggu: { label: "Proses Diklat", tone: "warning" },
     lolos: { label: "Lolos", tone: "success" },
     tidak_lolos: { label: "Tidak Lolos", tone: "danger" },
 };
