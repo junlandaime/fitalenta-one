@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { ChevronDown, KeyRound, LogOut, User, UserRound } from "lucide-react";
+import { ChevronDown, KeyRound, LogOut, MessageSquare, User, UserRound } from "lucide-react";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
@@ -16,6 +16,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { ChangePasswordSheet } from "./change-password-sheet";
+import { FeedbackSheet } from "@/components/user/feedback-sheet";
+import { Button } from "@/components/ui/button";
 import { Logo } from "./logo";
 import { NotificationBell } from "./notification-bell";
 import { cn } from "@/lib/utils";
@@ -38,6 +40,7 @@ export function UserNavbar() {
     const { data } = useCurrentUser();
     const logout = useLogout();
     const [passwordOpen, setPasswordOpen] = useState(false);
+    const [feedbackOpen, setFeedbackOpen] = useState(false);
 
     return (
         <header className="sticky top-0 z-50 border-b border-[#10302B]/10 bg-primary text-white">
@@ -72,6 +75,18 @@ export function UserNavbar() {
                     </nav>
 
                     <NotificationBell />
+
+                    <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon-sm"
+                        className="hidden text-white hover:bg-muted-foreground/30 hover:text-white sm:inline-flex"
+                        title="Laporkan masalah / masukan"
+                        aria-label="Laporkan masalah atau masukan"
+                        onClick={() => setFeedbackOpen(true)}
+                    >
+                        <MessageSquare aria-hidden />
+                    </Button>
 
                     <DropdownMenu>
                         <DropdownMenuTrigger
@@ -135,6 +150,11 @@ export function UserNavbar() {
                                 Ubah password
                             </DropdownMenuItem>
 
+                            <DropdownMenuItem onSelect={() => setFeedbackOpen(true)}>
+                                <MessageSquare aria-hidden />
+                                Laporkan masalah / masukan
+                            </DropdownMenuItem>
+
                             <DropdownMenuItem
                                 variant="destructive"
                                 disabled={logout.isPending}
@@ -149,6 +169,7 @@ export function UserNavbar() {
             </div>
 
             {passwordOpen && <ChangePasswordSheet onClose={() => setPasswordOpen(false)} />}
+            {feedbackOpen && <FeedbackSheet onClose={() => setFeedbackOpen(false)} />}
         </header>
     );
 }

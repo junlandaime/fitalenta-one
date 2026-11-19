@@ -3,6 +3,7 @@ import {
     Layers,
     LayoutDashboard,
     Newspaper,
+    MessageSquare,
     TrendingUp,
 } from "lucide-react";
 import type { AdminAreaConfig } from "@/constants/admin/admin-nav";
@@ -15,6 +16,7 @@ export const SUPERADMIN_AREA: AdminAreaConfig = {
     roles: ["superadmin", "admin", "editor"],
     nav: [
         { type: "link", title: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
+        { type: "link", title: "Feedback User", href: "/admin/feedback", icon: MessageSquare },
         {
             type: "group",
             title: "Manajemen",

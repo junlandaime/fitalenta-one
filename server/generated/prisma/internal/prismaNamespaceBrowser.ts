@@ -72,6 +72,7 @@ export const ModelName = {
   PaymentHistory: 'PaymentHistory',
   Notification: 'Notification',
   ContactMessage: 'ContactMessage',
+  UserFeedback: 'UserFeedback',
   Banner: 'Banner'
 } as const
 
@@ -460,6 +461,22 @@ export const ContactMessageScalarFieldEnum = {
 export type ContactMessageScalarFieldEnum = (typeof ContactMessageScalarFieldEnum)[keyof typeof ContactMessageScalarFieldEnum]
 
 
+export const UserFeedbackScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  category: 'category',
+  subject: 'subject',
+  message: 'message',
+  pageUrl: 'pageUrl',
+  status: 'status',
+  adminNote: 'adminNote',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserFeedbackScalarFieldEnum = (typeof UserFeedbackScalarFieldEnum)[keyof typeof UserFeedbackScalarFieldEnum]
+
+
 export const BannerScalarFieldEnum = {
   id: 'id',
   title: 'title',
@@ -749,6 +766,18 @@ export const ContactMessageOrderByRelevanceFieldEnum = {
 } as const
 
 export type ContactMessageOrderByRelevanceFieldEnum = (typeof ContactMessageOrderByRelevanceFieldEnum)[keyof typeof ContactMessageOrderByRelevanceFieldEnum]
+
+
+export const UserFeedbackOrderByRelevanceFieldEnum = {
+  category: 'category',
+  subject: 'subject',
+  message: 'message',
+  pageUrl: 'pageUrl',
+  status: 'status',
+  adminNote: 'adminNote'
+} as const
+
+export type UserFeedbackOrderByRelevanceFieldEnum = (typeof UserFeedbackOrderByRelevanceFieldEnum)[keyof typeof UserFeedbackOrderByRelevanceFieldEnum]
 
 
 export const BannerOrderByRelevanceFieldEnum = {

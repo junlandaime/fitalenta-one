@@ -418,6 +418,7 @@ export const ModelName = {
   PaymentHistory: 'PaymentHistory',
   Notification: 'Notification',
   ContactMessage: 'ContactMessage',
+  UserFeedback: 'UserFeedback',
   Banner: 'Banner'
 } as const
 
@@ -434,7 +435,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "category" | "event" | "eventView" | "article" | "articleView" | "service" | "serviceView" | "gallery" | "teamMember" | "testimonial" | "programCategory" | "program" | "registration" | "registrationStatusHistory" | "selectionStatus" | "placementStatus" | "payment" | "paymentHistory" | "notification" | "contactMessage" | "banner"
+    modelProps: "user" | "category" | "event" | "eventView" | "article" | "articleView" | "service" | "serviceView" | "gallery" | "teamMember" | "testimonial" | "programCategory" | "program" | "registration" | "registrationStatusHistory" | "selectionStatus" | "placementStatus" | "payment" | "paymentHistory" | "notification" | "contactMessage" | "userFeedback" | "banner"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1824,6 +1825,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    UserFeedback: {
+      payload: Prisma.$UserFeedbackPayload<ExtArgs>
+      fields: Prisma.UserFeedbackFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserFeedbackFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserFeedbackPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserFeedbackFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserFeedbackPayload>
+        }
+        findFirst: {
+          args: Prisma.UserFeedbackFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserFeedbackPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserFeedbackFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserFeedbackPayload>
+        }
+        findMany: {
+          args: Prisma.UserFeedbackFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserFeedbackPayload>[]
+        }
+        create: {
+          args: Prisma.UserFeedbackCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserFeedbackPayload>
+        }
+        createMany: {
+          args: Prisma.UserFeedbackCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.UserFeedbackDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserFeedbackPayload>
+        }
+        update: {
+          args: Prisma.UserFeedbackUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserFeedbackPayload>
+        }
+        deleteMany: {
+          args: Prisma.UserFeedbackDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserFeedbackUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.UserFeedbackUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserFeedbackPayload>
+        }
+        aggregate: {
+          args: Prisma.UserFeedbackAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserFeedback>
+        }
+        groupBy: {
+          args: Prisma.UserFeedbackGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserFeedbackGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserFeedbackCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserFeedbackCountAggregateOutputType> | number
+        }
+      }
+    }
     Banner: {
       payload: Prisma.$BannerPayload<ExtArgs>
       fields: Prisma.BannerFieldRefs
@@ -2298,6 +2365,22 @@ export const ContactMessageScalarFieldEnum = {
 export type ContactMessageScalarFieldEnum = (typeof ContactMessageScalarFieldEnum)[keyof typeof ContactMessageScalarFieldEnum]
 
 
+export const UserFeedbackScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  category: 'category',
+  subject: 'subject',
+  message: 'message',
+  pageUrl: 'pageUrl',
+  status: 'status',
+  adminNote: 'adminNote',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserFeedbackScalarFieldEnum = (typeof UserFeedbackScalarFieldEnum)[keyof typeof UserFeedbackScalarFieldEnum]
+
+
 export const BannerScalarFieldEnum = {
   id: 'id',
   title: 'title',
@@ -2587,6 +2670,18 @@ export const ContactMessageOrderByRelevanceFieldEnum = {
 } as const
 
 export type ContactMessageOrderByRelevanceFieldEnum = (typeof ContactMessageOrderByRelevanceFieldEnum)[keyof typeof ContactMessageOrderByRelevanceFieldEnum]
+
+
+export const UserFeedbackOrderByRelevanceFieldEnum = {
+  category: 'category',
+  subject: 'subject',
+  message: 'message',
+  pageUrl: 'pageUrl',
+  status: 'status',
+  adminNote: 'adminNote'
+} as const
+
+export type UserFeedbackOrderByRelevanceFieldEnum = (typeof UserFeedbackOrderByRelevanceFieldEnum)[keyof typeof UserFeedbackOrderByRelevanceFieldEnum]
 
 
 export const BannerOrderByRelevanceFieldEnum = {
@@ -2903,6 +2998,7 @@ export type GlobalOmitConfig = {
   paymentHistory?: Prisma.PaymentHistoryOmit
   notification?: Prisma.NotificationOmit
   contactMessage?: Prisma.ContactMessageOmit
+  userFeedback?: Prisma.UserFeedbackOmit
   banner?: Prisma.BannerOmit
 }
 
