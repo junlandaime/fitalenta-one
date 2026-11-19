@@ -50,6 +50,8 @@ FITALENTA adalah aplikasi web untuk **PT FAST Indo Talenta** (Bandung) yang meng
 2. **Portal peserta**: pendaftar membuat akun, mendaftar program, mengunggah dokumen, memantau status seleksi/penempatan, membayar (termasuk cicilan), dan menerima notifikasi.
 3. **Panel pengelola**: **admin** mengelola program, seleksi & penempatan, pembayaran, laporan keuangan, dan pengguna; **editor** mengelola konten website lewat CMS.
 
+Peran `superadmin` memiliki akses seluruh area admin/editor serta pengelolaan feedback peserta.
+
 Repositori ini adalah monorepo sederhana dengan dua aplikasi yang berdiri sendiri: `client` (Next.js) dan `server` (Express REST API).
 
 ## Fitur
@@ -69,21 +71,27 @@ Repositori ini adalah monorepo sederhana dengan dua aplikasi yang berdiri sendir
 
 ### Portal peserta (`user`)
 - Dashboard ringkasan status pendaftaran, pembayaran, dan notifikasi.
+- Katalog program peserta, detail program, wizard pengantar pendaftaran, dan panduan perjalanan 6 tahap.
 - Pendaftaran program dengan unggah dokumen (pas foto, sertifikat N4 dan SSW opsional), validasi NIK dan nomor telepon.
 - Pembayaran: ringkasan tagihan, detail, unggah bukti bayar, dan unduh **invoice PDF**.
-- Notifikasi dalam aplikasi dan pengelolaan profil.
+- Notifikasi dalam aplikasi, pengelolaan profil, navigasi mobile, dan pengiriman feedback.
 
 ### Panel admin (`admin`)
 - Dashboard dengan ringkasan, filter, dan daftar pendaftaran beserta detailnya.
 - Manajemen **program** dan kategori program (kuota, biaya pelatihan/keberangkatan, rencana cicilan, status).
 - **Seleksi & penempatan**: ubah status seleksi dan tahap penempatan peserta; peserta otomatis dinotifikasi.
+- **Seleksi diklat dan wawancara**: hasil seleksi diklat, hasil interview penyaluran, dan tahap penempatan (`proses` → `lolos` → `ditempatkan`).
 - **Pembayaran**: buat tagihan (cicilan 2–6 kali), terbitkan invoice, verifikasi bukti bayar, unduh invoice PDF.
 - **Laporan keuangan**: ringkasan, ekspor dan impor **Excel (.xlsx)** (maks. 5 MB / 500 baris), serta template impor.
-- Manajemen **pengguna** (CRUD akun admin, editor, dan peserta).
+- **Peserta**: pencarian/filter, detail, serta import/export data peserta Excel.
+- Manajemen **pengguna** (CRUD akun superadmin, admin, editor, dan peserta).
+- **Feedback peserta**: peserta mengirim feedback; superadmin melihat, memfilter, memberi catatan admin, dan mengubah status.
 
 ### CMS (`editor` dan `admin`)
 - Artikel, event, galeri, layanan, testimoni, **pakar**, dan **anggota tim** (lengkap dengan unggah gambar, urutan tampil, dan status aktif).
+- **Banner promo**: editor mengelola banner, CTA, periode tayang, urutan, dan status aktif; banner tampil sebagai carousel publik.
 - Endpoint tambahan di API untuk mitra, perusahaan, lowongan (*job*), dan pesan kontak.
+- Upload gambar divalidasi isi MIME, di-resize, dan dikonversi ke WebP melalui pipeline Sharp.
 
 ## Tech Stack
 
@@ -113,8 +121,9 @@ flowchart LR
 Catatan penting:
 
 - Halaman publik di-render di server dan mengambil data dari API dengan cache (`revalidate`).
-- `src/proxy.ts` di client memeriksa sesi dengan memanggil `GET /api/auth/me` (meneruskan cookie) lalu mengalihkan pengguna sesuai perannya.
+- `src/proxy.ts` di client memeriksa sesi dengan memanggil `GET /api/auth/me` (meneruskan cookie), memakai cache sesi singkat dan deduplikasi request, lalu mengalihkan pengguna sesuai perannya.
 - File unggahan disimpan di disk server (`server/uploads/`) dan disajikan pada path `/uploads`.
+- Prisma memakai adapter MariaDB dengan connection pool `connectionLimit: 10`; Next.js production dibatasi `cpus: 1`.
 
 ## Struktur Repositori
 
@@ -125,7 +134,7 @@ fitalenta/
 │   │   ├── app/                 # Route (App Router)
 │   │   │   ├── (front)/         #   website publik
 │   │   │   ├── (auth)/          #   login, register, verifikasi, reset password
-│   │   │   ├── (user)/          #   portal peserta
+│   │   │   ├── user/            #   portal peserta, program, dan profil
 │   │   │   ├── admin/           #   panel admin
 │   │   │   └── editor/          #   CMS editor
 │   │   ├── components/          # ui (shadcn), common, sections, admin, editor
@@ -155,6 +164,7 @@ fitalenta/
 │   │   ├── migrations/          # Riwayat migrasi
 │   │   ├── data/                # Data JSON untuk seeding
 │   │   └── seed-*.ts            # Skrip seeding
+│   ├── src/scripts/              # migrasi peserta, password, email, optimasi gambar
 │   ├── assets/invoice/          # Logo & tanda tangan untuk invoice PDF
 │   ├── http/                    # Koleksi request .http untuk uji API
 │   ├── prisma7.config.ts        # Konfigurasi Prisma 7
@@ -172,6 +182,7 @@ fitalenta/
 | MySQL atau MariaDB | Server aktif dan bisa diakses |
 | Akun Resend | Untuk email verifikasi, reset password, dan kontak (API key) |
 | Cloudflare Turnstile | Opsional saat development (tersedia *test key*), **wajib** di production |
+| PM2 / Nginx | Menjalankan dan mem-proxy aplikasi production |
 
 ## Memulai (Development)
 
@@ -228,6 +239,7 @@ Setelah menjalankan `seed:admin`, akun berikut tersedia (verifikasi email sudah 
 
 | Peran | Email | Password |
 | --- | --- | --- |
+| Superadmin | `superadmin@fitalenta.id` | `SuperAdmin@123` |
 | Admin | `admin@fitalenta.id` | `Admin@123` |
 | Editor | `editor@fitalenta.id` | `Editor@123` |
 
@@ -286,12 +298,13 @@ Model utama:
 
 | Domain | Model |
 | --- | --- |
-| Pengguna | `User` (peran `admin`, `editor`, `user`) |
-| Konten | `Category`, `Event`, `Article`, `Service`, `Gallery`, `HeroSlide`, `Testimonial`, `Client`, `TeamMember` (`type`: `expert` / `team`), `UniversityPartner`, `Company`, `Job`, `ContactMessage`, `Setting` |
-| Statistik | `EventView`, `ArticleView`, `ServiceView`, `Visitor` |
+| Pengguna | `User` (peran `superadmin`, `admin`, `editor`, `user`) |
+| Konten | `Category`, `Event`, `Article`, `Service`, `Gallery`, `Testimonial`, `TeamMember` (`type`: `expert` / `team`), `ContactMessage` |
+| Statistik | `EventView`, `ArticleView`, `ServiceView` |
 | Program & pendaftaran | `ProgramCategory`, `Program`, `Registration`, `RegistrationStatusHistory`, `SelectionStatus`, `PlacementStatus` |
 | Pembayaran | `Payment`, `PaymentHistory` |
 | Notifikasi | `Notification` (tipe `info`, `warning`, `success`, `error`) |
+| Operasional | `UserFeedback`, `Banner` |
 
 ### Migrasi
 
@@ -300,7 +313,7 @@ npm run prisma:migrate          # development: membuat/menerapkan migrasi
 npm run prisma:studio           # GUI untuk melihat data
 ```
 
-Di production gunakan `npx prisma migrate deploy` (hanya menerapkan migrasi yang sudah ada, tidak membuat yang baru).
+Di production, backup database lebih dahulu lalu sinkronkan schema dengan `npx prisma db push`. Perintah ini mengikuti schema saat ini; jangan memakai `--accept-data-loss` tanpa meninjau perubahan dan backup yang bisa dipulihkan.
 
 ### Seeding
 
@@ -308,6 +321,7 @@ Skrip seed bersifat idempoten (memakai *upsert*/pencocokan), sehingga aman dijal
 
 ```bash
 npm run seed:admin                                      # akun admin & editor
+npm run seed:superadmin                                 # akun superadmin
 npx tsx prisma/seed-programs.ts                         # kategori & program pelatihan
 npx tsx prisma/seed-events-articles.ts                  # event & artikel (dari prisma/data/*.json)
 npx tsx prisma/seed-team-members.ts                     # pakar/anggota tim
@@ -333,10 +347,11 @@ Jalankan keduanya bersamaan. Frontend memanggil API sesuai `NEXT_PUBLIC_API_URL`
 | `user` | `/dashboard`, `/pendaftaran`, `/pembayaran`, `/notifikasi`, `/profil` | Mendaftar program, membayar, memantau status |
 | `editor` | `/editor/*` | Mengelola konten website (CMS) |
 | `admin` | `/admin/*` dan `/editor/*` | Seluruh fitur: program, seleksi, pembayaran, laporan keuangan, pengguna, dan CMS |
+| `superadmin` | `/admin/*` dan `/editor/*` | Seluruh fitur admin/editor dan pengelolaan feedback peserta |
 
-Penegakan dilakukan di dua lapis: **`proxy.ts`** (pengalihan halaman di client) dan **middleware `authenticate` + `authorize`** (otorisasi sebenarnya di API). Endpoint modul keuangan dan pendaftaran hanya untuk `admin`; endpoint konten menerima `admin` dan `editor`.
+Penegakan dilakukan di dua lapis: **`proxy.ts`** (pengalihan halaman di client) dan **middleware `authenticate` + `authorize`** (otorisasi sebenarnya di API). Endpoint peserta, keuangan, seleksi/penempatan, pengguna, dan feedback dibatasi sesuai kebijakan akses; `superadmin` dapat mengakses seluruh modul admin/editor.
 
-Rute rumah setiap peran: `admin` → `/admin/dashboard`, `editor` → `/editor/dashboard`, `user` → `/dashboard`.
+Rute rumah setiap peran: `superadmin`/`admin` → `/admin/dashboard`, `editor` → `/editor/dashboard`, `user` → `/user/dashboard`.
 
 ## Alur Bisnis
 
@@ -378,6 +393,11 @@ Ringkasan status:
 | `prisma:migrate` | `prisma migrate dev` | Migrasi (development) |
 | `prisma:studio` | `prisma studio` | GUI database |
 | `seed:admin` | `tsx prisma/seed-admin.ts` | Seed akun admin & editor |
+| `seed:superadmin` | `tsx prisma/seed-superadmin.ts` | Seed akun superadmin |
+| `migrate:role` | `node prisma/seeds/apply-role-migration.js` atau `tsx prisma/apply-role-migration.ts` | Menambahkan role `superadmin` pada database lama |
+| `migrate:participants` | `node prisma/seeds/migrate-participants.js` | Migrasi peserta legacy |
+| `reset:passwords` / `verify:passwords` | `tsx src/scripts/...` | Reset dan verifikasi password peserta |
+| `images:optimize` | `tsx src/scripts/optimize-existing-images.ts` | Simulasi/terapkan optimasi gambar lama dengan backup dan rollback |
 
 ### `client/`
 
@@ -409,7 +429,13 @@ Daftar periksa:
    - Gunakan `JWT_SECRET` baru yang acak dan panjang. Jangan memakai nilai contoh.
    - `CORS_ORIGIN` dan `CLIENT_URL` harus berisi domain frontend yang sebenarnya.
    - Isi `TRUST_PROXY=1` bila berada di belakang nginx atau Cloudflare.
-2. **Database**: terapkan migrasi dengan `npx prisma migrate deploy`.
+2. **Database**: backup, generate client, lalu sinkronkan schema dengan `npx prisma db push`.
+   ```bash
+   cd server
+   mysqldump --single-transaction --routines --triggers -h "$DATABASE_HOST" -P "$DATABASE_PORT" -u "$DATABASE_USER" -p "$DATABASE_NAME" > "backup-$(date +%Y%m%d-%H%M%S).sql"
+   npm run prisma:generate
+   npx prisma db push
+   ```
 3. **Backend**
    ```bash
    cd server
@@ -426,9 +452,9 @@ Daftar periksa:
    npm start
    ```
 5. **Domain & cookie**: cookie sesi memakai `SameSite=Strict` dan `Secure` di production. Frontend dan API harus berada di **situs yang sama (same-site)**, misalnya `app.contoh.com` dan `api.contoh.com`, serta diakses lewat **HTTPS**. Bila berbeda situs, cookie tidak akan terkirim dan login akan gagal.
-6. **Gambar**: tambahkan hostname API produksi ke `images.remotePatterns` di `client/next.config.ts` (saat ini berisi `www.fitalenta.co.id` dan `localhost:5000`).
-7. **File unggahan**: `server/uploads/` ada di disk dan tidak masuk Git. Simpan pada *volume* yang persisten dan sertakan dalam backup, karena berisi dokumen peserta dan bukti pembayaran.
-8. **Akun awal**: ganti password akun seed atau jangan jalankan `seed:admin` di production dengan kredensial bawaan.
+6. **Gambar**: `client/next.config.ts` sudah mengizinkan hostname production Fitalenta dan localhost; ubah hanya bila domain baru dipakai.
+7. **File unggahan**: `server/uploads/` ada di disk dan tidak masuk Git. Simpan pada *volume* yang persisten dan sertakan dalam backup, termasuk `server/backup-uploads/` bila optimasi gambar dijalankan.
+8. **Akun awal**: ganti password seluruh akun seed, terutama superadmin, atau jangan jalankan seeder dengan kredensial bawaan di production.
 
 ## Keamanan
 
@@ -461,7 +487,7 @@ Menemukan celah keamanan? Mohon laporkan secara privat kepada pemilik repositori
 - **Alur di client**: `services` (panggilan API) → `hooks` (TanStack Query) → `components`/`app`. Tipe di `types/`, validasi form di `schemas/`, konstanta di `constants/`, fungsi murni di `helpers/`.
 - **Alur di server**: `routes` → `validators` → `controllers` → `services`. Logika bisnis dan akses data berada di `services`; konfigurasi domain di `config/`.
 - **Alias impor** di client: `@/*` memetakan ke `src/*`.
-- **Database**: setiap perubahan skema harus lewat migrasi Prisma (`npm run prisma:migrate`) dan berkas migrasi di-commit.
+- **Database**: development memakai `npm run prisma:migrate`; production wajib backup lebih dahulu lalu memakai `npx prisma db push` setelah schema ditinjau.
 - **Pesan commit** (disarankan): [Conventional Commits](https://www.conventionalcommits.org/), mis. `feat(editor): tambah tab anggota tim`, `fix(auth): perbaiki redirect setelah login`.
 - **Sebelum membuat PR**: pastikan `npm run typecheck` (server) serta `npm run lint` dan `npx tsc --noEmit` (client) lulus.
 
