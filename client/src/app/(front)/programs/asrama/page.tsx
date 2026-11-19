@@ -46,7 +46,7 @@ export default function ProgramAsramaPage() {
                                         <div className="my-8 flex justify-center">
                                             <div className="relative w-full overflow-hidden rounded-2xl bg-slate-50 p-2 ring-1 ring-slate-200/60 md:p-4">
                                                 <Image
-                                                    src="/program/illo-asrama.png"
+                                                    src="/program/illo-asrama.webp"
                                                     alt="Ilustrasi Belajar dan Lingkungan Program Asrama FITALENTA"
                                                     width={750}
                                                     height={560}

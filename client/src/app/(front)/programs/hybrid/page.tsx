@@ -46,7 +46,7 @@ export default function ProgramHybridPage() {
                                         <div className="my-8 flex justify-center">
                                             <div className="relative w-full overflow-hidden rounded-2xl bg-slate-50 p-2 ring-1 ring-slate-200/60 md:p-4">
                                                 <Image
-                                                    src="/program/illo-hybrid.png"
+                                                    src="/program/illo-hybrid.webp"
                                                     alt="Ilustrasi konsep pembelajaran hybrid online dan tatap muka FITALENTA"
                                                     width={750}
                                                     height={560}

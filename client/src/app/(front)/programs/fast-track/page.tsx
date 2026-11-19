@@ -46,7 +46,7 @@ export default function ProgramFastTrackPage() {
                                         <div className="my-8 flex justify-center">
                                             <div className="relative w-full overflow-hidden rounded-2xl bg-slate-50 p-2 ring-1 ring-slate-200/60 md:p-4">
                                                 <Image
-                                                    src="/program/illo-fasttrack.png"
+                                                    src="/program/illo-fasttrack.webp"
                                                     alt="Ilustrasi pendampingan job matching dan akselerasi karier Program Fast Track FITALENTA"
                                                     width={750}
                                                     height={560}
