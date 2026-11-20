@@ -53,7 +53,7 @@ export default async function GalleryDetailPage({ params }: Props) {
                     { label: "Gallery", href: "/gallery" },
                     { label: item.title },
                 ]}
-                bgImage="/gallery-hero.png"
+                bgImage="/gallery-hero.webp"
             />
 
             <section className="bg-slate-50 py-14">

@@ -46,7 +46,7 @@ export default async function ArticleDetailPage({ params }: Props) {
                     { label: "Articles", href: "/articles" },
                     { label: article.title },
                 ]}
-                bgImage="/blog-hero.png"
+                bgImage="/blog-hero.webp"
             />
 
             <section className="bg-slate-50 py-12">
