@@ -6,7 +6,7 @@ import { notFound } from "next/navigation";
 import { RelatedArticles } from "../features/related-article";
 import PageHero from "@/components/common/page-hero";
 import { ShareButtons } from "../features/share-section";
-import SlideIn from "@/components/common/slide-in"; 
+import SlideIn from "@/components/common/slide-in";
 
 type Props = { params: Promise<{ slug: string }> };
 

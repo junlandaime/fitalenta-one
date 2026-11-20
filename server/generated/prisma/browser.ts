@@ -123,6 +123,11 @@ export type Notification = Prisma.NotificationModel
  */
 export type ContactMessage = Prisma.ContactMessageModel
 /**
+ * Model UserFeedback
+ * 
+ */
+export type UserFeedback = Prisma.UserFeedbackModel
+/**
  * Model Banner
  * 
  */

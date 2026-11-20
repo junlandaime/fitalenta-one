@@ -16,6 +16,13 @@ Kedua sistem tersebut kini disatukan ke dalam arsitektur monorepo modern:
 - **Database**: MySQL / MariaDB (kompatibel dengan schema MySQL dari ojetu lama).
 - **Reverse Proxy**: Nginx + SSL Let's Encrypt (Certbot).
 - **Process Manager**: PM2.
+- **Akses aplikasi**: `superadmin`, `admin`, `editor`, dan `user` dengan portal peserta serta panel admin/editor.
+- **Media**: upload gambar divalidasi, di-resize, dan dikonversi ke WebP; file peserta dan bukti pembayaran tetap disimpan di disk.
+
+Fitur production yang perlu diuji setelah deploy:
+- Portal peserta: katalog/detail program, wizard pendaftaran, panduan perjalanan 6 tahap, seleksi diklat, interview penyaluran, pembayaran, notifikasi, profil, dan feedback.
+- Panel admin/superadmin: peserta, import/export Excel, program, seleksi & penempatan, pembayaran, laporan keuangan, pengguna, dan pengelolaan feedback.
+- Panel editor: artikel, event, galeri, layanan, testimoni, tim/pakar, dan banner promo.
 
 ---
 
@@ -61,7 +68,8 @@ PORT=5000
 NODE_ENV=production
 TRUST_PROXY=true
 
-# Database MySQL Production (Kompatibel dengan MySQL2 / Prisma)
+# Database MySQL Production (Prisma adapter MariaDB)
+DATABASE_URL=mysql://fitalenta_user:PasswordKuatDatabase2026!@127.0.0.1:3306/fitalenta_prod
 DATABASE_HOST=127.0.0.1
 DATABASE_PORT=3306
 DATABASE_NAME=fitalenta_prod
@@ -102,6 +110,9 @@ MAIL_FROM="Fitalenta <noreply@fitalenta.co.id>"
 
 # Cloudflare Turnstile (Captcha)
 TURNSTILE_SECRET_KEY=0x4AAAAAAxxxxxxxxxxxxxxxxxxxx
+
+# Opsional: URL internal backend untuk rewrite Next.js
+INTERNAL_API_URL=http://127.0.0.1:5000
 ```
 
 ### B. Frontend (`client/.env.local` atau `client/.env.production`)
@@ -129,22 +140,28 @@ cd /var/www/fitalenta
 cd /var/www/fitalenta/server
 npm install
 
-# 1. Jalankan generator dan migrasi database Prisma ke MySQL
-npm run prisma:generate
-npx prisma migrate deploy
+# 1. Backup database sebelum sinkronisasi schema
+mkdir -p backups
+mysqldump --single-transaction --routines --triggers -h "$DATABASE_HOST" -P "$DATABASE_PORT" -u "$DATABASE_USER" -p "$DATABASE_NAME" > "backups/db-$(date +%Y%m%d-%H%M%S).sql"
 
-# 2. Buat direktori penyimpanan upload dan atur hak akses
-mkdir -p uploads/articles uploads/events uploads/gallery uploads/team-members uploads/testimonials uploads/registrations uploads/payment-proofs
+# 2. Generate client dan sinkronkan schema Prisma ke database production
+npm run prisma:generate
+npx prisma db push
+
+# 3. Buat direktori penyimpanan upload dan atur hak akses
+mkdir -p uploads/articles uploads/banners uploads/events uploads/gallery uploads/team-members uploads/testimonials uploads/registrations uploads/payment-proofs
 chmod -R 775 uploads
 
-# 3. Build bundle backend Express
+# 4. Build bundle backend Express
 npm run build
 
-# 4. Seed Akun Admin Awal (Super Admin & Editor)
+# 5. Seed akun awal sesuai kebutuhan
 npm run seed:admin
+npm run seed:superadmin
 ```
 > **Akun Default Hasil Seed:**
-> - Super Admin: `admin@fitalenta.id` / Password: `Admin@123`
+> - Super Admin: `superadmin@fitalenta.id` / Password: `SuperAdmin@123`
+> - Admin: `admin@fitalenta.id` / Password: `Admin@123`
 > - Editor: `editor@fitalenta.id` / Password: `Editor@123`
 > *(Segera ubah password setelah pertama kali login).*
 
@@ -396,7 +413,7 @@ sudo certbot --nginx -d fitalenta.co.id -d www.fitalenta.co.id -d registrasi.fit
 
 ## 9. Manajemen Proses PM2 (`ecosystem.config.cjs`)
 
-Gunakan file [ecosystem.config.cjs](file:///d:/MAGANG-FITALENTA/fitalenta/ecosystem.config.cjs) yang telah tersedia di root proyek:
+Gunakan file `ecosystem.config.cjs` yang tersedia di root proyek:
 
 ```bash
 cd /var/www/fitalenta
@@ -412,11 +429,17 @@ pm2 logs            # Cek log runtime aplikasi
 pm2 reload all      # Restart aplikasi tanpa downtime
 ```
 
+Konfigurasi saat ini menjalankan satu proses fork untuk API port `5000` dan web port `3000`. Batas resource sengaja rendah untuk VPS/CloudLinux: API `max_memory_restart: 200M` dengan `--max-old-space-size=160`, web `420M` dengan `--max-old-space-size=350`. Jangan menaikkan nilai ini tanpa memastikan kapasitas VPS.
+
+Frontend juga memakai `experimental.cpus: 1` di `client/next.config.ts`. `deploy.sh` membatasi thread build dan memakai `NODE_OPTIONS=--max-old-space-size=768` hanya selama build.
+
 ---
 
 ## 10. Prosedur Update Kode di Server Production
 
 Setiap kali melakukan push pembaruan kode ke repository Git, jalankan langkah berikut di server production:
+
+`deploy.sh` dapat dipakai untuk fetch/reset, build, dan reload PM2, tetapi script tersebut tidak menggantikan backup database atau `prisma db push`. Jalankan sinkronisasi pada bagian berikut sebelum reload aplikasi. Perhatikan bahwa script memakai `git reset --hard origin/main`, sehingga perubahan lokal di server akan hilang.
 
 ```bash
 cd /var/www/fitalenta
@@ -428,7 +451,10 @@ git pull origin main
 cd server
 npm install
 npm run prisma:generate
-npx prisma migrate deploy
+# Backup sebelum perubahan schema
+mkdir -p backups
+mysqldump --single-transaction --routines --triggers -h "$DATABASE_HOST" -P "$DATABASE_PORT" -u "$DATABASE_USER" -p "$DATABASE_NAME" > "backups/db-$(date +%Y%m%d-%H%M%S).sql"
+npx prisma db push
 npm run build
 
 # 3. Build Frontend Client
@@ -440,3 +466,40 @@ npm run build
 cd /var/www/fitalenta
 pm2 reload ecosystem.config.cjs
 ```
+
+## 11. Sinkronisasi Schema, Backup, dan Rollback
+
+`prisma db push` menyamakan database production dengan `server/prisma/schema.prisma`. Jalankan hanya setelah meninjau diff schema dan membuat dump yang bisa dipulihkan.
+
+```bash
+cd /var/www/fitalenta/server
+mkdir -p backups
+mysqldump --single-transaction --routines --triggers -h "$DATABASE_HOST" -P "$DATABASE_PORT" -u "$DATABASE_USER" -p "$DATABASE_NAME" > "backups/db-$(date +%Y%m%d-%H%M%S).sql"
+npm run prisma:generate
+npx prisma db push
+```
+
+Untuk memulihkan database:
+
+```bash
+mysql -h "$DATABASE_HOST" -P "$DATABASE_PORT" -u "$DATABASE_USER" -p "$DATABASE_NAME" < backups/db-YYYYMMDD-HHMMSS.sql
+```
+
+Jangan memakai `npx prisma db push --accept-data-loss` sebagai langkah rutin. Jika Prisma memperingatkan perubahan destruktif, hentikan proses, tinjau dampaknya, dan minta persetujuan sebelum melanjutkan.
+
+## 12. Optimasi Gambar Lama
+
+Upload baru diproses otomatis menjadi gambar WebP. Untuk gambar lama, jalankan simulasi dahulu dari folder `server/`:
+
+```bash
+npm run images:optimize
+npm run images:optimize -- --apply
+```
+
+Saat diterapkan, file asli dipindahkan ke `server/backup-uploads/` dan catatan rollback JSON dibuat. Rollback memakai file tersebut:
+
+```bash
+npm run images:optimize -- --rollback="backup-uploads/rollback-YYYY-MM-DDTHH-MM-SS.json"
+```
+
+Backup database dan folder upload harus disimpan bersama sebelum optimasi atau deploy.

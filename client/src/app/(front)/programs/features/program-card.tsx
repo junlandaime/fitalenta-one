@@ -52,9 +52,9 @@ export function ProgramCard({ program, area = "public" }: ProgramCardProps) {
     }
 
     return (
-        <article className="group relative flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition-all duration-500 hover:scale-[1.03] hover:shadow-xl z-0 hover:z-10 before:absolute before:inset-0 before:-z-10 before:origin-top before:scale-y-0 before:bg-primary before:transition-transform before:duration-500 before:ease-out hover:before:scale-y-100 hover:ring-primary/50">
+        <article className="group relative z-0 flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition-all duration-500 before:absolute before:inset-0 before:-z-10 before:origin-top before:scale-y-0 before:bg-primary before:transition-transform before:duration-500 before:ease-out hover:z-10 hover:scale-[1.03] hover:shadow-xl hover:ring-primary/50 hover:before:scale-y-100">
             <header
-                className={`relative z-10 overflow-hidden p-6 text-white bg-cover bg-center h-[9.75rem] ${
+                className={`relative z-10 h-[9.75rem] overflow-hidden bg-cover bg-center p-6 text-white ${
                     !bgImage ? "bg-linear-to-br from-primary to-[#0e4a8f]" : ""
                 }`}
                 style={bgImage ? { backgroundImage: bgImage } : {}}
@@ -63,12 +63,12 @@ export function ProgramCard({ program, area = "public" }: ProgramCardProps) {
                 {!bgImage && <div className="pointer-events-none absolute -right-10 -top-10 size-36 rounded-full bg-white/10" />}
 
                 {program.category && (
-                    <span className="relative z-10 inline-block rounded-full bg-white px-3 py-1 text-xs font-semibold text-primary transition-colors duration-300 group-hover:bg-secondary group-hover:text-white shadow-sm">
+                    <span className="relative z-10 inline-block rounded-full bg-white px-3 py-1 text-xs font-semibold text-primary shadow-sm transition-colors duration-300 group-hover:bg-secondary group-hover:text-white">
                         {program.category.name}
                     </span>
                 )}
 
-                <h2 className="relative z-10 mt-4 text-xl font-bold leading-snug line-clamp-2" title={program.name}>
+                <h2 className="relative z-10 mt-4 line-clamp-2 text-xl font-bold leading-snug" title={program.name}>
                     {program.name}
                 </h2>
 
@@ -86,7 +86,7 @@ export function ProgramCard({ program, area = "public" }: ProgramCardProps) {
                             {program.description}
                         </p>
                     ) : (
-                        <p className="text-sm text-transparent select-none">-</p>
+                        <p className="select-none text-sm text-transparent">-</p>
                     )}
                 </div>
 
@@ -105,7 +105,6 @@ export function ProgramCard({ program, area = "public" }: ProgramCardProps) {
                             <CostBox label="Biaya Pelatihan" value={formatIDR(program.trainingCost)} />
                             <CostBox label="Biaya Keberangkatan" value={formatIDR(program.departureCost)} />
                         </div>
-                        {/* Kotak Skema Pembayaran */}
                         <div className="mt-3 flex items-center justify-between rounded-lg bg-primary/5 p-3 transition-colors duration-300 group-hover:bg-white/10">
                             <div>
                                 <p className="text-xs text-slate-500 transition-colors duration-300 group-hover:text-slate-300">Skema Pembayaran</p>
@@ -152,7 +151,7 @@ export function ProgramCard({ program, area = "public" }: ProgramCardProps) {
                             <ProgramRegisterButton
                                 programId={program.id}
                                 area={area}
-                                className="flex flex-1 items-center justify-center rounded-lg bg-secondary px-3 py-2.5 text-sm font-semibold text-white transition hover:opacity-90 shadow-sm group-hover:bg-white group-hover:text-primary group-hover:hover:bg-slate-100"
+                                className="flex flex-1 items-center justify-center rounded-lg bg-secondary px-3 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:opacity-90 group-hover:bg-white group-hover:text-primary group-hover:hover:bg-slate-100"
                             >
                                 Daftar Sekarang
                             </ProgramRegisterButton>

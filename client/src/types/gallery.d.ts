@@ -8,6 +8,7 @@ export type GalleryItem = {
     title: string;
     description?: string | null;
     image: string;
+    images?: string[] | null;
     eventDate?: string | null;
     isFeatured: boolean;
     order: number;

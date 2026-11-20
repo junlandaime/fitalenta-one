@@ -5,6 +5,7 @@ export type EditorGalleryItem = {
     title: string;
     description: string | null;
     image: string;
+    images?: string[] | null;
     categoryId: number;
     category: ContentCategory | null;
     isFeatured: boolean;
@@ -28,4 +29,6 @@ export type EditorGalleryPayload = {
     isFeatured: boolean;
     order: number;
     image: File | null;
+    existingImages?: string[];
+    newImages?: File[];
 };

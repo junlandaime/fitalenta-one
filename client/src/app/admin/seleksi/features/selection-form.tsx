@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type FormEvent, type ReactNode } from "react";
-import { Building2, CircleAlert, CircleCheck, ClipboardCheck, Info, Loader2, Pencil, X } from "lucide-react";
+import { Building2, CircleAlert, CircleCheck, ClipboardCheck, Info, Loader2, MessageSquare, Pencil, X } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { PLACEMENT_STATUS, SELECTION_STATUS, statusLabel } from "@/constants/admin/admin-status";
+import { INTERVIEW_STATUS, PLACEMENT_STATUS, SELECTION_STATUS, statusLabel } from "@/constants/admin/admin-status";
 import {
     COMPANY_REQUIRED_PLACEMENT_STATUSES,
     DATE_REQUIRED_PLACEMENT_STATUSES,
@@ -109,10 +109,6 @@ export function SelectionForm({ participant, initialEditing }: SelectionFormProp
         event.preventDefault();
 
         const nextErrors = validateSelectionPlacementForm(draft);
-        if (draft.selectionStatus !== PASSED_SELECTION_STATUS && participant.placement.determined) {
-            nextErrors.selectionStatus =
-                "Status seleksi harus tetap Lolos selama data penyaluran kerja sudah terisi.";
-        }
         if (Object.keys(nextErrors).length > 0) {
             setErrors(nextErrors);
             return;
@@ -150,6 +146,61 @@ export function SelectionForm({ participant, initialEditing }: SelectionFormProp
                     </Button>
                 </Alert>
             )}
+
+            <Card>
+                <CardHeader className="border-b">
+                    <div className="flex items-center gap-3">
+                        <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-muted text-muted-foreground">
+                            <MessageSquare className="size-5" aria-hidden />
+                        </span>
+                        <div className="space-y-0.5">
+                            <CardTitle className="text-base">Seleksi Wawancara</CardTitle>
+                            <CardDescription>Hasil wawancara peserta sebelum seleksi diklat.</CardDescription>
+                        </div>
+                    </div>
+                </CardHeader>
+
+                <CardContent>
+                    <fieldset disabled={locked} className="min-w-0 space-y-4 border-0 p-0">
+                        <Field id="interviewStatus" label="Status wawancara" required error={errors.interviewStatus}>
+                            <Select
+                                value={values.interviewStatus}
+                                onValueChange={(value) => setValue("interviewStatus", value as SelectionStatus)}
+                            >
+                                <SelectTrigger
+                                    id="interviewStatus"
+                                    className="h-10 w-full sm:max-w-xs"
+                                    {...a11y("interviewStatus", errors.interviewStatus)}
+                                >
+                                    <SelectValue placeholder="Pilih status wawancara" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {SELECTION_STATUS_VALUES.map((status) => (
+                                        <SelectItem key={status} value={status}>
+                                            {statusLabel(INTERVIEW_STATUS, status)}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </Field>
+
+                        <Field
+                            id="interviewNotes"
+                            label="Catatan wawancara"
+                            hint="Opsional. Mis. hasil penilaian atau catatan pewawancara."
+                            error={errors.interviewNotes}
+                        >
+                            <Textarea
+                                id="interviewNotes"
+                                rows={3}
+                                value={values.interviewNotes}
+                                onChange={(event) => setValue("interviewNotes", event.target.value)}
+                                {...a11y("interviewNotes", errors.interviewNotes, "x")}
+                            />
+                        </Field>
+                    </fieldset>
+                </CardContent>
+            </Card>
 
             <Card>
                 <CardHeader className="border-b">
@@ -234,7 +285,7 @@ export function SelectionForm({ participant, initialEditing }: SelectionFormProp
                         </span>
                         <div className="space-y-0.5">
                             <CardTitle className="text-base">Penyaluran Kerja</CardTitle>
-                            <CardDescription>Status wawancara, perusahaan, dan tanggal penempatan.</CardDescription>
+                            <CardDescription>Status penyaluran, perusahaan, dan tanggal penempatan.</CardDescription>
                         </div>
                     </div>
                 </CardHeader>

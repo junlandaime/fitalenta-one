@@ -22,7 +22,7 @@ export default function ProgramGijingokuPage() {
                     { label: "Programs", href: "/programs" },
                     { label: "Gijingoku" }
                 ]}
-                bgImage="/cardgijingoku2.png" 
+                bgImage="/cardgijingoku2.webp" 
             />
 
             <div className="bg-slate-50 py-16">
@@ -46,7 +46,7 @@ export default function ProgramGijingokuPage() {
                                         <div className="my-8 flex justify-center">
                                             <div className="relative w-full overflow-hidden rounded-2xl bg-slate-50 p-2 ring-1 ring-slate-200/60 md:p-4">
                                                 <Image
-                                                    src="/program/illo-gijinkoku.png"
+                                                    src="/program/illo-gijinkoku.webp"
                                                     alt="Ilustrasi alur program Gijinkoku FITALENTA meliputi administrasi, pelatihan bahasa, job offer, dan bimbingan"
                                                     width={750}
                                                     height={560}

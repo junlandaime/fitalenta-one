@@ -32,7 +32,7 @@ const admins: AdminSeed[] = [
   {
     email: "admin@fitalenta.id",
     password: "Admin@123",
-    name: "Super Admin",
+    name: "Admin",
     phone: "081234567890",
     role: "admin",
   },

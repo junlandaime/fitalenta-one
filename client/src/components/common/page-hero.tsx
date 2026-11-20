@@ -1,5 +1,5 @@
 import Link from "next/link";
-import SlideIn from "./slide-in"; // 1. Import komponen SlideIn
+import SlideIn from "./slide-in";
 
 type Crumb = { label: string; href?: string };
 
@@ -25,15 +25,13 @@ export default function PageHero({
             {!hideHero && title && (
                 <section
                     // 2. Tambahkan overflow-hidden agar scrollbar aman saat animasi meluncur
-                    className={`relative overflow-hidden px-6 py-20 text-center text-white bg-cover bg-center ${
+                    className={`relative overflow-hidden bg-cover bg-center px-6 py-20 text-center text-white ${
                         !bgImage ? "bg-linear-to-br from-[#071d40] to-[#0e4a8f]" : ""
                     }`}
                     style={bgImage ? { backgroundImage: `url(${bgImage})` } : {}}
                 >
-                    {/* Overlay Hitam diturunkan menjadi 20% agar gambar asli lebih terang */}
                     {bgImage && <div className="absolute inset-0 bg-black/20" />}
 
-                    {/* 3. Gunakan flex flex-col items-center agar konten tetap rata tengah */}
                     <div className="relative z-10 flex flex-col items-center">
                         {/* Badge muncul duluan (delay 0.1) */}
                         {badge && (
@@ -44,14 +42,12 @@ export default function PageHero({
                             </SlideIn>
                         )}
 
-                        {/* Judul muncul menyusul (delay 0.2) */}
                         <SlideIn direction="up" delay={0.2}>
-                            <h1 className="mx-auto max-w-4xl text-4xl font-extrabold leading-tight md:text-5xl drop-shadow-md">
+                            <h1 className="mx-auto max-w-4xl text-4xl font-extrabold leading-tight drop-shadow-md md:text-5xl">
                                 {title}
                             </h1>
                         </SlideIn>
 
-                        {/* Subjudul muncul berikutnya (delay 0.3) */}
                         {subtitle && (
                             <SlideIn direction="up" delay={0.3}>
                                 <p className="mx-auto mt-4 max-w-2xl text-lg text-white/90 drop-shadow-sm">
@@ -60,7 +56,6 @@ export default function PageHero({
                             </SlideIn>
                         )}
 
-                        {/* Chips (jika ada) muncul paling terakhir (delay 0.4) */}
                         {chips && chips.length > 0 && (
                             <SlideIn direction="up" delay={0.4}>
                                 <div className="mt-6 flex flex-wrap justify-center gap-3">

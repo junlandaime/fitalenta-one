@@ -42,6 +42,10 @@ export function toParticipantItem(registration: ParticipantRecord): ParticipantI
       programFormat: program?.programFormat ?? null,
       duration: program?.duration ?? null,
     },
+    interview: { 
+      status: registration.registrationStatus, 
+      notes: registration.selectionNotes ?? null
+    },
     selection: {
       status: selectionStatus,
       notes: selection?.notes ?? null,

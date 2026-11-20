@@ -30,6 +30,8 @@ import adminFinancialReportRoutes from "./admin/financialReport.routes";
 import adminCmsRoutes from "./admin/cms.routes";
 import adminProgramCategoryRoutes from "./admin/programCategory.routes";
 import adminParticipantRoutes from "./admin/participant.routes";
+import feedbackRoutes from "./feedback.routes";
+import adminFeedbackRoutes from "./admin/feedback.routes";
 
 const router = Router();
 
@@ -64,5 +66,7 @@ router.use("/admin/financial-reports", adminFinancialReportRoutes);
 router.use("/admin/cms", adminCmsRoutes);
 router.use("/admin/program-categories", adminProgramCategoryRoutes);
 router.use("/admin/participants", adminParticipantRoutes);
+router.use("/feedback", feedbackRoutes);
+router.use("/admin/feedback", adminFeedbackRoutes);
 
 export default router;

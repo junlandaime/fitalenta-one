@@ -30,6 +30,15 @@ export const contactRateLimiter = limiter({
   message: "Terlalu banyak pesan terkirim. Silakan coba lagi dalam beberapa menit.",
 });
 
+export const feedbackRateLimiter = rateLimit({
+  windowMs: 15 * MINUTE,
+  limit: 5,
+  keyGenerator: userKey,
+  message: { success: false, message: "Terlalu banyak feedback dikirim. Silakan coba lagi dalam beberapa menit." },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 export const registerRateLimiter = limiter({
   windowMs: HOUR,
   limit: 10,

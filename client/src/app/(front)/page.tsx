@@ -26,8 +26,6 @@ export default function Home() {
       <Reveal><PromoBannerSection /></Reveal>
       <Reveal><FeaturedEventsSection /></Reveal>
       <Reveal><AboutSection /></Reveal>
-      <Reveal><FeaturedEventsSection /></Reveal>
-      <Reveal><AboutSection /></Reveal>
       <Reveal><ServicesSection /></Reveal>
       <Reveal><ImpactSection /></Reveal>
       <Reveal><ExpertsSection /></Reveal>

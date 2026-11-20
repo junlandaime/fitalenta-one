@@ -279,6 +279,7 @@ export type UserWhereInput = {
   paymentsVerified?: Prisma.PaymentListRelationFilter
   paymentHistoryChanges?: Prisma.PaymentHistoryListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
+  feedbacks?: Prisma.UserFeedbackListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -301,6 +302,7 @@ export type UserOrderByWithRelationInput = {
   paymentsVerified?: Prisma.PaymentOrderByRelationAggregateInput
   paymentHistoryChanges?: Prisma.PaymentHistoryOrderByRelationAggregateInput
   notifications?: Prisma.NotificationOrderByRelationAggregateInput
+  feedbacks?: Prisma.UserFeedbackOrderByRelationAggregateInput
   _relevance?: Prisma.UserOrderByRelevanceInput
 }
 
@@ -327,6 +329,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   paymentsVerified?: Prisma.PaymentListRelationFilter
   paymentHistoryChanges?: Prisma.PaymentHistoryListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
+  feedbacks?: Prisma.UserFeedbackListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -386,6 +389,7 @@ export type UserCreateInput = {
   paymentsVerified?: Prisma.PaymentCreateNestedManyWithoutVerifiedByUserInput
   paymentHistoryChanges?: Prisma.PaymentHistoryCreateNestedManyWithoutChangedByUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  feedbacks?: Prisma.UserFeedbackCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -408,6 +412,7 @@ export type UserUncheckedCreateInput = {
   paymentsVerified?: Prisma.PaymentUncheckedCreateNestedManyWithoutVerifiedByUserInput
   paymentHistoryChanges?: Prisma.PaymentHistoryUncheckedCreateNestedManyWithoutChangedByUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  feedbacks?: Prisma.UserFeedbackUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -429,6 +434,7 @@ export type UserUpdateInput = {
   paymentsVerified?: Prisma.PaymentUpdateManyWithoutVerifiedByUserNestedInput
   paymentHistoryChanges?: Prisma.PaymentHistoryUpdateManyWithoutChangedByUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  feedbacks?: Prisma.UserFeedbackUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -451,6 +457,7 @@ export type UserUncheckedUpdateInput = {
   paymentsVerified?: Prisma.PaymentUncheckedUpdateManyWithoutVerifiedByUserNestedInput
   paymentHistoryChanges?: Prisma.PaymentHistoryUncheckedUpdateManyWithoutChangedByUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  feedbacks?: Prisma.UserFeedbackUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -704,6 +711,20 @@ export type UserUpdateOneWithoutNotificationsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutNotificationsInput, Prisma.UserUpdateWithoutNotificationsInput>, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
 }
 
+export type UserCreateNestedOneWithoutFeedbacksInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFeedbacksInput, Prisma.UserUncheckedCreateWithoutFeedbacksInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFeedbacksInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutFeedbacksNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFeedbacksInput, Prisma.UserUncheckedCreateWithoutFeedbacksInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFeedbacksInput
+  upsert?: Prisma.UserUpsertWithoutFeedbacksInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFeedbacksInput, Prisma.UserUpdateWithoutFeedbacksInput>, Prisma.UserUncheckedUpdateWithoutFeedbacksInput>
+}
+
 export type UserCreateWithoutArticlesInput = {
   email: string
   password: string
@@ -722,6 +743,7 @@ export type UserCreateWithoutArticlesInput = {
   paymentsVerified?: Prisma.PaymentCreateNestedManyWithoutVerifiedByUserInput
   paymentHistoryChanges?: Prisma.PaymentHistoryCreateNestedManyWithoutChangedByUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  feedbacks?: Prisma.UserFeedbackCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutArticlesInput = {
@@ -743,6 +765,7 @@ export type UserUncheckedCreateWithoutArticlesInput = {
   paymentsVerified?: Prisma.PaymentUncheckedCreateNestedManyWithoutVerifiedByUserInput
   paymentHistoryChanges?: Prisma.PaymentHistoryUncheckedCreateNestedManyWithoutChangedByUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  feedbacks?: Prisma.UserFeedbackUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutArticlesInput = {
@@ -779,6 +802,7 @@ export type UserUpdateWithoutArticlesInput = {
   paymentsVerified?: Prisma.PaymentUpdateManyWithoutVerifiedByUserNestedInput
   paymentHistoryChanges?: Prisma.PaymentHistoryUpdateManyWithoutChangedByUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  feedbacks?: Prisma.UserFeedbackUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutArticlesInput = {
@@ -800,6 +824,7 @@ export type UserUncheckedUpdateWithoutArticlesInput = {
   paymentsVerified?: Prisma.PaymentUncheckedUpdateManyWithoutVerifiedByUserNestedInput
   paymentHistoryChanges?: Prisma.PaymentHistoryUncheckedUpdateManyWithoutChangedByUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  feedbacks?: Prisma.UserFeedbackUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutRegistrationsInput = {
@@ -820,6 +845,7 @@ export type UserCreateWithoutRegistrationsInput = {
   paymentsVerified?: Prisma.PaymentCreateNestedManyWithoutVerifiedByUserInput
   paymentHistoryChanges?: Prisma.PaymentHistoryCreateNestedManyWithoutChangedByUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  feedbacks?: Prisma.UserFeedbackCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutRegistrationsInput = {
@@ -841,6 +867,7 @@ export type UserUncheckedCreateWithoutRegistrationsInput = {
   paymentsVerified?: Prisma.PaymentUncheckedCreateNestedManyWithoutVerifiedByUserInput
   paymentHistoryChanges?: Prisma.PaymentHistoryUncheckedCreateNestedManyWithoutChangedByUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  feedbacks?: Prisma.UserFeedbackUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutRegistrationsInput = {
@@ -877,6 +904,7 @@ export type UserUpdateWithoutRegistrationsInput = {
   paymentsVerified?: Prisma.PaymentUpdateManyWithoutVerifiedByUserNestedInput
   paymentHistoryChanges?: Prisma.PaymentHistoryUpdateManyWithoutChangedByUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  feedbacks?: Prisma.UserFeedbackUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRegistrationsInput = {
@@ -898,6 +926,7 @@ export type UserUncheckedUpdateWithoutRegistrationsInput = {
   paymentsVerified?: Prisma.PaymentUncheckedUpdateManyWithoutVerifiedByUserNestedInput
   paymentHistoryChanges?: Prisma.PaymentHistoryUncheckedUpdateManyWithoutChangedByUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  feedbacks?: Prisma.UserFeedbackUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutRegistrationStatusChangesInput = {
@@ -918,6 +947,7 @@ export type UserCreateWithoutRegistrationStatusChangesInput = {
   paymentsVerified?: Prisma.PaymentCreateNestedManyWithoutVerifiedByUserInput
   paymentHistoryChanges?: Prisma.PaymentHistoryCreateNestedManyWithoutChangedByUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  feedbacks?: Prisma.UserFeedbackCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutRegistrationStatusChangesInput = {
@@ -939,6 +969,7 @@ export type UserUncheckedCreateWithoutRegistrationStatusChangesInput = {
   paymentsVerified?: Prisma.PaymentUncheckedCreateNestedManyWithoutVerifiedByUserInput
   paymentHistoryChanges?: Prisma.PaymentHistoryUncheckedCreateNestedManyWithoutChangedByUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  feedbacks?: Prisma.UserFeedbackUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutRegistrationStatusChangesInput = {
@@ -975,6 +1006,7 @@ export type UserUpdateWithoutRegistrationStatusChangesInput = {
   paymentsVerified?: Prisma.PaymentUpdateManyWithoutVerifiedByUserNestedInput
   paymentHistoryChanges?: Prisma.PaymentHistoryUpdateManyWithoutChangedByUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  feedbacks?: Prisma.UserFeedbackUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRegistrationStatusChangesInput = {
@@ -996,6 +1028,7 @@ export type UserUncheckedUpdateWithoutRegistrationStatusChangesInput = {
   paymentsVerified?: Prisma.PaymentUncheckedUpdateManyWithoutVerifiedByUserNestedInput
   paymentHistoryChanges?: Prisma.PaymentHistoryUncheckedUpdateManyWithoutChangedByUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  feedbacks?: Prisma.UserFeedbackUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSelectionEvaluationsInput = {
@@ -1016,6 +1049,7 @@ export type UserCreateWithoutSelectionEvaluationsInput = {
   paymentsVerified?: Prisma.PaymentCreateNestedManyWithoutVerifiedByUserInput
   paymentHistoryChanges?: Prisma.PaymentHistoryCreateNestedManyWithoutChangedByUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  feedbacks?: Prisma.UserFeedbackCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSelectionEvaluationsInput = {
@@ -1037,6 +1071,7 @@ export type UserUncheckedCreateWithoutSelectionEvaluationsInput = {
   paymentsVerified?: Prisma.PaymentUncheckedCreateNestedManyWithoutVerifiedByUserInput
   paymentHistoryChanges?: Prisma.PaymentHistoryUncheckedCreateNestedManyWithoutChangedByUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  feedbacks?: Prisma.UserFeedbackUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSelectionEvaluationsInput = {
@@ -1073,6 +1108,7 @@ export type UserUpdateWithoutSelectionEvaluationsInput = {
   paymentsVerified?: Prisma.PaymentUpdateManyWithoutVerifiedByUserNestedInput
   paymentHistoryChanges?: Prisma.PaymentHistoryUpdateManyWithoutChangedByUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  feedbacks?: Prisma.UserFeedbackUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSelectionEvaluationsInput = {
@@ -1094,6 +1130,7 @@ export type UserUncheckedUpdateWithoutSelectionEvaluationsInput = {
   paymentsVerified?: Prisma.PaymentUncheckedUpdateManyWithoutVerifiedByUserNestedInput
   paymentHistoryChanges?: Prisma.PaymentHistoryUncheckedUpdateManyWithoutChangedByUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  feedbacks?: Prisma.UserFeedbackUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutPaymentsVerifiedInput = {
@@ -1114,6 +1151,7 @@ export type UserCreateWithoutPaymentsVerifiedInput = {
   selectionEvaluations?: Prisma.SelectionStatusCreateNestedManyWithoutEvaluatedByUserInput
   paymentHistoryChanges?: Prisma.PaymentHistoryCreateNestedManyWithoutChangedByUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  feedbacks?: Prisma.UserFeedbackCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPaymentsVerifiedInput = {
@@ -1135,6 +1173,7 @@ export type UserUncheckedCreateWithoutPaymentsVerifiedInput = {
   selectionEvaluations?: Prisma.SelectionStatusUncheckedCreateNestedManyWithoutEvaluatedByUserInput
   paymentHistoryChanges?: Prisma.PaymentHistoryUncheckedCreateNestedManyWithoutChangedByUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  feedbacks?: Prisma.UserFeedbackUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPaymentsVerifiedInput = {
@@ -1171,6 +1210,7 @@ export type UserUpdateWithoutPaymentsVerifiedInput = {
   selectionEvaluations?: Prisma.SelectionStatusUpdateManyWithoutEvaluatedByUserNestedInput
   paymentHistoryChanges?: Prisma.PaymentHistoryUpdateManyWithoutChangedByUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  feedbacks?: Prisma.UserFeedbackUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPaymentsVerifiedInput = {
@@ -1192,6 +1232,7 @@ export type UserUncheckedUpdateWithoutPaymentsVerifiedInput = {
   selectionEvaluations?: Prisma.SelectionStatusUncheckedUpdateManyWithoutEvaluatedByUserNestedInput
   paymentHistoryChanges?: Prisma.PaymentHistoryUncheckedUpdateManyWithoutChangedByUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  feedbacks?: Prisma.UserFeedbackUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutPaymentHistoryChangesInput = {
@@ -1212,6 +1253,7 @@ export type UserCreateWithoutPaymentHistoryChangesInput = {
   selectionEvaluations?: Prisma.SelectionStatusCreateNestedManyWithoutEvaluatedByUserInput
   paymentsVerified?: Prisma.PaymentCreateNestedManyWithoutVerifiedByUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  feedbacks?: Prisma.UserFeedbackCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPaymentHistoryChangesInput = {
@@ -1233,6 +1275,7 @@ export type UserUncheckedCreateWithoutPaymentHistoryChangesInput = {
   selectionEvaluations?: Prisma.SelectionStatusUncheckedCreateNestedManyWithoutEvaluatedByUserInput
   paymentsVerified?: Prisma.PaymentUncheckedCreateNestedManyWithoutVerifiedByUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  feedbacks?: Prisma.UserFeedbackUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPaymentHistoryChangesInput = {
@@ -1269,6 +1312,7 @@ export type UserUpdateWithoutPaymentHistoryChangesInput = {
   selectionEvaluations?: Prisma.SelectionStatusUpdateManyWithoutEvaluatedByUserNestedInput
   paymentsVerified?: Prisma.PaymentUpdateManyWithoutVerifiedByUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  feedbacks?: Prisma.UserFeedbackUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPaymentHistoryChangesInput = {
@@ -1290,6 +1334,7 @@ export type UserUncheckedUpdateWithoutPaymentHistoryChangesInput = {
   selectionEvaluations?: Prisma.SelectionStatusUncheckedUpdateManyWithoutEvaluatedByUserNestedInput
   paymentsVerified?: Prisma.PaymentUncheckedUpdateManyWithoutVerifiedByUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  feedbacks?: Prisma.UserFeedbackUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutNotificationsInput = {
@@ -1310,6 +1355,7 @@ export type UserCreateWithoutNotificationsInput = {
   selectionEvaluations?: Prisma.SelectionStatusCreateNestedManyWithoutEvaluatedByUserInput
   paymentsVerified?: Prisma.PaymentCreateNestedManyWithoutVerifiedByUserInput
   paymentHistoryChanges?: Prisma.PaymentHistoryCreateNestedManyWithoutChangedByUserInput
+  feedbacks?: Prisma.UserFeedbackCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -1331,6 +1377,7 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   selectionEvaluations?: Prisma.SelectionStatusUncheckedCreateNestedManyWithoutEvaluatedByUserInput
   paymentsVerified?: Prisma.PaymentUncheckedCreateNestedManyWithoutVerifiedByUserInput
   paymentHistoryChanges?: Prisma.PaymentHistoryUncheckedCreateNestedManyWithoutChangedByUserInput
+  feedbacks?: Prisma.UserFeedbackUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -1367,6 +1414,7 @@ export type UserUpdateWithoutNotificationsInput = {
   selectionEvaluations?: Prisma.SelectionStatusUpdateManyWithoutEvaluatedByUserNestedInput
   paymentsVerified?: Prisma.PaymentUpdateManyWithoutVerifiedByUserNestedInput
   paymentHistoryChanges?: Prisma.PaymentHistoryUpdateManyWithoutChangedByUserNestedInput
+  feedbacks?: Prisma.UserFeedbackUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -1388,6 +1436,109 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   selectionEvaluations?: Prisma.SelectionStatusUncheckedUpdateManyWithoutEvaluatedByUserNestedInput
   paymentsVerified?: Prisma.PaymentUncheckedUpdateManyWithoutVerifiedByUserNestedInput
   paymentHistoryChanges?: Prisma.PaymentHistoryUncheckedUpdateManyWithoutChangedByUserNestedInput
+  feedbacks?: Prisma.UserFeedbackUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutFeedbacksInput = {
+  email: string
+  password: string
+  name: string
+  phone?: string | null
+  address?: string | null
+  birthPlace?: string | null
+  birthDate?: Date | string | null
+  role?: $Enums.Role
+  emailVerifiedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  articles?: Prisma.ArticleCreateNestedManyWithoutAuthorInput
+  registrations?: Prisma.RegistrationCreateNestedManyWithoutUserInput
+  registrationStatusChanges?: Prisma.RegistrationStatusHistoryCreateNestedManyWithoutChangedByUserInput
+  selectionEvaluations?: Prisma.SelectionStatusCreateNestedManyWithoutEvaluatedByUserInput
+  paymentsVerified?: Prisma.PaymentCreateNestedManyWithoutVerifiedByUserInput
+  paymentHistoryChanges?: Prisma.PaymentHistoryCreateNestedManyWithoutChangedByUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutFeedbacksInput = {
+  id?: number
+  email: string
+  password: string
+  name: string
+  phone?: string | null
+  address?: string | null
+  birthPlace?: string | null
+  birthDate?: Date | string | null
+  role?: $Enums.Role
+  emailVerifiedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  articles?: Prisma.ArticleUncheckedCreateNestedManyWithoutAuthorInput
+  registrations?: Prisma.RegistrationUncheckedCreateNestedManyWithoutUserInput
+  registrationStatusChanges?: Prisma.RegistrationStatusHistoryUncheckedCreateNestedManyWithoutChangedByUserInput
+  selectionEvaluations?: Prisma.SelectionStatusUncheckedCreateNestedManyWithoutEvaluatedByUserInput
+  paymentsVerified?: Prisma.PaymentUncheckedCreateNestedManyWithoutVerifiedByUserInput
+  paymentHistoryChanges?: Prisma.PaymentHistoryUncheckedCreateNestedManyWithoutChangedByUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutFeedbacksInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutFeedbacksInput, Prisma.UserUncheckedCreateWithoutFeedbacksInput>
+}
+
+export type UserUpsertWithoutFeedbacksInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutFeedbacksInput, Prisma.UserUncheckedUpdateWithoutFeedbacksInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutFeedbacksInput, Prisma.UserUncheckedCreateWithoutFeedbacksInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutFeedbacksInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutFeedbacksInput, Prisma.UserUncheckedUpdateWithoutFeedbacksInput>
+}
+
+export type UserUpdateWithoutFeedbacksInput = {
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  articles?: Prisma.ArticleUpdateManyWithoutAuthorNestedInput
+  registrations?: Prisma.RegistrationUpdateManyWithoutUserNestedInput
+  registrationStatusChanges?: Prisma.RegistrationStatusHistoryUpdateManyWithoutChangedByUserNestedInput
+  selectionEvaluations?: Prisma.SelectionStatusUpdateManyWithoutEvaluatedByUserNestedInput
+  paymentsVerified?: Prisma.PaymentUpdateManyWithoutVerifiedByUserNestedInput
+  paymentHistoryChanges?: Prisma.PaymentHistoryUpdateManyWithoutChangedByUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutFeedbacksInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  articles?: Prisma.ArticleUncheckedUpdateManyWithoutAuthorNestedInput
+  registrations?: Prisma.RegistrationUncheckedUpdateManyWithoutUserNestedInput
+  registrationStatusChanges?: Prisma.RegistrationStatusHistoryUncheckedUpdateManyWithoutChangedByUserNestedInput
+  selectionEvaluations?: Prisma.SelectionStatusUncheckedUpdateManyWithoutEvaluatedByUserNestedInput
+  paymentsVerified?: Prisma.PaymentUncheckedUpdateManyWithoutVerifiedByUserNestedInput
+  paymentHistoryChanges?: Prisma.PaymentHistoryUncheckedUpdateManyWithoutChangedByUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -1403,6 +1554,7 @@ export type UserCountOutputType = {
   paymentsVerified: number
   paymentHistoryChanges: number
   notifications: number
+  feedbacks: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1413,6 +1565,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   paymentsVerified?: boolean | UserCountOutputTypeCountPaymentsVerifiedArgs
   paymentHistoryChanges?: boolean | UserCountOutputTypeCountPaymentHistoryChangesArgs
   notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
+  feedbacks?: boolean | UserCountOutputTypeCountFeedbacksArgs
 }
 
 /**
@@ -1474,6 +1627,13 @@ export type UserCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Ty
   where?: Prisma.NotificationWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountFeedbacksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserFeedbackWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1495,6 +1655,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   paymentsVerified?: boolean | Prisma.User$paymentsVerifiedArgs<ExtArgs>
   paymentHistoryChanges?: boolean | Prisma.User$paymentHistoryChangesArgs<ExtArgs>
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
+  feedbacks?: boolean | Prisma.User$feedbacksArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1524,6 +1685,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   paymentsVerified?: boolean | Prisma.User$paymentsVerifiedArgs<ExtArgs>
   paymentHistoryChanges?: boolean | Prisma.User$paymentHistoryChangesArgs<ExtArgs>
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
+  feedbacks?: boolean | Prisma.User$feedbacksArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -1537,6 +1699,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     paymentsVerified: Prisma.$PaymentPayload<ExtArgs>[]
     paymentHistoryChanges: Prisma.$PaymentHistoryPayload<ExtArgs>[]
     notifications: Prisma.$NotificationPayload<ExtArgs>[]
+    feedbacks: Prisma.$UserFeedbackPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1898,6 +2061,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   paymentsVerified<T extends Prisma.User$paymentsVerifiedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$paymentsVerifiedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   paymentHistoryChanges<T extends Prisma.User$paymentHistoryChangesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$paymentHistoryChangesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   notifications<T extends Prisma.User$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  feedbacks<T extends Prisma.User$feedbacksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$feedbacksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserFeedbackPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2452,6 +2616,30 @@ export type User$notificationsArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   distinct?: Prisma.NotificationScalarFieldEnum | Prisma.NotificationScalarFieldEnum[]
+}
+
+/**
+ * User.feedbacks
+ */
+export type User$feedbacksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserFeedback
+   */
+  select?: Prisma.UserFeedbackSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserFeedback
+   */
+  omit?: Prisma.UserFeedbackOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserFeedbackInclude<ExtArgs> | null
+  where?: Prisma.UserFeedbackWhereInput
+  orderBy?: Prisma.UserFeedbackOrderByWithRelationInput | Prisma.UserFeedbackOrderByWithRelationInput[]
+  cursor?: Prisma.UserFeedbackWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserFeedbackScalarFieldEnum | Prisma.UserFeedbackScalarFieldEnum[]
 }
 
 /**

@@ -96,6 +96,7 @@ model User {
   paymentsVerified          Payment[]                   @relation("PaymentVerifiedBy")
   paymentHistoryChanges     PaymentHistory[]            @relation("PaymentHistoryChangedBy")
   notifications             Notification[]
+  feedbacks                 UserFeedback[]
 
   @@map("users")
 }
@@ -220,6 +221,7 @@ model Gallery {
   title       String
   description String?   @db.Text
   image       String
+  images      Json?
   categoryId  Int       @map("category_id")
   category    Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   isFeatured  Boolean   @default(false) @map("is_featured")
@@ -475,6 +477,22 @@ model ContactMessage {
   createdAt DateTime @default(now()) @map("created_at")
 
   @@map("contact_messages")
+}
+
+model UserFeedback {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @map("user_id")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category  String
+  subject   String
+  message   String   @db.VarChar(2000)
+  pageUrl   String?  @map("page_url")
+  status    String   @default("OPEN")
+  adminNote String?  @map("admin_note") @db.Text
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("user_feedbacks")
 }
 
 model Banner {
