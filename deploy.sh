@@ -19,7 +19,7 @@ fi
 echo "[1/5] Menangani potensi konflik lokal & Menarik kode terbaru..."
 # Hindari kegagalan git pull karena package-lock.json lokal tersentuh npm di server
 git checkout -- server/package-lock.json client/package-lock.json 2>/dev/null || true
-git fetch origin main
+git -c pack.threads=1 -c pack.windowMemory=10m fetch origin main
 git reset --hard origin/main
 
 echo "[2/5] Memperbarui Prisma & Build Backend (Express)..."
@@ -37,11 +37,18 @@ cd client
 export RAYON_NUM_THREADS=1
 export UV_THREADPOOL_SIZE=1
 export NEXT_CPU_NUM=1
-export NODE_OPTIONS="--max-old-space-size=1280"
-npx next build --webpack
+export NODE_OPTIONS="--max-old-space-size=1280 --v8-pool-size=1"
+if ! npx next build --webpack; then
+    echo "[!] Build terhenti saat PM2 aktif. Menghentikan fitalenta-web sementara untuk membebaskan RAM..."
+    cd ..
+    npx pm2 stop fitalenta-web 2>/dev/null || true
+    cd client
+    npx next build --webpack
+fi
 cd ..
 
 echo "[4/5] Melakukan reload PM2 (pergantian instan tanpa downtime)..."
+npx pm2 start ecosystem.config.cjs 2>/dev/null || true
 npx pm2 reload ecosystem.config.cjs || npx pm2 restart all
 npx pm2 save
 chmod +x keep-alive.sh 2>/dev/null || true
