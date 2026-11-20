@@ -33,7 +33,8 @@ cd ..
 
 echo "[3/5] Melakukan build Next.js frontend (PM2 tetap melayani pengunjung)..."
 cd client
-# Tidak menghapus folder .next sebelum build agar chunk lama tetap aktif melayani traffic
+# Tidak menghapus seluruh .next agar chunk lama tetap aktif; hanya bersihkan cache webpack agar tidak memicu OOM
+rm -rf .next/cache/webpack
 export RAYON_NUM_THREADS=1
 export UV_THREADPOOL_SIZE=1
 export NEXT_CPU_NUM=1
