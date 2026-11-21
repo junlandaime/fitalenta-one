@@ -21,7 +21,7 @@ export default async function GalleryPage() {
                 title="Our Gallery"
                 subtitle=" Empowering businesses and individuals with tailored solutions "
                 crumbs={[{ label: "Home", href: "/" }, { label: "Gallery" }]}
-                bgImage="/gallery-hero.png"
+                bgImage="/gallery-hero.webp"
             />
 
             <div className="bg-slate-50 py-16">
