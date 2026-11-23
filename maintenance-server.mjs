@@ -7,6 +7,7 @@ const HTML = `<!DOCTYPE html>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
   <meta http-equiv="refresh" content="20" />
   <title>Pembaruan Sistem — FITALENTA</title>
   <style>
@@ -135,9 +136,8 @@ const HTML = `<!DOCTYPE html>
 </html>`;
 
 const server = http.createServer((_req, res) => {
-  res.writeHead(503, {
+  res.writeHead(200, {
     "Content-Type": "text/html; charset=utf-8",
-    "Retry-After": "60",
     "Cache-Control": "no-store, no-cache, must-revalidate",
   });
   res.end(HTML);
