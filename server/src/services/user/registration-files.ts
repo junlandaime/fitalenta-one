@@ -1,4 +1,5 @@
 import {
+  FormTemplate,
   REGISTRATION_FILES,
   REGISTRATION_UPLOAD_FOLDER,
   RegistrationFileColumn,
@@ -21,9 +22,9 @@ export function mapUploadedFiles(files: unknown): RegistrationFilePaths {
   return paths;
 }
 
-export function assertRequiredFiles(paths: RegistrationFilePaths): void {
+export function assertRequiredFiles(paths: RegistrationFilePaths, template: FormTemplate = "default"): void {
   const missing = REGISTRATION_FILES
-    .filter((file) => file.required && !paths[file.column])
+    .filter((file) => file.requiredFor.includes(template) && !paths[file.column])
     .map((file) => file.label);
 
   if (missing.length > 0) throw RegistrationErrors.missingFiles(missing);

@@ -16,8 +16,21 @@ const createEmptyAddress = (): RegistrationAddress => ({
     detail: "",
 });
 
-const createInitialDraft = (): RegistrationDraft => ({
+const EMPTY_FILES = {
     photo: null,
+    ktpFile: null,
+    diplomaFile: null,
+    transcriptFile: null,
+    healthCertFile: null,
+    colorBlindCertFile: null,
+    drugFreeCertFile: null,
+    toeicCertFile: null,
+    cvFile: null,
+    supportingDocsFile: null,
+} as const;
+
+const createInitialDraft = (): RegistrationDraft => ({
+    ...EMPTY_FILES,
     fullName: "",
     nik: "",
     gender: "",
@@ -25,6 +38,7 @@ const createInitialDraft = (): RegistrationDraft => ({
     birthDate: "",
     phone: "",
     lastEducation: "",
+    otherEducation: "",
     major: "",
     institution: "",
     currentActivity: "",
@@ -34,6 +48,9 @@ const createInitialDraft = (): RegistrationDraft => ({
     ktp: createEmptyAddress(),
     sameAsKtp: false,
     domicile: createEmptyAddress(),
+    domicileCity: "",
+    gpa: "",
+    colorBlindStatus: "",
     programId: null,
     agreed: false,
 });
@@ -137,7 +154,7 @@ export const useRegistrationStore = create<RegistrationState>()(
             name: "fitalenta-registration-draft",
             version: 1,
             skipHydration: true,
-            partialize: (state) => ({ draft: { ...state.draft, photo: null } }),
+            partialize: (state) => ({ draft: { ...state.draft, ...EMPTY_FILES } }),
             merge: (persisted, current) => {
                 const saved = (persisted as { draft?: Partial<RegistrationDraft> } | undefined)?.draft;
                 if (!saved) return current;
@@ -147,7 +164,7 @@ export const useRegistrationStore = create<RegistrationState>()(
                     draft: {
                         ...current.draft,
                         ...saved,
-                        photo: null,
+                        ...EMPTY_FILES,
                         ktp: { ...current.draft.ktp, ...saved.ktp },
                         domicile: { ...current.draft.domicile, ...saved.domicile },
                     },

@@ -1,6 +1,7 @@
 import { body, query, ValidationChain } from "express-validator";
 import { ProgramStatus } from "../../generated/prisma/client";
 import { INSTALLMENT_PLAN_PATTERN, PROGRAM_LIMITS } from "../config/program.config";
+import { FORM_TEMPLATES } from "../config/registration.config";
 import { enumQueryRule, idParamRule, paginationRules, searchRule } from "./common.validator";
 import { booleanRule, dateRule, decimalRule, enumRule, intRule, textRule } from "./rule-factories";
 
@@ -54,6 +55,7 @@ function programFieldRules(partial: boolean): ValidationChain[] {
     intRule("capacity", { label: "Kuota", min: 1, max: PROGRAM_LIMITS.capacity, nullable: true }),
     intRule("sortOrder", { label: "Urutan", min: 0, max: PROGRAM_LIMITS.sortOrder, optional: true }),
     enumRule("status", STATUS_VALUES, { label: "Status", optional: true }),
+    enumRule("formTemplate", [...FORM_TEMPLATES], { label: "Template formulir", optional: true }),
     booleanRule(body("isRunning"), "isRunning"),
     body("installmentPlan")
       .optional()

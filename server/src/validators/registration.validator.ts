@@ -1,6 +1,6 @@
 import { body, ValidationChain } from "express-validator";
 import { Gender } from "../../generated/prisma/client";
-import { NIK_PATTERN, PHONE_PATTERN } from "../config/registration.config";
+import { COLOR_BLIND_OPTIONS, NIK_PATTERN, PHONE_PATTERN } from "../config/registration.config";
 
 interface TextField {
   field: string;
@@ -10,24 +10,25 @@ interface TextField {
 }
 
 const TEXT_FIELDS: TextField[] = [
-  { field: "birthPlace", label: "Tempat lahir", required: true },
+  { field: "birthPlace", label: "Tempat lahir" },
   { field: "lastEducation", label: "Pendidikan terakhir", required: true },
   { field: "major", label: "Jurusan" },
   { field: "educationInstitution", label: "Institusi pendidikan" },
   { field: "currentActivity", label: "Kegiatan saat ini" },
   { field: "maritalStatus", label: "Status pernikahan", max: 50 },
   { field: "parentRelationship", label: "Hubungan dengan orang tua/wali", max: 50 },
-  { field: "ktpProvinceCode", label: "Kode provinsi KTP", required: true, max: 20 },
-  { field: "ktpProvinceName", label: "Provinsi KTP", required: true },
-  { field: "ktpCityCode", label: "Kode kota KTP", required: true, max: 20 },
-  { field: "ktpCityName", label: "Kota KTP", required: true },
-  { field: "ktpAddress", label: "Alamat KTP", required: true, max: 1000 },
+  { field: "ktpProvinceCode", label: "Kode provinsi KTP", max: 20 },
+  { field: "ktpProvinceName", label: "Provinsi KTP" },
+  { field: "ktpCityCode", label: "Kode kota KTP", max: 20 },
+  { field: "ktpCityName", label: "Kota KTP" },
+  { field: "ktpAddress", label: "Alamat KTP", max: 1000 },
   { field: "domicileProvinceCode", label: "Kode provinsi domisili", max: 20 },
   { field: "domicileProvinceName", label: "Provinsi domisili" },
   { field: "domicileCityCode", label: "Kode kota domisili", max: 20 },
   { field: "domicileCityName", label: "Kota domisili" },
   { field: "domicileAddress", label: "Alamat domisili", max: 1000 },
   { field: "fullName", label: "Nama lengkap" },
+  { field: "gpa", label: "IPK", max: 10 },
 ];
 
 function baseChain(field: string, label: string, required: boolean): ValidationChain {
@@ -57,8 +58,8 @@ export const createRegistrationRules: ValidationChain[] = [
     .toInt(),
 
   body("nik")
+    .optional({ values: "falsy" })
     .trim()
-    .notEmpty().withMessage("NIK wajib diisi").bail()
     .matches(NIK_PATTERN).withMessage("NIK harus 16 digit angka"),
 
   body("gender")
@@ -71,7 +72,12 @@ export const createRegistrationRules: ValidationChain[] = [
     .isISO8601({ strict: true, strictSeparator: true }).withMessage("Tanggal lahir harus berformat YYYY-MM-DD").bail()
     .custom((value: string) => new Date(value) < new Date()).withMessage("Tanggal lahir tidak boleh di masa depan"),
 
-  phoneRule("parentPhone", "Nomor telepon orang tua/wali", true),
+  body("colorBlindStatus")
+    .optional({ values: "falsy" })
+    .trim()
+    .isIn(COLOR_BLIND_OPTIONS).withMessage(`Status buta warna harus salah satu dari: ${COLOR_BLIND_OPTIONS.join(", ")}`),
+
+  phoneRule("parentPhone", "Nomor telepon orang tua/wali", false),
   phoneRule("phone", "Nomor telepon", false),
 
   ...TEXT_FIELDS.map(textRule),

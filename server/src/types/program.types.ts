@@ -26,6 +26,7 @@ export interface ProgramListItem {
   id: number;
   name: string;
   programFormat: string | null;
+  formTemplate: string;
   category: { id: number; name: string } | null;
   duration: string | null;
   capacity: number | null;
@@ -65,6 +66,7 @@ export interface ProgramDetail extends ProgramListItem {
 export interface ProgramInput {
   name?: string;
   programFormat?: string | null;
+  formTemplate?: string;
   categoryId?: number | null;
   description?: string | null;
   requirements?: string | null;

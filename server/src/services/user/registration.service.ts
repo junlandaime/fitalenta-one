@@ -11,7 +11,11 @@ import {
   nextRegistrationCode,
 } from "../../utils/code-generator";
 import { isUniqueViolation } from "../../utils/prisma-error";
-import { assertProgramAcceptsRegistration } from "./registration-policy";
+import {
+  assertProgramAcceptsRegistration,
+  assertRequiredProfileFields,
+  resolveFormTemplate,
+} from "./registration-policy";
 import {
   RegistrationFilePaths,
   assertRequiredFiles,
@@ -94,6 +98,10 @@ async function registerInTransaction(
   if (!program) throw RegistrationErrors.programNotFound();
   assertProgramAcceptsRegistration(program);
 
+  const template = resolveFormTemplate(program.formTemplate);
+  assertRequiredProfileFields(input, template);
+  assertRequiredFiles(filePaths, template);
+
   const existing = await tx.registration.findUnique({
     where: { unique_user_program: { userId, programId } },
     select: { id: true },
@@ -167,8 +175,6 @@ export async function createRegistration(
   input: CreateRegistrationInput,
   filePaths: RegistrationFilePaths,
 ): Promise<RegistrationResult> {
-  assertRequiredFiles(filePaths);
-
   for (let attempt = 1; ; attempt++) {
     try {
       return await prisma.$transaction((tx) =>

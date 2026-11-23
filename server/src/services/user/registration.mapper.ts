@@ -3,7 +3,7 @@ import { RegistrationResult } from "../../types/registration.types";
 
 export const registrationResultInclude = {
   user: { select: { name: true, email: true, phone: true } },
-  program: { select: { id: true, name: true, programFormat: true, installmentPlan: true } },
+  program: { select: { id: true, name: true, programFormat: true, formTemplate: true, installmentPlan: true } },
   payments: { select: { id: true, invoiceNumber: true, amount: true, status: true, notes: true } },
 } satisfies Prisma.RegistrationInclude;
 
@@ -37,6 +37,8 @@ export function toApplicant(registration: ApplicantSource): RegistrationResult["
     maritalStatus: registration.maritalStatus,
     parentRelationship: registration.parentRelationship,
     parentPhone: registration.parentPhone,
+    gpa: registration.gpa,
+    colorBlindStatus: registration.colorBlindStatus,
     ktp: {
       provinceCode: registration.ktpProvinceCode,
       provinceName: registration.ktpProvinceName,
@@ -55,12 +57,35 @@ export function toApplicant(registration: ApplicantSource): RegistrationResult["
 }
 
 export function toDocuments(
-  registration: Pick<Registration, "photoPath" | "n4CertificatePath" | "sswCertificatePath">
+  registration: Pick<
+    Registration,
+    | "photoPath"
+    | "n4CertificatePath"
+    | "sswCertificatePath"
+    | "ktpPath"
+    | "diplomaPath"
+    | "transcriptPath"
+    | "healthCertPath"
+    | "colorBlindCertPath"
+    | "drugFreeCertPath"
+    | "toeicCertPath"
+    | "cvPath"
+    | "supportingDocsPath"
+  >
 ): RegistrationResult["documents"] {
   return {
     photoPath: registration.photoPath,
     n4CertificatePath: registration.n4CertificatePath,
     sswCertificatePath: registration.sswCertificatePath,
+    ktpPath: registration.ktpPath,
+    diplomaPath: registration.diplomaPath,
+    transcriptPath: registration.transcriptPath,
+    healthCertPath: registration.healthCertPath,
+    colorBlindCertPath: registration.colorBlindCertPath,
+    drugFreeCertPath: registration.drugFreeCertPath,
+    toeicCertPath: registration.toeicCertPath,
+    cvPath: registration.cvPath,
+    supportingDocsPath: registration.supportingDocsPath,
   };
 }
 
@@ -77,6 +102,7 @@ export function toRegistrationResult(registration: RegistrationRecord): Registra
       id: program?.id ?? null,
       name: program?.name ?? "",
       programFormat: program?.programFormat ?? null,
+      formTemplate: program?.formTemplate ?? "default",
     },
     payment: {
       id: payment.id,

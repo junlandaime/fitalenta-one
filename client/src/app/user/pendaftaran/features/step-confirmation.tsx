@@ -31,7 +31,10 @@ export function ConfirmationStep({ programs, email }: ConfirmationStepProps) {
     const goToStep = useRegistrationStore((state) => state.goToStep);
 
     const program = programs.find((item) => item.id === draft.programId);
+    const isAvionics = program?.formTemplate === "avionics";
     const gender = GENDERS.find((item) => item.value === draft.gender)?.label;
+    const educationLabel =
+        isAvionics && draft.lastEducation === "Lainnya" ? draft.otherEducation : draft.lastEducation;
 
     return (
         <div className="space-y-6">
@@ -49,41 +52,77 @@ export function ConfirmationStep({ programs, email }: ConfirmationStepProps) {
                 {program && <Badge variant="secondary">{program.name}</Badge>}
             </div>
 
-            <ReviewSection title="Data diri" onEdit={() => goToStep(1)}>
-                <ReviewItem label="Nama lengkap" value={draft.fullName} />
-                <ReviewItem label="NIK" value={draft.nik} />
-                <ReviewItem label="Jenis kelamin" value={gender} />
-                <ReviewItem
-                    label="Tempat, tanggal lahir"
-                    value={`${draft.birthPlace}, ${formatDate(draft.birthDate, "id-ID")}`}
-                />
-                <ReviewItem label="Email" value={email} />
-                <ReviewItem label="Nomor handphone" value={draft.phone} />
-            </ReviewSection>
+            {isAvionics ? (
+                <>
+                    <ReviewSection title="Identitas & domisili" onEdit={() => goToStep(2)}>
+                        <ReviewItem label="Nama lengkap" value={draft.fullName} />
+                        <ReviewItem label="Jenis kelamin" value={gender} />
+                        <ReviewItem label="Tanggal lahir" value={formatDate(draft.birthDate, "id-ID")} />
+                        <ReviewItem label="Email" value={email} />
+                        <ReviewItem label="Nomor WhatsApp aktif" value={draft.phone} />
+                        <ReviewItem label="Domisili sekarang" value={draft.domicileCity} />
+                    </ReviewSection>
 
-            <ReviewSection title="Pendidikan & aktivitas" onEdit={() => goToStep(1)}>
-                <ReviewItem label="Pendidikan terakhir" value={draft.lastEducation} />
-                <ReviewItem label="Jurusan" value={draft.major} />
-                <ReviewItem label="Asal institusi pendidikan" value={draft.institution} />
-                <ReviewItem label="Pekerjaan/aktivitas saat ini" value={draft.currentActivity} />
-                <ReviewItem label="Status pernikahan" value={draft.maritalStatus} />
-            </ReviewSection>
+                    <ReviewSection title="Pendidikan & kesehatan" onEdit={() => goToStep(2)}>
+                        <ReviewItem label="Pendidikan" value={educationLabel} />
+                        <ReviewItem label="Program studi" value={draft.major} />
+                        <ReviewItem label="Perguruan tinggi" value={draft.institution} />
+                        <ReviewItem label="IPK" value={draft.gpa} />
+                        <ReviewItem label="Kondisi buta warna" value={draft.colorBlindStatus} />
+                    </ReviewSection>
 
-            <ReviewSection title="Kontak orang tua/wali" onEdit={() => goToStep(1)}>
-                <ReviewItem label="Hubungan" value={draft.guardianRelation} />
-                <ReviewItem label="Nomor handphone" value={draft.guardianPhone} />
-            </ReviewSection>
+                    <ReviewSection title="Dokumen yang diunggah" onEdit={() => goToStep(2)}>
+                        <ReviewItem label="Foto formal" value={draft.photo?.name} />
+                        <ReviewItem label="KTP" value={draft.ktpFile?.name} />
+                        <ReviewItem label="Ijazah pendidikan terakhir" value={draft.diplomaFile?.name} />
+                        <ReviewItem label="Transkrip nilai akademik" value={draft.transcriptFile?.name} />
+                        <ReviewItem label="CV (Curriculum Vitae)" value={draft.cvFile?.name} />
+                        <ReviewItem label="Surat keterangan sehat" value={draft.healthCertFile?.name ?? "Belum diunggah"} />
+                        <ReviewItem label="Surat tidak buta warna" value={draft.colorBlindCertFile?.name ?? "Belum diunggah"} />
+                        <ReviewItem label="Surat bebas narkoba" value={draft.drugFreeCertFile?.name ?? "Belum diunggah"} />
+                        <ReviewItem label="Sertifikat TOEIC" value={draft.toeicCertFile?.name ?? "Belum diunggah"} />
+                        <ReviewItem label="Sertifikat pendukung" value={draft.supportingDocsFile?.name ?? "Belum diunggah"} />
+                    </ReviewSection>
+                </>
+            ) : (
+                <>
+                    <ReviewSection title="Data diri" onEdit={() => goToStep(2)}>
+                        <ReviewItem label="Nama lengkap" value={draft.fullName} />
+                        <ReviewItem label="NIK" value={draft.nik} />
+                        <ReviewItem label="Jenis kelamin" value={gender} />
+                        <ReviewItem
+                            label="Tempat, tanggal lahir"
+                            value={`${draft.birthPlace}, ${formatDate(draft.birthDate, "id-ID")}`}
+                        />
+                        <ReviewItem label="Email" value={email} />
+                        <ReviewItem label="Nomor handphone" value={draft.phone} />
+                    </ReviewSection>
 
-            <ReviewSection title="Alamat" onEdit={() => goToStep(1)}>
-                <ReviewItem label="Alamat sesuai KTP" value={formatAddress(draft.ktp)} wide />
-                <ReviewItem
-                    label="Alamat domisili"
-                    value={draft.sameAsKtp ? "Sama dengan alamat KTP" : formatAddress(draft.domicile)}
-                    wide
-                />
-            </ReviewSection>
+                    <ReviewSection title="Pendidikan & aktivitas" onEdit={() => goToStep(2)}>
+                        <ReviewItem label="Pendidikan terakhir" value={draft.lastEducation} />
+                        <ReviewItem label="Jurusan" value={draft.major} />
+                        <ReviewItem label="Asal institusi pendidikan" value={draft.institution} />
+                        <ReviewItem label="Pekerjaan/aktivitas saat ini" value={draft.currentActivity} />
+                        <ReviewItem label="Status pernikahan" value={draft.maritalStatus} />
+                    </ReviewSection>
 
-            <ReviewSection title="Program yang dipilih" onEdit={() => goToStep(2)}>
+                    <ReviewSection title="Kontak orang tua/wali" onEdit={() => goToStep(2)}>
+                        <ReviewItem label="Hubungan" value={draft.guardianRelation} />
+                        <ReviewItem label="Nomor handphone" value={draft.guardianPhone} />
+                    </ReviewSection>
+
+                    <ReviewSection title="Alamat" onEdit={() => goToStep(2)}>
+                        <ReviewItem label="Alamat sesuai KTP" value={formatAddress(draft.ktp)} wide />
+                        <ReviewItem
+                            label="Alamat domisili"
+                            value={draft.sameAsKtp ? "Sama dengan alamat KTP" : formatAddress(draft.domicile)}
+                            wide
+                        />
+                    </ReviewSection>
+                </>
+            )}
+
+            <ReviewSection title="Program yang dipilih" onEdit={() => goToStep(1)}>
                 <ReviewItem label="Program" value={program?.name} wide />
                 {program && (
                     <>

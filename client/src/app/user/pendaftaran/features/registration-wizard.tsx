@@ -13,11 +13,12 @@ import { focusFirstInvalidField } from "@/helpers/user/registration-helper";
 import { useCurrentUser } from "@/hooks/auth/use-current-user";
 import { useRegistrationHydrated } from "@/hooks/user/use-registration-hydrated";
 import { useSubmitRegistration } from "@/hooks/user/use-submit-registration";
-import { registrationSchema, validateStep } from "@/schemas/user/registration";
+import { getRegistrationSchema, validateStep, type FormTemplate } from "@/schemas/user/registration";
 import { isApiError } from "@/lib/api-error";
 import { useRegistrationStore } from "@/store/registration-store";
 import type { Program } from "@/types/program";
 import type { CreatedRegistration, RegistrationStep } from "@/types/user/registration";
+import { AvionicsStep } from "./step-avionics";
 import { RegistrationStepper } from "./registration-stepper";
 import { RegistrationSuccess } from "./registration-success";
 import { ConfirmationStep } from "./step-confirmation";
@@ -47,7 +48,12 @@ export function RegistrationWizard({ programs, initialProgramId }: RegistrationW
     const submitRegistration = useSubmitRegistration();
 
     const step = useRegistrationStore((state) => state.step);
+    const selectedProgramId = useRegistrationStore((state) => state.draft.programId);
     const goToStep = useRegistrationStore((state) => state.goToStep);
+
+    const selectedProgram = programs.find((p) => p.id === selectedProgramId);
+    const formTemplate: FormTemplate =
+        selectedProgram?.formTemplate === "avionics" ? "avionics" : "default";
 
     const [submitted, setSubmitted] = useState<CreatedRegistration | null>(null);
 
@@ -82,7 +88,7 @@ export function RegistrationWizard({ programs, initialProgramId }: RegistrationW
         const { draft, step: currentStep, setErrors } = useRegistrationStore.getState();
 
         if (currentStep < 3) {
-            const errors = validateStep(currentStep, draft);
+            const errors = validateStep(currentStep, draft, formTemplate);
             if (Object.keys(errors).length > 0) {
                 setErrors(errors);
                 focusFirstInvalidField();
@@ -93,7 +99,7 @@ export function RegistrationWizard({ programs, initialProgramId }: RegistrationW
         }
 
         for (const target of STEPS) {
-            const errors = validateStep(target, draft);
+            const errors = validateStep(target, draft, formTemplate);
             if (Object.keys(errors).length > 0) {
                 goToStep(target);
                 setErrors(errors);
@@ -102,13 +108,17 @@ export function RegistrationWizard({ programs, initialProgramId }: RegistrationW
             }
         }
 
-        submitRegistration.mutate(registrationSchema.parse(draft), {
-            onSuccess: (result) => {
-                setSubmitted(result);
-                useRegistrationStore.getState().reset();
-                useRegistrationStore.persist.clearStorage();
+        const parsed = getRegistrationSchema(formTemplate).parse(draft);
+        submitRegistration.mutate(
+            { values: parsed, template: formTemplate },
+            {
+                onSuccess: (result) => {
+                    setSubmitted(result);
+                    useRegistrationStore.getState().reset();
+                    useRegistrationStore.persist.clearStorage();
+                },
             },
-        });
+        );
     }
 
     if (submitted) return <RegistrationSuccess registrationCode={submitted.registrationCode} />;
@@ -138,8 +148,9 @@ export function RegistrationWizard({ programs, initialProgramId }: RegistrationW
                     </CardHeader>
 
                     <CardContent className="space-y-6">
-                        {step === 1 && <PersonalStep email={user?.email} />}
-                        {step === 2 && <ProgramStep programs={programs} />}
+                        {step === 1 && <ProgramStep programs={programs} />}
+                        {step === 2 &&
+                            (formTemplate === "avionics" ? <AvionicsStep /> : <PersonalStep email={user?.email} />)}
                         {step === 3 && <ConfirmationStep programs={programs} email={user?.email} />}
 
                         {isLastStep && submitRegistration.isError && (

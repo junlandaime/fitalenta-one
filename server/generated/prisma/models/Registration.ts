@@ -71,6 +71,17 @@ export type RegistrationMinAggregateOutputType = {
   photoPath: string | null
   n4CertificatePath: string | null
   sswCertificatePath: string | null
+  gpa: string | null
+  colorBlindStatus: string | null
+  ktpPath: string | null
+  diplomaPath: string | null
+  transcriptPath: string | null
+  healthCertPath: string | null
+  colorBlindCertPath: string | null
+  drugFreeCertPath: string | null
+  toeicCertPath: string | null
+  cvPath: string | null
+  supportingDocsPath: string | null
 }
 
 export type RegistrationMaxAggregateOutputType = {
@@ -106,6 +117,17 @@ export type RegistrationMaxAggregateOutputType = {
   photoPath: string | null
   n4CertificatePath: string | null
   sswCertificatePath: string | null
+  gpa: string | null
+  colorBlindStatus: string | null
+  ktpPath: string | null
+  diplomaPath: string | null
+  transcriptPath: string | null
+  healthCertPath: string | null
+  colorBlindCertPath: string | null
+  drugFreeCertPath: string | null
+  toeicCertPath: string | null
+  cvPath: string | null
+  supportingDocsPath: string | null
 }
 
 export type RegistrationCountAggregateOutputType = {
@@ -141,6 +163,17 @@ export type RegistrationCountAggregateOutputType = {
   photoPath: number
   n4CertificatePath: number
   sswCertificatePath: number
+  gpa: number
+  colorBlindStatus: number
+  ktpPath: number
+  diplomaPath: number
+  transcriptPath: number
+  healthCertPath: number
+  colorBlindCertPath: number
+  drugFreeCertPath: number
+  toeicCertPath: number
+  cvPath: number
+  supportingDocsPath: number
   _all: number
 }
 
@@ -190,6 +223,17 @@ export type RegistrationMinAggregateInputType = {
   photoPath?: true
   n4CertificatePath?: true
   sswCertificatePath?: true
+  gpa?: true
+  colorBlindStatus?: true
+  ktpPath?: true
+  diplomaPath?: true
+  transcriptPath?: true
+  healthCertPath?: true
+  colorBlindCertPath?: true
+  drugFreeCertPath?: true
+  toeicCertPath?: true
+  cvPath?: true
+  supportingDocsPath?: true
 }
 
 export type RegistrationMaxAggregateInputType = {
@@ -225,6 +269,17 @@ export type RegistrationMaxAggregateInputType = {
   photoPath?: true
   n4CertificatePath?: true
   sswCertificatePath?: true
+  gpa?: true
+  colorBlindStatus?: true
+  ktpPath?: true
+  diplomaPath?: true
+  transcriptPath?: true
+  healthCertPath?: true
+  colorBlindCertPath?: true
+  drugFreeCertPath?: true
+  toeicCertPath?: true
+  cvPath?: true
+  supportingDocsPath?: true
 }
 
 export type RegistrationCountAggregateInputType = {
@@ -260,6 +315,17 @@ export type RegistrationCountAggregateInputType = {
   photoPath?: true
   n4CertificatePath?: true
   sswCertificatePath?: true
+  gpa?: true
+  colorBlindStatus?: true
+  ktpPath?: true
+  diplomaPath?: true
+  transcriptPath?: true
+  healthCertPath?: true
+  colorBlindCertPath?: true
+  drugFreeCertPath?: true
+  toeicCertPath?: true
+  cvPath?: true
+  supportingDocsPath?: true
   _all?: true
 }
 
@@ -382,6 +448,17 @@ export type RegistrationGroupByOutputType = {
   photoPath: string | null
   n4CertificatePath: string | null
   sswCertificatePath: string | null
+  gpa: string | null
+  colorBlindStatus: string | null
+  ktpPath: string | null
+  diplomaPath: string | null
+  transcriptPath: string | null
+  healthCertPath: string | null
+  colorBlindCertPath: string | null
+  drugFreeCertPath: string | null
+  toeicCertPath: string | null
+  cvPath: string | null
+  supportingDocsPath: string | null
   _count: RegistrationCountAggregateOutputType | null
   _avg: RegistrationAvgAggregateOutputType | null
   _sum: RegistrationSumAggregateOutputType | null
@@ -440,6 +517,17 @@ export type RegistrationWhereInput = {
   photoPath?: Prisma.StringNullableFilter<"Registration"> | string | null
   n4CertificatePath?: Prisma.StringNullableFilter<"Registration"> | string | null
   sswCertificatePath?: Prisma.StringNullableFilter<"Registration"> | string | null
+  gpa?: Prisma.StringNullableFilter<"Registration"> | string | null
+  colorBlindStatus?: Prisma.StringNullableFilter<"Registration"> | string | null
+  ktpPath?: Prisma.StringNullableFilter<"Registration"> | string | null
+  diplomaPath?: Prisma.StringNullableFilter<"Registration"> | string | null
+  transcriptPath?: Prisma.StringNullableFilter<"Registration"> | string | null
+  healthCertPath?: Prisma.StringNullableFilter<"Registration"> | string | null
+  colorBlindCertPath?: Prisma.StringNullableFilter<"Registration"> | string | null
+  drugFreeCertPath?: Prisma.StringNullableFilter<"Registration"> | string | null
+  toeicCertPath?: Prisma.StringNullableFilter<"Registration"> | string | null
+  cvPath?: Prisma.StringNullableFilter<"Registration"> | string | null
+  supportingDocsPath?: Prisma.StringNullableFilter<"Registration"> | string | null
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   program?: Prisma.XOR<Prisma.ProgramNullableScalarRelationFilter, Prisma.ProgramWhereInput> | null
   statusHistory?: Prisma.RegistrationStatusHistoryListRelationFilter
@@ -481,6 +569,17 @@ export type RegistrationOrderByWithRelationInput = {
   photoPath?: Prisma.SortOrderInput | Prisma.SortOrder
   n4CertificatePath?: Prisma.SortOrderInput | Prisma.SortOrder
   sswCertificatePath?: Prisma.SortOrderInput | Prisma.SortOrder
+  gpa?: Prisma.SortOrderInput | Prisma.SortOrder
+  colorBlindStatus?: Prisma.SortOrderInput | Prisma.SortOrder
+  ktpPath?: Prisma.SortOrderInput | Prisma.SortOrder
+  diplomaPath?: Prisma.SortOrderInput | Prisma.SortOrder
+  transcriptPath?: Prisma.SortOrderInput | Prisma.SortOrder
+  healthCertPath?: Prisma.SortOrderInput | Prisma.SortOrder
+  colorBlindCertPath?: Prisma.SortOrderInput | Prisma.SortOrder
+  drugFreeCertPath?: Prisma.SortOrderInput | Prisma.SortOrder
+  toeicCertPath?: Prisma.SortOrderInput | Prisma.SortOrder
+  cvPath?: Prisma.SortOrderInput | Prisma.SortOrder
+  supportingDocsPath?: Prisma.SortOrderInput | Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   program?: Prisma.ProgramOrderByWithRelationInput
   statusHistory?: Prisma.RegistrationStatusHistoryOrderByRelationAggregateInput
@@ -527,6 +626,17 @@ export type RegistrationWhereUniqueInput = Prisma.AtLeast<{
   photoPath?: Prisma.StringNullableFilter<"Registration"> | string | null
   n4CertificatePath?: Prisma.StringNullableFilter<"Registration"> | string | null
   sswCertificatePath?: Prisma.StringNullableFilter<"Registration"> | string | null
+  gpa?: Prisma.StringNullableFilter<"Registration"> | string | null
+  colorBlindStatus?: Prisma.StringNullableFilter<"Registration"> | string | null
+  ktpPath?: Prisma.StringNullableFilter<"Registration"> | string | null
+  diplomaPath?: Prisma.StringNullableFilter<"Registration"> | string | null
+  transcriptPath?: Prisma.StringNullableFilter<"Registration"> | string | null
+  healthCertPath?: Prisma.StringNullableFilter<"Registration"> | string | null
+  colorBlindCertPath?: Prisma.StringNullableFilter<"Registration"> | string | null
+  drugFreeCertPath?: Prisma.StringNullableFilter<"Registration"> | string | null
+  toeicCertPath?: Prisma.StringNullableFilter<"Registration"> | string | null
+  cvPath?: Prisma.StringNullableFilter<"Registration"> | string | null
+  supportingDocsPath?: Prisma.StringNullableFilter<"Registration"> | string | null
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   program?: Prisma.XOR<Prisma.ProgramNullableScalarRelationFilter, Prisma.ProgramWhereInput> | null
   statusHistory?: Prisma.RegistrationStatusHistoryListRelationFilter
@@ -568,6 +678,17 @@ export type RegistrationOrderByWithAggregationInput = {
   photoPath?: Prisma.SortOrderInput | Prisma.SortOrder
   n4CertificatePath?: Prisma.SortOrderInput | Prisma.SortOrder
   sswCertificatePath?: Prisma.SortOrderInput | Prisma.SortOrder
+  gpa?: Prisma.SortOrderInput | Prisma.SortOrder
+  colorBlindStatus?: Prisma.SortOrderInput | Prisma.SortOrder
+  ktpPath?: Prisma.SortOrderInput | Prisma.SortOrder
+  diplomaPath?: Prisma.SortOrderInput | Prisma.SortOrder
+  transcriptPath?: Prisma.SortOrderInput | Prisma.SortOrder
+  healthCertPath?: Prisma.SortOrderInput | Prisma.SortOrder
+  colorBlindCertPath?: Prisma.SortOrderInput | Prisma.SortOrder
+  drugFreeCertPath?: Prisma.SortOrderInput | Prisma.SortOrder
+  toeicCertPath?: Prisma.SortOrderInput | Prisma.SortOrder
+  cvPath?: Prisma.SortOrderInput | Prisma.SortOrder
+  supportingDocsPath?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.RegistrationCountOrderByAggregateInput
   _avg?: Prisma.RegistrationAvgOrderByAggregateInput
   _max?: Prisma.RegistrationMaxOrderByAggregateInput
@@ -611,6 +732,17 @@ export type RegistrationScalarWhereWithAggregatesInput = {
   photoPath?: Prisma.StringNullableWithAggregatesFilter<"Registration"> | string | null
   n4CertificatePath?: Prisma.StringNullableWithAggregatesFilter<"Registration"> | string | null
   sswCertificatePath?: Prisma.StringNullableWithAggregatesFilter<"Registration"> | string | null
+  gpa?: Prisma.StringNullableWithAggregatesFilter<"Registration"> | string | null
+  colorBlindStatus?: Prisma.StringNullableWithAggregatesFilter<"Registration"> | string | null
+  ktpPath?: Prisma.StringNullableWithAggregatesFilter<"Registration"> | string | null
+  diplomaPath?: Prisma.StringNullableWithAggregatesFilter<"Registration"> | string | null
+  transcriptPath?: Prisma.StringNullableWithAggregatesFilter<"Registration"> | string | null
+  healthCertPath?: Prisma.StringNullableWithAggregatesFilter<"Registration"> | string | null
+  colorBlindCertPath?: Prisma.StringNullableWithAggregatesFilter<"Registration"> | string | null
+  drugFreeCertPath?: Prisma.StringNullableWithAggregatesFilter<"Registration"> | string | null
+  toeicCertPath?: Prisma.StringNullableWithAggregatesFilter<"Registration"> | string | null
+  cvPath?: Prisma.StringNullableWithAggregatesFilter<"Registration"> | string | null
+  supportingDocsPath?: Prisma.StringNullableWithAggregatesFilter<"Registration"> | string | null
 }
 
 export type RegistrationCreateInput = {
@@ -643,6 +775,17 @@ export type RegistrationCreateInput = {
   photoPath?: string | null
   n4CertificatePath?: string | null
   sswCertificatePath?: string | null
+  gpa?: string | null
+  colorBlindStatus?: string | null
+  ktpPath?: string | null
+  diplomaPath?: string | null
+  transcriptPath?: string | null
+  healthCertPath?: string | null
+  colorBlindCertPath?: string | null
+  drugFreeCertPath?: string | null
+  toeicCertPath?: string | null
+  cvPath?: string | null
+  supportingDocsPath?: string | null
   user?: Prisma.UserCreateNestedOneWithoutRegistrationsInput
   program?: Prisma.ProgramCreateNestedOneWithoutRegistrationsInput
   statusHistory?: Prisma.RegistrationStatusHistoryCreateNestedManyWithoutRegistrationInput
@@ -684,6 +827,17 @@ export type RegistrationUncheckedCreateInput = {
   photoPath?: string | null
   n4CertificatePath?: string | null
   sswCertificatePath?: string | null
+  gpa?: string | null
+  colorBlindStatus?: string | null
+  ktpPath?: string | null
+  diplomaPath?: string | null
+  transcriptPath?: string | null
+  healthCertPath?: string | null
+  colorBlindCertPath?: string | null
+  drugFreeCertPath?: string | null
+  toeicCertPath?: string | null
+  cvPath?: string | null
+  supportingDocsPath?: string | null
   statusHistory?: Prisma.RegistrationStatusHistoryUncheckedCreateNestedManyWithoutRegistrationInput
   selectionStatuses?: Prisma.SelectionStatusUncheckedCreateNestedManyWithoutRegistrationInput
   placementStatuses?: Prisma.PlacementStatusUncheckedCreateNestedManyWithoutRegistrationInput
@@ -720,6 +874,17 @@ export type RegistrationUpdateInput = {
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   n4CertificatePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sswCertificatePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gpa?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorBlindStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ktpPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  diplomaPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transcriptPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  healthCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorBlindCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  drugFreeCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toeicCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cvPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supportingDocsPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user?: Prisma.UserUpdateOneWithoutRegistrationsNestedInput
   program?: Prisma.ProgramUpdateOneWithoutRegistrationsNestedInput
   statusHistory?: Prisma.RegistrationStatusHistoryUpdateManyWithoutRegistrationNestedInput
@@ -761,6 +926,17 @@ export type RegistrationUncheckedUpdateInput = {
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   n4CertificatePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sswCertificatePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gpa?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorBlindStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ktpPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  diplomaPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transcriptPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  healthCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorBlindCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  drugFreeCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toeicCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cvPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supportingDocsPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   statusHistory?: Prisma.RegistrationStatusHistoryUncheckedUpdateManyWithoutRegistrationNestedInput
   selectionStatuses?: Prisma.SelectionStatusUncheckedUpdateManyWithoutRegistrationNestedInput
   placementStatuses?: Prisma.PlacementStatusUncheckedUpdateManyWithoutRegistrationNestedInput
@@ -800,6 +976,17 @@ export type RegistrationCreateManyInput = {
   photoPath?: string | null
   n4CertificatePath?: string | null
   sswCertificatePath?: string | null
+  gpa?: string | null
+  colorBlindStatus?: string | null
+  ktpPath?: string | null
+  diplomaPath?: string | null
+  transcriptPath?: string | null
+  healthCertPath?: string | null
+  colorBlindCertPath?: string | null
+  drugFreeCertPath?: string | null
+  toeicCertPath?: string | null
+  cvPath?: string | null
+  supportingDocsPath?: string | null
 }
 
 export type RegistrationUpdateManyMutationInput = {
@@ -832,6 +1019,17 @@ export type RegistrationUpdateManyMutationInput = {
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   n4CertificatePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sswCertificatePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gpa?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorBlindStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ktpPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  diplomaPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transcriptPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  healthCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorBlindCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  drugFreeCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toeicCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cvPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supportingDocsPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type RegistrationUncheckedUpdateManyInput = {
@@ -867,6 +1065,17 @@ export type RegistrationUncheckedUpdateManyInput = {
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   n4CertificatePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sswCertificatePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gpa?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorBlindStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ktpPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  diplomaPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transcriptPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  healthCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorBlindCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  drugFreeCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toeicCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cvPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supportingDocsPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type RegistrationListRelationFilter = {
@@ -923,6 +1132,17 @@ export type RegistrationCountOrderByAggregateInput = {
   photoPath?: Prisma.SortOrder
   n4CertificatePath?: Prisma.SortOrder
   sswCertificatePath?: Prisma.SortOrder
+  gpa?: Prisma.SortOrder
+  colorBlindStatus?: Prisma.SortOrder
+  ktpPath?: Prisma.SortOrder
+  diplomaPath?: Prisma.SortOrder
+  transcriptPath?: Prisma.SortOrder
+  healthCertPath?: Prisma.SortOrder
+  colorBlindCertPath?: Prisma.SortOrder
+  drugFreeCertPath?: Prisma.SortOrder
+  toeicCertPath?: Prisma.SortOrder
+  cvPath?: Prisma.SortOrder
+  supportingDocsPath?: Prisma.SortOrder
 }
 
 export type RegistrationAvgOrderByAggregateInput = {
@@ -964,6 +1184,17 @@ export type RegistrationMaxOrderByAggregateInput = {
   photoPath?: Prisma.SortOrder
   n4CertificatePath?: Prisma.SortOrder
   sswCertificatePath?: Prisma.SortOrder
+  gpa?: Prisma.SortOrder
+  colorBlindStatus?: Prisma.SortOrder
+  ktpPath?: Prisma.SortOrder
+  diplomaPath?: Prisma.SortOrder
+  transcriptPath?: Prisma.SortOrder
+  healthCertPath?: Prisma.SortOrder
+  colorBlindCertPath?: Prisma.SortOrder
+  drugFreeCertPath?: Prisma.SortOrder
+  toeicCertPath?: Prisma.SortOrder
+  cvPath?: Prisma.SortOrder
+  supportingDocsPath?: Prisma.SortOrder
 }
 
 export type RegistrationMinOrderByAggregateInput = {
@@ -999,6 +1230,17 @@ export type RegistrationMinOrderByAggregateInput = {
   photoPath?: Prisma.SortOrder
   n4CertificatePath?: Prisma.SortOrder
   sswCertificatePath?: Prisma.SortOrder
+  gpa?: Prisma.SortOrder
+  colorBlindStatus?: Prisma.SortOrder
+  ktpPath?: Prisma.SortOrder
+  diplomaPath?: Prisma.SortOrder
+  transcriptPath?: Prisma.SortOrder
+  healthCertPath?: Prisma.SortOrder
+  colorBlindCertPath?: Prisma.SortOrder
+  drugFreeCertPath?: Prisma.SortOrder
+  toeicCertPath?: Prisma.SortOrder
+  cvPath?: Prisma.SortOrder
+  supportingDocsPath?: Prisma.SortOrder
 }
 
 export type RegistrationSumOrderByAggregateInput = {
@@ -1198,6 +1440,17 @@ export type RegistrationCreateWithoutUserInput = {
   photoPath?: string | null
   n4CertificatePath?: string | null
   sswCertificatePath?: string | null
+  gpa?: string | null
+  colorBlindStatus?: string | null
+  ktpPath?: string | null
+  diplomaPath?: string | null
+  transcriptPath?: string | null
+  healthCertPath?: string | null
+  colorBlindCertPath?: string | null
+  drugFreeCertPath?: string | null
+  toeicCertPath?: string | null
+  cvPath?: string | null
+  supportingDocsPath?: string | null
   program?: Prisma.ProgramCreateNestedOneWithoutRegistrationsInput
   statusHistory?: Prisma.RegistrationStatusHistoryCreateNestedManyWithoutRegistrationInput
   selectionStatuses?: Prisma.SelectionStatusCreateNestedManyWithoutRegistrationInput
@@ -1237,6 +1490,17 @@ export type RegistrationUncheckedCreateWithoutUserInput = {
   photoPath?: string | null
   n4CertificatePath?: string | null
   sswCertificatePath?: string | null
+  gpa?: string | null
+  colorBlindStatus?: string | null
+  ktpPath?: string | null
+  diplomaPath?: string | null
+  transcriptPath?: string | null
+  healthCertPath?: string | null
+  colorBlindCertPath?: string | null
+  drugFreeCertPath?: string | null
+  toeicCertPath?: string | null
+  cvPath?: string | null
+  supportingDocsPath?: string | null
   statusHistory?: Prisma.RegistrationStatusHistoryUncheckedCreateNestedManyWithoutRegistrationInput
   selectionStatuses?: Prisma.SelectionStatusUncheckedCreateNestedManyWithoutRegistrationInput
   placementStatuses?: Prisma.PlacementStatusUncheckedCreateNestedManyWithoutRegistrationInput
@@ -1305,6 +1569,17 @@ export type RegistrationScalarWhereInput = {
   photoPath?: Prisma.StringNullableFilter<"Registration"> | string | null
   n4CertificatePath?: Prisma.StringNullableFilter<"Registration"> | string | null
   sswCertificatePath?: Prisma.StringNullableFilter<"Registration"> | string | null
+  gpa?: Prisma.StringNullableFilter<"Registration"> | string | null
+  colorBlindStatus?: Prisma.StringNullableFilter<"Registration"> | string | null
+  ktpPath?: Prisma.StringNullableFilter<"Registration"> | string | null
+  diplomaPath?: Prisma.StringNullableFilter<"Registration"> | string | null
+  transcriptPath?: Prisma.StringNullableFilter<"Registration"> | string | null
+  healthCertPath?: Prisma.StringNullableFilter<"Registration"> | string | null
+  colorBlindCertPath?: Prisma.StringNullableFilter<"Registration"> | string | null
+  drugFreeCertPath?: Prisma.StringNullableFilter<"Registration"> | string | null
+  toeicCertPath?: Prisma.StringNullableFilter<"Registration"> | string | null
+  cvPath?: Prisma.StringNullableFilter<"Registration"> | string | null
+  supportingDocsPath?: Prisma.StringNullableFilter<"Registration"> | string | null
 }
 
 export type RegistrationCreateWithoutProgramInput = {
@@ -1337,6 +1612,17 @@ export type RegistrationCreateWithoutProgramInput = {
   photoPath?: string | null
   n4CertificatePath?: string | null
   sswCertificatePath?: string | null
+  gpa?: string | null
+  colorBlindStatus?: string | null
+  ktpPath?: string | null
+  diplomaPath?: string | null
+  transcriptPath?: string | null
+  healthCertPath?: string | null
+  colorBlindCertPath?: string | null
+  drugFreeCertPath?: string | null
+  toeicCertPath?: string | null
+  cvPath?: string | null
+  supportingDocsPath?: string | null
   user?: Prisma.UserCreateNestedOneWithoutRegistrationsInput
   statusHistory?: Prisma.RegistrationStatusHistoryCreateNestedManyWithoutRegistrationInput
   selectionStatuses?: Prisma.SelectionStatusCreateNestedManyWithoutRegistrationInput
@@ -1376,6 +1662,17 @@ export type RegistrationUncheckedCreateWithoutProgramInput = {
   photoPath?: string | null
   n4CertificatePath?: string | null
   sswCertificatePath?: string | null
+  gpa?: string | null
+  colorBlindStatus?: string | null
+  ktpPath?: string | null
+  diplomaPath?: string | null
+  transcriptPath?: string | null
+  healthCertPath?: string | null
+  colorBlindCertPath?: string | null
+  drugFreeCertPath?: string | null
+  toeicCertPath?: string | null
+  cvPath?: string | null
+  supportingDocsPath?: string | null
   statusHistory?: Prisma.RegistrationStatusHistoryUncheckedCreateNestedManyWithoutRegistrationInput
   selectionStatuses?: Prisma.SelectionStatusUncheckedCreateNestedManyWithoutRegistrationInput
   placementStatuses?: Prisma.PlacementStatusUncheckedCreateNestedManyWithoutRegistrationInput
@@ -1438,6 +1735,17 @@ export type RegistrationCreateWithoutStatusHistoryInput = {
   photoPath?: string | null
   n4CertificatePath?: string | null
   sswCertificatePath?: string | null
+  gpa?: string | null
+  colorBlindStatus?: string | null
+  ktpPath?: string | null
+  diplomaPath?: string | null
+  transcriptPath?: string | null
+  healthCertPath?: string | null
+  colorBlindCertPath?: string | null
+  drugFreeCertPath?: string | null
+  toeicCertPath?: string | null
+  cvPath?: string | null
+  supportingDocsPath?: string | null
   user?: Prisma.UserCreateNestedOneWithoutRegistrationsInput
   program?: Prisma.ProgramCreateNestedOneWithoutRegistrationsInput
   selectionStatuses?: Prisma.SelectionStatusCreateNestedManyWithoutRegistrationInput
@@ -1478,6 +1786,17 @@ export type RegistrationUncheckedCreateWithoutStatusHistoryInput = {
   photoPath?: string | null
   n4CertificatePath?: string | null
   sswCertificatePath?: string | null
+  gpa?: string | null
+  colorBlindStatus?: string | null
+  ktpPath?: string | null
+  diplomaPath?: string | null
+  transcriptPath?: string | null
+  healthCertPath?: string | null
+  colorBlindCertPath?: string | null
+  drugFreeCertPath?: string | null
+  toeicCertPath?: string | null
+  cvPath?: string | null
+  supportingDocsPath?: string | null
   selectionStatuses?: Prisma.SelectionStatusUncheckedCreateNestedManyWithoutRegistrationInput
   placementStatuses?: Prisma.PlacementStatusUncheckedCreateNestedManyWithoutRegistrationInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutRegistrationInput
@@ -1529,6 +1848,17 @@ export type RegistrationUpdateWithoutStatusHistoryInput = {
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   n4CertificatePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sswCertificatePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gpa?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorBlindStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ktpPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  diplomaPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transcriptPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  healthCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorBlindCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  drugFreeCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toeicCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cvPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supportingDocsPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user?: Prisma.UserUpdateOneWithoutRegistrationsNestedInput
   program?: Prisma.ProgramUpdateOneWithoutRegistrationsNestedInput
   selectionStatuses?: Prisma.SelectionStatusUpdateManyWithoutRegistrationNestedInput
@@ -1569,6 +1899,17 @@ export type RegistrationUncheckedUpdateWithoutStatusHistoryInput = {
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   n4CertificatePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sswCertificatePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gpa?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorBlindStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ktpPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  diplomaPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transcriptPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  healthCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorBlindCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  drugFreeCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toeicCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cvPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supportingDocsPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   selectionStatuses?: Prisma.SelectionStatusUncheckedUpdateManyWithoutRegistrationNestedInput
   placementStatuses?: Prisma.PlacementStatusUncheckedUpdateManyWithoutRegistrationNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutRegistrationNestedInput
@@ -1604,6 +1945,17 @@ export type RegistrationCreateWithoutSelectionStatusesInput = {
   photoPath?: string | null
   n4CertificatePath?: string | null
   sswCertificatePath?: string | null
+  gpa?: string | null
+  colorBlindStatus?: string | null
+  ktpPath?: string | null
+  diplomaPath?: string | null
+  transcriptPath?: string | null
+  healthCertPath?: string | null
+  colorBlindCertPath?: string | null
+  drugFreeCertPath?: string | null
+  toeicCertPath?: string | null
+  cvPath?: string | null
+  supportingDocsPath?: string | null
   user?: Prisma.UserCreateNestedOneWithoutRegistrationsInput
   program?: Prisma.ProgramCreateNestedOneWithoutRegistrationsInput
   statusHistory?: Prisma.RegistrationStatusHistoryCreateNestedManyWithoutRegistrationInput
@@ -1644,6 +1996,17 @@ export type RegistrationUncheckedCreateWithoutSelectionStatusesInput = {
   photoPath?: string | null
   n4CertificatePath?: string | null
   sswCertificatePath?: string | null
+  gpa?: string | null
+  colorBlindStatus?: string | null
+  ktpPath?: string | null
+  diplomaPath?: string | null
+  transcriptPath?: string | null
+  healthCertPath?: string | null
+  colorBlindCertPath?: string | null
+  drugFreeCertPath?: string | null
+  toeicCertPath?: string | null
+  cvPath?: string | null
+  supportingDocsPath?: string | null
   statusHistory?: Prisma.RegistrationStatusHistoryUncheckedCreateNestedManyWithoutRegistrationInput
   placementStatuses?: Prisma.PlacementStatusUncheckedCreateNestedManyWithoutRegistrationInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutRegistrationInput
@@ -1695,6 +2058,17 @@ export type RegistrationUpdateWithoutSelectionStatusesInput = {
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   n4CertificatePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sswCertificatePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gpa?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorBlindStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ktpPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  diplomaPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transcriptPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  healthCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorBlindCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  drugFreeCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toeicCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cvPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supportingDocsPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user?: Prisma.UserUpdateOneWithoutRegistrationsNestedInput
   program?: Prisma.ProgramUpdateOneWithoutRegistrationsNestedInput
   statusHistory?: Prisma.RegistrationStatusHistoryUpdateManyWithoutRegistrationNestedInput
@@ -1735,6 +2109,17 @@ export type RegistrationUncheckedUpdateWithoutSelectionStatusesInput = {
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   n4CertificatePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sswCertificatePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gpa?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorBlindStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ktpPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  diplomaPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transcriptPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  healthCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorBlindCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  drugFreeCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toeicCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cvPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supportingDocsPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   statusHistory?: Prisma.RegistrationStatusHistoryUncheckedUpdateManyWithoutRegistrationNestedInput
   placementStatuses?: Prisma.PlacementStatusUncheckedUpdateManyWithoutRegistrationNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutRegistrationNestedInput
@@ -1770,6 +2155,17 @@ export type RegistrationCreateWithoutPlacementStatusesInput = {
   photoPath?: string | null
   n4CertificatePath?: string | null
   sswCertificatePath?: string | null
+  gpa?: string | null
+  colorBlindStatus?: string | null
+  ktpPath?: string | null
+  diplomaPath?: string | null
+  transcriptPath?: string | null
+  healthCertPath?: string | null
+  colorBlindCertPath?: string | null
+  drugFreeCertPath?: string | null
+  toeicCertPath?: string | null
+  cvPath?: string | null
+  supportingDocsPath?: string | null
   user?: Prisma.UserCreateNestedOneWithoutRegistrationsInput
   program?: Prisma.ProgramCreateNestedOneWithoutRegistrationsInput
   statusHistory?: Prisma.RegistrationStatusHistoryCreateNestedManyWithoutRegistrationInput
@@ -1810,6 +2206,17 @@ export type RegistrationUncheckedCreateWithoutPlacementStatusesInput = {
   photoPath?: string | null
   n4CertificatePath?: string | null
   sswCertificatePath?: string | null
+  gpa?: string | null
+  colorBlindStatus?: string | null
+  ktpPath?: string | null
+  diplomaPath?: string | null
+  transcriptPath?: string | null
+  healthCertPath?: string | null
+  colorBlindCertPath?: string | null
+  drugFreeCertPath?: string | null
+  toeicCertPath?: string | null
+  cvPath?: string | null
+  supportingDocsPath?: string | null
   statusHistory?: Prisma.RegistrationStatusHistoryUncheckedCreateNestedManyWithoutRegistrationInput
   selectionStatuses?: Prisma.SelectionStatusUncheckedCreateNestedManyWithoutRegistrationInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutRegistrationInput
@@ -1861,6 +2268,17 @@ export type RegistrationUpdateWithoutPlacementStatusesInput = {
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   n4CertificatePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sswCertificatePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gpa?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorBlindStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ktpPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  diplomaPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transcriptPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  healthCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorBlindCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  drugFreeCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toeicCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cvPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supportingDocsPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user?: Prisma.UserUpdateOneWithoutRegistrationsNestedInput
   program?: Prisma.ProgramUpdateOneWithoutRegistrationsNestedInput
   statusHistory?: Prisma.RegistrationStatusHistoryUpdateManyWithoutRegistrationNestedInput
@@ -1901,6 +2319,17 @@ export type RegistrationUncheckedUpdateWithoutPlacementStatusesInput = {
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   n4CertificatePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sswCertificatePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gpa?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorBlindStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ktpPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  diplomaPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transcriptPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  healthCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorBlindCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  drugFreeCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toeicCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cvPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supportingDocsPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   statusHistory?: Prisma.RegistrationStatusHistoryUncheckedUpdateManyWithoutRegistrationNestedInput
   selectionStatuses?: Prisma.SelectionStatusUncheckedUpdateManyWithoutRegistrationNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutRegistrationNestedInput
@@ -1936,6 +2365,17 @@ export type RegistrationCreateWithoutPaymentsInput = {
   photoPath?: string | null
   n4CertificatePath?: string | null
   sswCertificatePath?: string | null
+  gpa?: string | null
+  colorBlindStatus?: string | null
+  ktpPath?: string | null
+  diplomaPath?: string | null
+  transcriptPath?: string | null
+  healthCertPath?: string | null
+  colorBlindCertPath?: string | null
+  drugFreeCertPath?: string | null
+  toeicCertPath?: string | null
+  cvPath?: string | null
+  supportingDocsPath?: string | null
   user?: Prisma.UserCreateNestedOneWithoutRegistrationsInput
   program?: Prisma.ProgramCreateNestedOneWithoutRegistrationsInput
   statusHistory?: Prisma.RegistrationStatusHistoryCreateNestedManyWithoutRegistrationInput
@@ -1976,6 +2416,17 @@ export type RegistrationUncheckedCreateWithoutPaymentsInput = {
   photoPath?: string | null
   n4CertificatePath?: string | null
   sswCertificatePath?: string | null
+  gpa?: string | null
+  colorBlindStatus?: string | null
+  ktpPath?: string | null
+  diplomaPath?: string | null
+  transcriptPath?: string | null
+  healthCertPath?: string | null
+  colorBlindCertPath?: string | null
+  drugFreeCertPath?: string | null
+  toeicCertPath?: string | null
+  cvPath?: string | null
+  supportingDocsPath?: string | null
   statusHistory?: Prisma.RegistrationStatusHistoryUncheckedCreateNestedManyWithoutRegistrationInput
   selectionStatuses?: Prisma.SelectionStatusUncheckedCreateNestedManyWithoutRegistrationInput
   placementStatuses?: Prisma.PlacementStatusUncheckedCreateNestedManyWithoutRegistrationInput
@@ -2027,6 +2478,17 @@ export type RegistrationUpdateWithoutPaymentsInput = {
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   n4CertificatePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sswCertificatePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gpa?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorBlindStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ktpPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  diplomaPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transcriptPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  healthCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorBlindCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  drugFreeCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toeicCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cvPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supportingDocsPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user?: Prisma.UserUpdateOneWithoutRegistrationsNestedInput
   program?: Prisma.ProgramUpdateOneWithoutRegistrationsNestedInput
   statusHistory?: Prisma.RegistrationStatusHistoryUpdateManyWithoutRegistrationNestedInput
@@ -2067,6 +2529,17 @@ export type RegistrationUncheckedUpdateWithoutPaymentsInput = {
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   n4CertificatePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sswCertificatePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gpa?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorBlindStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ktpPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  diplomaPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transcriptPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  healthCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorBlindCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  drugFreeCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toeicCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cvPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supportingDocsPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   statusHistory?: Prisma.RegistrationStatusHistoryUncheckedUpdateManyWithoutRegistrationNestedInput
   selectionStatuses?: Prisma.SelectionStatusUncheckedUpdateManyWithoutRegistrationNestedInput
   placementStatuses?: Prisma.PlacementStatusUncheckedUpdateManyWithoutRegistrationNestedInput
@@ -2104,6 +2577,17 @@ export type RegistrationCreateManyUserInput = {
   photoPath?: string | null
   n4CertificatePath?: string | null
   sswCertificatePath?: string | null
+  gpa?: string | null
+  colorBlindStatus?: string | null
+  ktpPath?: string | null
+  diplomaPath?: string | null
+  transcriptPath?: string | null
+  healthCertPath?: string | null
+  colorBlindCertPath?: string | null
+  drugFreeCertPath?: string | null
+  toeicCertPath?: string | null
+  cvPath?: string | null
+  supportingDocsPath?: string | null
 }
 
 export type RegistrationUpdateWithoutUserInput = {
@@ -2136,6 +2620,17 @@ export type RegistrationUpdateWithoutUserInput = {
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   n4CertificatePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sswCertificatePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gpa?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorBlindStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ktpPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  diplomaPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transcriptPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  healthCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorBlindCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  drugFreeCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toeicCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cvPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supportingDocsPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   program?: Prisma.ProgramUpdateOneWithoutRegistrationsNestedInput
   statusHistory?: Prisma.RegistrationStatusHistoryUpdateManyWithoutRegistrationNestedInput
   selectionStatuses?: Prisma.SelectionStatusUpdateManyWithoutRegistrationNestedInput
@@ -2175,6 +2670,17 @@ export type RegistrationUncheckedUpdateWithoutUserInput = {
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   n4CertificatePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sswCertificatePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gpa?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorBlindStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ktpPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  diplomaPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transcriptPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  healthCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorBlindCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  drugFreeCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toeicCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cvPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supportingDocsPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   statusHistory?: Prisma.RegistrationStatusHistoryUncheckedUpdateManyWithoutRegistrationNestedInput
   selectionStatuses?: Prisma.SelectionStatusUncheckedUpdateManyWithoutRegistrationNestedInput
   placementStatuses?: Prisma.PlacementStatusUncheckedUpdateManyWithoutRegistrationNestedInput
@@ -2213,6 +2719,17 @@ export type RegistrationUncheckedUpdateManyWithoutUserInput = {
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   n4CertificatePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sswCertificatePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gpa?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorBlindStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ktpPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  diplomaPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transcriptPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  healthCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorBlindCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  drugFreeCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toeicCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cvPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supportingDocsPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type RegistrationCreateManyProgramInput = {
@@ -2247,6 +2764,17 @@ export type RegistrationCreateManyProgramInput = {
   photoPath?: string | null
   n4CertificatePath?: string | null
   sswCertificatePath?: string | null
+  gpa?: string | null
+  colorBlindStatus?: string | null
+  ktpPath?: string | null
+  diplomaPath?: string | null
+  transcriptPath?: string | null
+  healthCertPath?: string | null
+  colorBlindCertPath?: string | null
+  drugFreeCertPath?: string | null
+  toeicCertPath?: string | null
+  cvPath?: string | null
+  supportingDocsPath?: string | null
 }
 
 export type RegistrationUpdateWithoutProgramInput = {
@@ -2279,6 +2807,17 @@ export type RegistrationUpdateWithoutProgramInput = {
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   n4CertificatePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sswCertificatePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gpa?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorBlindStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ktpPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  diplomaPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transcriptPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  healthCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorBlindCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  drugFreeCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toeicCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cvPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supportingDocsPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user?: Prisma.UserUpdateOneWithoutRegistrationsNestedInput
   statusHistory?: Prisma.RegistrationStatusHistoryUpdateManyWithoutRegistrationNestedInput
   selectionStatuses?: Prisma.SelectionStatusUpdateManyWithoutRegistrationNestedInput
@@ -2318,6 +2857,17 @@ export type RegistrationUncheckedUpdateWithoutProgramInput = {
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   n4CertificatePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sswCertificatePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gpa?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorBlindStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ktpPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  diplomaPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transcriptPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  healthCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorBlindCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  drugFreeCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toeicCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cvPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supportingDocsPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   statusHistory?: Prisma.RegistrationStatusHistoryUncheckedUpdateManyWithoutRegistrationNestedInput
   selectionStatuses?: Prisma.SelectionStatusUncheckedUpdateManyWithoutRegistrationNestedInput
   placementStatuses?: Prisma.PlacementStatusUncheckedUpdateManyWithoutRegistrationNestedInput
@@ -2356,6 +2906,17 @@ export type RegistrationUncheckedUpdateManyWithoutProgramInput = {
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   n4CertificatePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sswCertificatePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gpa?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorBlindStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ktpPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  diplomaPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transcriptPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  healthCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorBlindCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  drugFreeCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toeicCertPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cvPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supportingDocsPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -2449,6 +3010,17 @@ export type RegistrationSelect<ExtArgs extends runtime.Types.Extensions.Internal
   photoPath?: boolean
   n4CertificatePath?: boolean
   sswCertificatePath?: boolean
+  gpa?: boolean
+  colorBlindStatus?: boolean
+  ktpPath?: boolean
+  diplomaPath?: boolean
+  transcriptPath?: boolean
+  healthCertPath?: boolean
+  colorBlindCertPath?: boolean
+  drugFreeCertPath?: boolean
+  toeicCertPath?: boolean
+  cvPath?: boolean
+  supportingDocsPath?: boolean
   user?: boolean | Prisma.Registration$userArgs<ExtArgs>
   program?: boolean | Prisma.Registration$programArgs<ExtArgs>
   statusHistory?: boolean | Prisma.Registration$statusHistoryArgs<ExtArgs>
@@ -2493,9 +3065,20 @@ export type RegistrationSelectScalar = {
   photoPath?: boolean
   n4CertificatePath?: boolean
   sswCertificatePath?: boolean
+  gpa?: boolean
+  colorBlindStatus?: boolean
+  ktpPath?: boolean
+  diplomaPath?: boolean
+  transcriptPath?: boolean
+  healthCertPath?: boolean
+  colorBlindCertPath?: boolean
+  drugFreeCertPath?: boolean
+  toeicCertPath?: boolean
+  cvPath?: boolean
+  supportingDocsPath?: boolean
 }
 
-export type RegistrationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "programId" | "registrationStatus" | "registrationCode" | "selectionNotes" | "registrationDate" | "updatedAt" | "nik" | "gender" | "birthPlace" | "birthDate" | "lastEducation" | "major" | "educationInstitution" | "currentActivity" | "maritalStatus" | "parentPhone" | "parentRelationship" | "ktpProvinceCode" | "ktpProvinceName" | "ktpCityCode" | "ktpCityName" | "ktpAddress" | "domicileProvinceCode" | "domicileProvinceName" | "domicileCityCode" | "domicileCityName" | "domicileAddress" | "photoPath" | "n4CertificatePath" | "sswCertificatePath", ExtArgs["result"]["registration"]>
+export type RegistrationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "programId" | "registrationStatus" | "registrationCode" | "selectionNotes" | "registrationDate" | "updatedAt" | "nik" | "gender" | "birthPlace" | "birthDate" | "lastEducation" | "major" | "educationInstitution" | "currentActivity" | "maritalStatus" | "parentPhone" | "parentRelationship" | "ktpProvinceCode" | "ktpProvinceName" | "ktpCityCode" | "ktpCityName" | "ktpAddress" | "domicileProvinceCode" | "domicileProvinceName" | "domicileCityCode" | "domicileCityName" | "domicileAddress" | "photoPath" | "n4CertificatePath" | "sswCertificatePath" | "gpa" | "colorBlindStatus" | "ktpPath" | "diplomaPath" | "transcriptPath" | "healthCertPath" | "colorBlindCertPath" | "drugFreeCertPath" | "toeicCertPath" | "cvPath" | "supportingDocsPath", ExtArgs["result"]["registration"]>
 export type RegistrationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.Registration$userArgs<ExtArgs>
   program?: boolean | Prisma.Registration$programArgs<ExtArgs>
@@ -2549,6 +3132,17 @@ export type $RegistrationPayload<ExtArgs extends runtime.Types.Extensions.Intern
     photoPath: string | null
     n4CertificatePath: string | null
     sswCertificatePath: string | null
+    gpa: string | null
+    colorBlindStatus: string | null
+    ktpPath: string | null
+    diplomaPath: string | null
+    transcriptPath: string | null
+    healthCertPath: string | null
+    colorBlindCertPath: string | null
+    drugFreeCertPath: string | null
+    toeicCertPath: string | null
+    cvPath: string | null
+    supportingDocsPath: string | null
   }, ExtArgs["result"]["registration"]>
   composites: {}
 }
@@ -2956,6 +3550,17 @@ export interface RegistrationFieldRefs {
   readonly photoPath: Prisma.FieldRef<"Registration", 'String'>
   readonly n4CertificatePath: Prisma.FieldRef<"Registration", 'String'>
   readonly sswCertificatePath: Prisma.FieldRef<"Registration", 'String'>
+  readonly gpa: Prisma.FieldRef<"Registration", 'String'>
+  readonly colorBlindStatus: Prisma.FieldRef<"Registration", 'String'>
+  readonly ktpPath: Prisma.FieldRef<"Registration", 'String'>
+  readonly diplomaPath: Prisma.FieldRef<"Registration", 'String'>
+  readonly transcriptPath: Prisma.FieldRef<"Registration", 'String'>
+  readonly healthCertPath: Prisma.FieldRef<"Registration", 'String'>
+  readonly colorBlindCertPath: Prisma.FieldRef<"Registration", 'String'>
+  readonly drugFreeCertPath: Prisma.FieldRef<"Registration", 'String'>
+  readonly toeicCertPath: Prisma.FieldRef<"Registration", 'String'>
+  readonly cvPath: Prisma.FieldRef<"Registration", 'String'>
+  readonly supportingDocsPath: Prisma.FieldRef<"Registration", 'String'>
 }
     
 

@@ -276,6 +276,7 @@ export const ProgramScalarFieldEnum = {
   categoryId: 'categoryId',
   name: 'name',
   programFormat: 'programFormat',
+  formTemplate: 'formTemplate',
   description: 'description',
   requirements: 'requirements',
   schedule: 'schedule',
@@ -339,7 +340,18 @@ export const RegistrationScalarFieldEnum = {
   domicileAddress: 'domicileAddress',
   photoPath: 'photoPath',
   n4CertificatePath: 'n4CertificatePath',
-  sswCertificatePath: 'sswCertificatePath'
+  sswCertificatePath: 'sswCertificatePath',
+  gpa: 'gpa',
+  colorBlindStatus: 'colorBlindStatus',
+  ktpPath: 'ktpPath',
+  diplomaPath: 'diplomaPath',
+  transcriptPath: 'transcriptPath',
+  healthCertPath: 'healthCertPath',
+  colorBlindCertPath: 'colorBlindCertPath',
+  drugFreeCertPath: 'drugFreeCertPath',
+  toeicCertPath: 'toeicCertPath',
+  cvPath: 'cvPath',
+  supportingDocsPath: 'supportingDocsPath'
 } as const
 
 export type RegistrationScalarFieldEnum = (typeof RegistrationScalarFieldEnum)[keyof typeof RegistrationScalarFieldEnum]
@@ -660,6 +672,7 @@ export type ProgramCategoryOrderByRelevanceFieldEnum = (typeof ProgramCategoryOr
 export const ProgramOrderByRelevanceFieldEnum = {
   name: 'name',
   programFormat: 'programFormat',
+  formTemplate: 'formTemplate',
   description: 'description',
   requirements: 'requirements',
   schedule: 'schedule',
@@ -701,7 +714,18 @@ export const RegistrationOrderByRelevanceFieldEnum = {
   domicileAddress: 'domicileAddress',
   photoPath: 'photoPath',
   n4CertificatePath: 'n4CertificatePath',
-  sswCertificatePath: 'sswCertificatePath'
+  sswCertificatePath: 'sswCertificatePath',
+  gpa: 'gpa',
+  colorBlindStatus: 'colorBlindStatus',
+  ktpPath: 'ktpPath',
+  diplomaPath: 'diplomaPath',
+  transcriptPath: 'transcriptPath',
+  healthCertPath: 'healthCertPath',
+  colorBlindCertPath: 'colorBlindCertPath',
+  drugFreeCertPath: 'drugFreeCertPath',
+  toeicCertPath: 'toeicCertPath',
+  cvPath: 'cvPath',
+  supportingDocsPath: 'supportingDocsPath'
 } as const
 
 export type RegistrationOrderByRelevanceFieldEnum = (typeof RegistrationOrderByRelevanceFieldEnum)[keyof typeof RegistrationOrderByRelevanceFieldEnum]

@@ -55,6 +55,7 @@ export type ProgramMinAggregateOutputType = {
   categoryId: number | null
   name: string | null
   programFormat: string | null
+  formTemplate: string | null
   description: string | null
   requirements: string | null
   schedule: string | null
@@ -88,6 +89,7 @@ export type ProgramMaxAggregateOutputType = {
   categoryId: number | null
   name: string | null
   programFormat: string | null
+  formTemplate: string | null
   description: string | null
   requirements: string | null
   schedule: string | null
@@ -121,6 +123,7 @@ export type ProgramCountAggregateOutputType = {
   categoryId: number
   name: number
   programFormat: number
+  formTemplate: number
   description: number
   requirements: number
   schedule: number
@@ -180,6 +183,7 @@ export type ProgramMinAggregateInputType = {
   categoryId?: true
   name?: true
   programFormat?: true
+  formTemplate?: true
   description?: true
   requirements?: true
   schedule?: true
@@ -213,6 +217,7 @@ export type ProgramMaxAggregateInputType = {
   categoryId?: true
   name?: true
   programFormat?: true
+  formTemplate?: true
   description?: true
   requirements?: true
   schedule?: true
@@ -246,6 +251,7 @@ export type ProgramCountAggregateInputType = {
   categoryId?: true
   name?: true
   programFormat?: true
+  formTemplate?: true
   description?: true
   requirements?: true
   schedule?: true
@@ -366,6 +372,7 @@ export type ProgramGroupByOutputType = {
   categoryId: number | null
   name: string
   programFormat: string | null
+  formTemplate: string
   description: string | null
   requirements: string | null
   schedule: string | null
@@ -422,6 +429,7 @@ export type ProgramWhereInput = {
   categoryId?: Prisma.IntNullableFilter<"Program"> | number | null
   name?: Prisma.StringFilter<"Program"> | string
   programFormat?: Prisma.StringNullableFilter<"Program"> | string | null
+  formTemplate?: Prisma.StringFilter<"Program"> | string
   description?: Prisma.StringNullableFilter<"Program"> | string | null
   requirements?: Prisma.StringNullableFilter<"Program"> | string | null
   schedule?: Prisma.StringNullableFilter<"Program"> | string | null
@@ -457,6 +465,7 @@ export type ProgramOrderByWithRelationInput = {
   categoryId?: Prisma.SortOrderInput | Prisma.SortOrder
   name?: Prisma.SortOrder
   programFormat?: Prisma.SortOrderInput | Prisma.SortOrder
+  formTemplate?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   requirements?: Prisma.SortOrderInput | Prisma.SortOrder
   schedule?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -496,6 +505,7 @@ export type ProgramWhereUniqueInput = Prisma.AtLeast<{
   categoryId?: Prisma.IntNullableFilter<"Program"> | number | null
   name?: Prisma.StringFilter<"Program"> | string
   programFormat?: Prisma.StringNullableFilter<"Program"> | string | null
+  formTemplate?: Prisma.StringFilter<"Program"> | string
   description?: Prisma.StringNullableFilter<"Program"> | string | null
   requirements?: Prisma.StringNullableFilter<"Program"> | string | null
   schedule?: Prisma.StringNullableFilter<"Program"> | string | null
@@ -531,6 +541,7 @@ export type ProgramOrderByWithAggregationInput = {
   categoryId?: Prisma.SortOrderInput | Prisma.SortOrder
   name?: Prisma.SortOrder
   programFormat?: Prisma.SortOrderInput | Prisma.SortOrder
+  formTemplate?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   requirements?: Prisma.SortOrderInput | Prisma.SortOrder
   schedule?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -572,6 +583,7 @@ export type ProgramScalarWhereWithAggregatesInput = {
   categoryId?: Prisma.IntNullableWithAggregatesFilter<"Program"> | number | null
   name?: Prisma.StringWithAggregatesFilter<"Program"> | string
   programFormat?: Prisma.StringNullableWithAggregatesFilter<"Program"> | string | null
+  formTemplate?: Prisma.StringWithAggregatesFilter<"Program"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"Program"> | string | null
   requirements?: Prisma.StringNullableWithAggregatesFilter<"Program"> | string | null
   schedule?: Prisma.StringNullableWithAggregatesFilter<"Program"> | string | null
@@ -603,6 +615,7 @@ export type ProgramScalarWhereWithAggregatesInput = {
 export type ProgramCreateInput = {
   name: string
   programFormat?: string | null
+  formTemplate?: string
   description?: string | null
   requirements?: string | null
   schedule?: string | null
@@ -638,6 +651,7 @@ export type ProgramUncheckedCreateInput = {
   categoryId?: number | null
   name: string
   programFormat?: string | null
+  formTemplate?: string
   description?: string | null
   requirements?: string | null
   schedule?: string | null
@@ -670,6 +684,7 @@ export type ProgramUncheckedCreateInput = {
 export type ProgramUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   programFormat?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  formTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requirements?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   schedule?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -705,6 +720,7 @@ export type ProgramUncheckedUpdateInput = {
   categoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   programFormat?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  formTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requirements?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   schedule?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -739,6 +755,7 @@ export type ProgramCreateManyInput = {
   categoryId?: number | null
   name: string
   programFormat?: string | null
+  formTemplate?: string
   description?: string | null
   requirements?: string | null
   schedule?: string | null
@@ -770,6 +787,7 @@ export type ProgramCreateManyInput = {
 export type ProgramUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   programFormat?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  formTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requirements?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   schedule?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -803,6 +821,7 @@ export type ProgramUncheckedUpdateManyInput = {
   categoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   programFormat?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  formTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requirements?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   schedule?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -852,6 +871,7 @@ export type ProgramCountOrderByAggregateInput = {
   categoryId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   programFormat?: Prisma.SortOrder
+  formTemplate?: Prisma.SortOrder
   description?: Prisma.SortOrder
   requirements?: Prisma.SortOrder
   schedule?: Prisma.SortOrder
@@ -897,6 +917,7 @@ export type ProgramMaxOrderByAggregateInput = {
   categoryId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   programFormat?: Prisma.SortOrder
+  formTemplate?: Prisma.SortOrder
   description?: Prisma.SortOrder
   requirements?: Prisma.SortOrder
   schedule?: Prisma.SortOrder
@@ -930,6 +951,7 @@ export type ProgramMinOrderByAggregateInput = {
   categoryId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   programFormat?: Prisma.SortOrder
+  formTemplate?: Prisma.SortOrder
   description?: Prisma.SortOrder
   requirements?: Prisma.SortOrder
   schedule?: Prisma.SortOrder
@@ -1048,6 +1070,7 @@ export type ProgramUpdateOneWithoutRegistrationsNestedInput = {
 export type ProgramCreateWithoutCategoryInput = {
   name: string
   programFormat?: string | null
+  formTemplate?: string
   description?: string | null
   requirements?: string | null
   schedule?: string | null
@@ -1081,6 +1104,7 @@ export type ProgramUncheckedCreateWithoutCategoryInput = {
   id?: number
   name: string
   programFormat?: string | null
+  formTemplate?: string
   description?: string | null
   requirements?: string | null
   schedule?: string | null
@@ -1144,6 +1168,7 @@ export type ProgramScalarWhereInput = {
   categoryId?: Prisma.IntNullableFilter<"Program"> | number | null
   name?: Prisma.StringFilter<"Program"> | string
   programFormat?: Prisma.StringNullableFilter<"Program"> | string | null
+  formTemplate?: Prisma.StringFilter<"Program"> | string
   description?: Prisma.StringNullableFilter<"Program"> | string | null
   requirements?: Prisma.StringNullableFilter<"Program"> | string | null
   schedule?: Prisma.StringNullableFilter<"Program"> | string | null
@@ -1175,6 +1200,7 @@ export type ProgramScalarWhereInput = {
 export type ProgramCreateWithoutRegistrationsInput = {
   name: string
   programFormat?: string | null
+  formTemplate?: string
   description?: string | null
   requirements?: string | null
   schedule?: string | null
@@ -1209,6 +1235,7 @@ export type ProgramUncheckedCreateWithoutRegistrationsInput = {
   categoryId?: number | null
   name: string
   programFormat?: string | null
+  formTemplate?: string
   description?: string | null
   requirements?: string | null
   schedule?: string | null
@@ -1256,6 +1283,7 @@ export type ProgramUpdateToOneWithWhereWithoutRegistrationsInput = {
 export type ProgramUpdateWithoutRegistrationsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   programFormat?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  formTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requirements?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   schedule?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1290,6 +1318,7 @@ export type ProgramUncheckedUpdateWithoutRegistrationsInput = {
   categoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   programFormat?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  formTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requirements?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   schedule?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1322,6 +1351,7 @@ export type ProgramCreateManyCategoryInput = {
   id?: number
   name: string
   programFormat?: string | null
+  formTemplate?: string
   description?: string | null
   requirements?: string | null
   schedule?: string | null
@@ -1353,6 +1383,7 @@ export type ProgramCreateManyCategoryInput = {
 export type ProgramUpdateWithoutCategoryInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   programFormat?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  formTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requirements?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   schedule?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1386,6 +1417,7 @@ export type ProgramUncheckedUpdateWithoutCategoryInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   programFormat?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  formTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requirements?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   schedule?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1419,6 +1451,7 @@ export type ProgramUncheckedUpdateManyWithoutCategoryInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   programFormat?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  formTemplate?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requirements?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   schedule?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1483,6 +1516,7 @@ export type ProgramSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   categoryId?: boolean
   name?: boolean
   programFormat?: boolean
+  formTemplate?: boolean
   description?: boolean
   requirements?: boolean
   schedule?: boolean
@@ -1521,6 +1555,7 @@ export type ProgramSelectScalar = {
   categoryId?: boolean
   name?: boolean
   programFormat?: boolean
+  formTemplate?: boolean
   description?: boolean
   requirements?: boolean
   schedule?: boolean
@@ -1549,7 +1584,7 @@ export type ProgramSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ProgramOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "categoryId" | "name" | "programFormat" | "description" | "requirements" | "schedule" | "duration" | "capacity" | "currentParticipants" | "status" | "isRunning" | "contactInfo" | "registrationDeadline" | "startDate" | "endDate" | "location" | "trainingCost" | "trainingFeeDetails" | "departureCost" | "departureFeeDetails" | "installmentPlan" | "downPayment" | "jobMatchingCost" | "bridgeFund" | "timelineText" | "requirementsText" | "sortOrder" | "createdAt" | "updatedAt", ExtArgs["result"]["program"]>
+export type ProgramOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "categoryId" | "name" | "programFormat" | "formTemplate" | "description" | "requirements" | "schedule" | "duration" | "capacity" | "currentParticipants" | "status" | "isRunning" | "contactInfo" | "registrationDeadline" | "startDate" | "endDate" | "location" | "trainingCost" | "trainingFeeDetails" | "departureCost" | "departureFeeDetails" | "installmentPlan" | "downPayment" | "jobMatchingCost" | "bridgeFund" | "timelineText" | "requirementsText" | "sortOrder" | "createdAt" | "updatedAt", ExtArgs["result"]["program"]>
 export type ProgramInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   category?: boolean | Prisma.Program$categoryArgs<ExtArgs>
   registrations?: boolean | Prisma.Program$registrationsArgs<ExtArgs>
@@ -1567,6 +1602,7 @@ export type $ProgramPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     categoryId: number | null
     name: string
     programFormat: string | null
+    formTemplate: string
     description: string | null
     requirements: string | null
     schedule: string | null
@@ -1968,6 +2004,7 @@ export interface ProgramFieldRefs {
   readonly categoryId: Prisma.FieldRef<"Program", 'Int'>
   readonly name: Prisma.FieldRef<"Program", 'String'>
   readonly programFormat: Prisma.FieldRef<"Program", 'String'>
+  readonly formTemplate: Prisma.FieldRef<"Program", 'String'>
   readonly description: Prisma.FieldRef<"Program", 'String'>
   readonly requirements: Prisma.FieldRef<"Program", 'String'>
   readonly schedule: Prisma.FieldRef<"Program", 'String'>

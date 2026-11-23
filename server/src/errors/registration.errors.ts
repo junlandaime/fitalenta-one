@@ -13,6 +13,8 @@ export const RegistrationErrors = {
     new AppError("ALREADY_REGISTERED", 409, "Anda sudah terdaftar di program ini"),
   missingFiles: (labels: string[]) =>
     new AppError("MISSING_FILES", 400, `Dokumen wajib diunggah: ${labels.join(", ")}`),
+  missingFields: (labels: string[]) =>
+    new AppError("VALIDATION_ERROR", 400, `Data wajib diisi: ${labels.join(", ")}`),
   codeGenerationFailed: () =>
     new AppError("CODE_GENERATION_FAILED", 500, "Gagal membuat nomor pendaftaran, silakan coba lagi"),
 };

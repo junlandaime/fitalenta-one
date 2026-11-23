@@ -6,6 +6,7 @@ export function createEmptyProgramForm(): ProgramFormValues {
     return {
         name: "",
         programFormat: "",
+        formTemplate: "default",
         categoryId: "",
         description: "",
         location: NEW_PROGRAM_DEFAULTS.location,
@@ -39,6 +40,7 @@ export function toProgramFormValues(program: AdminProgramDetail): ProgramFormVal
     return {
         name: program.name,
         programFormat: program.programFormat ?? "",
+        formTemplate: program.formTemplate ?? "default",
         categoryId: program.categoryId ? String(program.categoryId) : "",
         description: program.description ?? "",
         location: program.location ?? "",

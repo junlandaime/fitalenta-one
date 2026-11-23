@@ -22,6 +22,8 @@ export type RegistrationProfileInput = Pick<
   | "domicileCityCode"
   | "domicileCityName"
   | "domicileAddress"
+  | "gpa"
+  | "colorBlindStatus"
 >;
 
 export interface CreateRegistrationInput extends RegistrationProfileInput {
@@ -48,6 +50,7 @@ export interface RegistrationResult {
     id: number | null;
     name: string;
     programFormat: string | null;
+    formTemplate: string;
   };
   payment: {
     id?: number;
@@ -72,6 +75,8 @@ export interface RegistrationResult {
     maritalStatus: string | null;
     parentRelationship: string | null;
     parentPhone: string | null;
+    gpa: string | null;
+    colorBlindStatus: string | null;
     ktp: RegionResult;
     domicile: RegionResult;
   };
@@ -79,5 +84,14 @@ export interface RegistrationResult {
     photoPath: string | null;
     n4CertificatePath: string | null;
     sswCertificatePath: string | null;
+    ktpPath: string | null;
+    diplomaPath: string | null;
+    transcriptPath: string | null;
+    healthCertPath: string | null;
+    colorBlindCertPath: string | null;
+    drugFreeCertPath: string | null;
+    toeicCertPath: string | null;
+    cvPath: string | null;
+    supportingDocsPath: string | null;
   };
 }

@@ -2,6 +2,7 @@ import { z } from "zod";
 import { INSTALLMENT_PLAN_PATTERN, PROGRAM_LIMITS } from "@/constants/admin/admin-program-constant";
 
 const STATUS_VALUES = ["active", "inactive", "full"] as const;
+const FORM_TEMPLATE_VALUES = ["default", "avionics"] as const;
 const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 
 const isValidDate = (value: string) => DATE_PATTERN.test(value) && !Number.isNaN(Date.parse(value));
@@ -58,6 +59,7 @@ const optionalDate = (label: string) =>
 export type ProgramFormValues = {
     name: string;
     programFormat: string;
+    formTemplate: string;
     categoryId: string;
     description: string;
     location: string;
@@ -91,6 +93,7 @@ export function buildProgramSchema(currentParticipants = 0) {
         .object({
             name: requiredText("Nama program", short),
             programFormat: optionalText("Format program", short),
+            formTemplate: z.enum(FORM_TEMPLATE_VALUES, { error: "Template formulir wajib dipilih" }),
             categoryId: optionalInt("Kategori", 1, Number.MAX_SAFE_INTEGER),
             description: optionalText("Deskripsi", long),
             location: optionalText("Lokasi", short),

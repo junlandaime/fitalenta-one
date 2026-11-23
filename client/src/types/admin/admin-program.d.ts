@@ -2,10 +2,13 @@ import type { AdminPageMeta } from "@/types/admin-common";
 
 export type AdminProgramStatus = "active" | "inactive" | "full";
 
+export type AdminProgramFormTemplate = "default" | "avionics";
+
 export type AdminProgram = {
     id: number;
     name: string;
     programFormat: string | null;
+    formTemplate: AdminProgramFormTemplate;
     category: { id: number; name: string } | null;
     duration: string | null;
     capacity: number | null;

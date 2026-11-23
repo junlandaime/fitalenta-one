@@ -281,6 +281,7 @@ model Program {
   category             ProgramCategory? @relation(fields: [categoryId], references: [id])
   name                 String
   programFormat        String?          @map("program_format")
+  formTemplate         String           @default("default") @map("form_template") @db.VarChar(30)
   description          String?          @db.Text
   requirements         String?          @db.Text
   schedule             String?          @db.Text
@@ -348,6 +349,17 @@ model Registration {
   photoPath            String?            @map("photo_path")
   n4CertificatePath    String?            @map("n4_certificate_path")
   sswCertificatePath   String?            @map("ssw_certificate_path")
+  gpa                  String?            @db.VarChar(10)
+  colorBlindStatus     String?            @map("color_blind_status") @db.VarChar(30)
+  ktpPath              String?            @map("ktp_path")
+  diplomaPath          String?            @map("diploma_path")
+  transcriptPath       String?            @map("transcript_path")
+  healthCertPath       String?            @map("health_cert_path")
+  colorBlindCertPath   String?            @map("color_blind_cert_path")
+  drugFreeCertPath     String?            @map("drug_free_cert_path")
+  toeicCertPath        String?            @map("toeic_cert_path")
+  cvPath               String?            @map("cv_path")
+  supportingDocsPath   String?            @map("supporting_docs_path")
 
   statusHistory     RegistrationStatusHistory[]
   selectionStatuses SelectionStatus[]

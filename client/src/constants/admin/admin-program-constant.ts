@@ -31,6 +31,11 @@ export const PROGRAM_STATUS_OPTIONS: { value: AdminProgramStatus; label: string 
     { value: "full", label: PROGRAM_STATUS_META.full.label },
 ];
 
+export const FORM_TEMPLATE_OPTIONS = [
+    { value: "default", label: "Standar (Program Jepang)" },
+    { value: "avionics", label: "Avionik (Matrikulasi Akademik)" },
+];
+
 export const RUNNING_FILTER_OPTIONS = [
     { value: "all", label: "Semua jadwal" },
     { value: "true", label: "Sedang berjalan" },

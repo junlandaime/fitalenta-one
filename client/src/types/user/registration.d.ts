@@ -19,6 +19,7 @@ export type RegistrationDraft = {
     birthDate: string;
     phone: string;
     lastEducation: string;
+    otherEducation: string;
     major: string;
     institution: string;
     currentActivity: string;
@@ -28,9 +29,32 @@ export type RegistrationDraft = {
     ktp: RegistrationAddress;
     sameAsKtp: boolean;
     domicile: RegistrationAddress;
+    domicileCity: string;
+    gpa: string;
+    colorBlindStatus: string;
+    ktpFile: File | null;
+    diplomaFile: File | null;
+    transcriptFile: File | null;
+    healthCertFile: File | null;
+    colorBlindCertFile: File | null;
+    drugFreeCertFile: File | null;
+    toeicCertFile: File | null;
+    cvFile: File | null;
+    supportingDocsFile: File | null;
     programId: number | null;
     agreed: boolean;
 };
+
+export type RegistrationDocumentKey =
+    | "ktpFile"
+    | "diplomaFile"
+    | "transcriptFile"
+    | "healthCertFile"
+    | "colorBlindCertFile"
+    | "drugFreeCertFile"
+    | "toeicCertFile"
+    | "cvFile"
+    | "supportingDocsFile";
 
 export type StringFieldName = {
     [K in keyof RegistrationDraft]: RegistrationDraft[K] extends string ? K : never;

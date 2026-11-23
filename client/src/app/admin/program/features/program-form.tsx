@@ -7,7 +7,7 @@ import { CircleAlert, Loader2, Save } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { INSTALLMENT_PLANS, PROGRAM_STATUS_OPTIONS } from "@/constants/admin/admin-program-constant";
+import { FORM_TEMPLATE_OPTIONS, INSTALLMENT_PLANS, PROGRAM_STATUS_OPTIONS } from "@/constants/admin/admin-program-constant";
 import { createEmptyProgramForm, toProgramFormValues } from "@/helpers/admin/admin-program-helper";
 import { installmentLabel } from "@/helpers/program-helper";
 import { focusFirstInvalidField } from "@/helpers/user/registration-helper";
@@ -180,6 +180,14 @@ export function ProgramForm({ program, options }: ProgramFormProps) {
 
                 <div className="space-y-6">
                     <FormCard title="Pengaturan program" description="Status dan urutan tampil di website.">
+                        <SelectField
+                            form={form}
+                            name="formTemplate"
+                            label="Template formulir pendaftaran"
+                            required
+                            options={FORM_TEMPLATE_OPTIONS}
+                            hint="Pilih Avionik untuk form khusus Matrikulasi Akademik."
+                        />
                         <SelectField
                             form={form}
                             name="status"

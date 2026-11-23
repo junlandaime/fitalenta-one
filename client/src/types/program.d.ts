@@ -13,6 +13,7 @@ export type Program = {
     category?: ProgramCategory | null;
     name: string;
     programFormat?: string | null;
+    formTemplate?: string;
     description?: string | null;
     requirements?: string | null;
     schedule?: string | null;
