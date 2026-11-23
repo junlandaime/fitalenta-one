@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ProgramRegisterButton, type ProgramArea } from "./program-register-button";
 import { ArrowRight, Calendar, Clock, CreditCard, MapPin, Tag, Users, type LucideIcon } from "lucide-react";
 import type { Program } from "@/types/program";
-import { installmentLabel, isFull, quotaLabel, quotaPercent } from "@/helpers/program-helper";
+import { installmentLabel, isFull, quotaLabel, quotaPercent, toProgramSlug } from "@/helpers/program-helper";
 import { formatIDR } from "@/lib/utils";
 
 function InfoRow({ icon: Icon, label, value }: { icon: LucideIcon; label: string; value?: string | null }) {
@@ -33,7 +33,8 @@ type ProgramCardProps = { program: Program; area?: ProgramArea };
 export function ProgramCard({ program, area = "public" }: ProgramCardProps) {
     const full = isFull(program);
     const percent = quotaPercent(program);
-    const detailHref = area === "user" ? `/user/program/${program.id}` : `/programs/${program.id}`;
+    const slug = toProgramSlug(program.name) || String(program.id);
+    const detailHref = area === "user" ? `/user/program/${slug}` : `/programs/${slug}`;
 
     let bgImage = "";
     const fullText = `${program.category?.name || ""} ${program.name || ""} ${program.description || ""}`.toLowerCase();

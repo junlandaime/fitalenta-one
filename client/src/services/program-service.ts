@@ -1,4 +1,5 @@
 import { cache } from "react";
+import { toProgramSlug } from "@/helpers/program-helper";
 import { api } from "@/lib/axios";
 import type { Program, ProgramsListData } from "@/types/program";
 import type { ApiResponse } from "@/types/api";
@@ -22,5 +23,18 @@ export const getProgramById = cache(
             throw new Error(res.data.message ?? "Gagal memuat program");
         }
         return res.data.data;
+    },
+);
+
+export const getProgramBySlugOrId = cache(
+    async (raw: string): Promise<Program | undefined> => {
+        if (/^\d+$/.test(raw)) {
+            const id = Number(raw);
+            return Number.isInteger(id) && id > 0 ? getProgramById(id) : undefined;
+        }
+
+        const slug = decodeURIComponent(raw).toLowerCase();
+        const programs = await getPrograms();
+        return programs.find((item) => toProgramSlug(item.name) === slug);
     },
 );

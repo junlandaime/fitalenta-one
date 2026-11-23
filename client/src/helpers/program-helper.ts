@@ -28,3 +28,12 @@ export function installmentLabel(plan?: string | null): string {
 
     return plan.replace(/_/g, " ");
 }
+
+export function toProgramSlug(name: string): string {
+    return name
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+}
